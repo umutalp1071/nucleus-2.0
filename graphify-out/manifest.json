@@ -1,0 +1,92 @@
+{
+  ".eslintrc.json": {
+    "mtime": 1784979258.293197,
+    "ast_hash": "5cc89077d438e3d0d0a8308ab7e06a5a",
+    "semantic_hash": ""
+  },
+  "next.config.mjs": {
+    "mtime": 1784979258.3685174,
+    "ast_hash": "21958f5752add43cc47ab0ff5172cd46",
+    "semantic_hash": ""
+  },
+  "package.json": {
+    "mtime": 1784981073.553517,
+    "ast_hash": "b98eca821f7b41c7dcaf2290555ebafe",
+    "semantic_hash": ""
+  },
+  "postcss.config.mjs": {
+    "mtime": 1784979258.3883936,
+    "ast_hash": "b7941c02b947e17ae32f67ae7e664ec8",
+    "semantic_hash": ""
+  },
+  "src/app/layout.tsx": {
+    "mtime": 1784981291.8539956,
+    "ast_hash": "7f39fb851bcbf08148cf8e4fc20d3734",
+    "semantic_hash": ""
+  },
+  "src/app/page.tsx": {
+    "mtime": 1784981073.5370853,
+    "ast_hash": "3104a10cf03546f89f2df1bad2b32684",
+    "semantic_hash": ""
+  },
+  "tailwind.config.ts": {
+    "mtime": 1784981415.3587973,
+    "ast_hash": "1935ad05ad1cebbdf9f2055206ee8047",
+    "semantic_hash": ""
+  },
+  "tsconfig.json": {
+    "mtime": 1784981073.5112555,
+    "ast_hash": "3bd7a3770c6b44dbcaab1d2f175db8bd",
+    "semantic_hash": ""
+  },
+  "README.md": {
+    "mtime": 1784979258.340345,
+    "ast_hash": "f15aaa42d5d299d091b1171097ea56ad",
+    "semantic_hash": ""
+  },
+  "START_HERE.md": {
+    "mtime": 1784999580.4226692,
+    "ast_hash": "d41d8cd98f00b204e9800998ecf8427e",
+    "semantic_hash": ""
+  },
+  "docs/CONTEXT.md": {
+    "mtime": 1784974497.698752,
+    "ast_hash": "a346c675e6ad114ea966a8922cf0fb30",
+    "semantic_hash": ""
+  },
+  "docs/TOMORROW_PLAN.md": {
+    "mtime": 1784999387.924251,
+    "ast_hash": "b1e612a0f257c8e1188aee38bb17ea78",
+    "semantic_hash": ""
+  },
+  "docs/mistakes/nucleus-1.0-lessons.md": {
+    "mtime": 1784975444.0929108,
+    "ast_hash": "11775769ef4114e9f85d17b76bd4e2b7",
+    "semantic_hash": ""
+  },
+  "docs/mistakes/template.md": {
+    "mtime": 1784975262.4706242,
+    "ast_hash": "087e8db2f3ab0c84aa61ba0669a259dd",
+    "semantic_hash": ""
+  },
+  "docs/workflow/PROTOCOL.md": {
+    "mtime": 1784976661.641449,
+    "ast_hash": "8bf998586737edcca94bc7f9d10d8a36",
+    "semantic_hash": ""
+  },
+  "docs/workflow/prompts/bugfix.md": {
+    "mtime": 1784977173.7011192,
+    "ast_hash": "95423262600641d46496cc11487f952d",
+    "semantic_hash": ""
+  },
+  "docs/workflow/prompts/feature.md": {
+    "mtime": 1784976949.1315272,
+    "ast_hash": "125db4ad110d6ff2977b8d9a3d8bf6c9",
+    "semantic_hash": ""
+  },
+  "docs/workflow/prompts/vision-check.md": {
+    "mtime": 1784977393.0937138,
+    "ast_hash": "756179db3da5e5dc5f7fe0eba765fd99",
+    "semantic_hash": ""
+  }
+}
