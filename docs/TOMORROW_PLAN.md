@@ -61,3 +61,16 @@ they should see a clean, modern dashboard similar to this:
 │                                         │
 │ [RECENT ACTIVITY] [GROWTH] [QUICK ACTIONS] │
 └─────────────────────────────────────────┘
+
+
+
+## TOMORROW (2026-07-27) — Phase 1, Day 2 Goals
+
+1. Make the "Continue" button functional → transition to the project creation flow (stub)
+2. Make the "Save" button functional → save ideas (mock storage)
+3. Add a "Saved Ideas" section to the dashboard
+4. Publish a "Day 1" post on Peerlist (with 2 screenshots)
+5. Start budget tracking — monitor OpenRouter usage
+
+Target quality score: > 85
+```
