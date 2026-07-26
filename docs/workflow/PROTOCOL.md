@@ -221,6 +221,34 @@ Every major decision must align with:
 
 ---
 
+## END-OF-SESSION PROTOCOL (Automatic — At the End of Every Session)
+
+Claude, before ending every session, automatically perform the following steps:
+
+### 1. UPDATE LEARNING.MD
+File: docs/workflow/learning.md
+
+Format:
+
+```markdown
+## YYYY-MM-DD — [PHASE], [DAY]: [SHORT TITLE]
+
+### What Was Done
+- [Item 1]
+- [Item 2]
+
+### What Was Learned
+- [Lesson 1]
+- [Lesson 2]
+
+### Errors / Issues
+- [Issue 1] → [Solution]
+
+### Next Step
+- [Tomorrow's task / Goal]
+
+### Quality Score: [0-100]
+
 # CORE WORKING PRINCIPLE
 
 Claude is not just a coding assistant.
@@ -245,3 +273,115 @@ The goal is to build a system that:
 
 **Nucleus 2.0 is built by a human + AI collaboration system, not by isolated coding sessions.**
 ```
+
+---
+
+## SESSION-END PROTOCOL (Automatic — Executed Every Session End)
+
+Before ending any session, Claude MUST self-execute these steps without waiting for user instruction.
+
+### 1. LEARNING.MD UPDATE
+File: docs/workflow/learning.md
+Format:
+```markdown
+## YYYY-MM-DD — [PHASE], [DAY]: [SHORT TITLE]
+
+### What Was Done
+- [Item 1]
+- [Item 2]
+
+### What Was Learned
+- [Lesson 1]
+- [Lesson 2]
+
+### Errors / Issues
+- [Issue] → [Solution]
+
+### Next Step
+- [Tomorrow/Goal]
+
+### Quality Score: [0-100]
+```
+
+### 2. TOMORROW_PLAN.MD UPDATE
+File: docs/TOMORROW_PLAN.md
+- Mark previous "Tomorrow" section as ✅ (completed) or 🟡 (partial)
+- Add new "Tomorrow" section with:
+```markdown
+## YYYY-MM-DD — Phase X, Day Y
+
+### Goal
+- [Goal 1]
+- [Goal 2]
+
+### Success Criteria
+- [Criterion 1]
+
+### Risk
+- [Potential issue]
+```
+
+### 3. MASTER_PLAN.MD UPDATE
+File: docs/MASTER_PLAN.md
+- Mark relevant day with ✅ or 🟡
+- Add note if goal changed
+
+### 4. CONTENT ENGINE — PEERLIST POST DRAFTS
+Create directory if missing: docs/content/drafts/
+Create two draft files per session:
+
+**Draft A: "What I Built Today" (Ship Post)**
+File: docs/content/drafts/YYYY-MM-DD-ship.md
+```markdown
+# Nucleus 2.0 — Day [X]: [Title]
+
+## What Was Built
+- [Item]
+
+## Problem & Solution
+- [Problem] → [Solution]
+
+## Screenshot / Demo
+[Placeholder for GIF or image]
+
+## Next Step
+- [Goal]
+
+#buildinpublic #nucleus2
+```
+
+**Draft B: "Problem-Solution" (Lesson Post)**
+File: docs/content/drafts/YYYY-MM-DD-lesson.md
+```markdown
+# A problem I faced today and how I solved it
+
+**Context:** While building Nucleus 2.0...
+
+**Problem:** [Description]
+
+**Solution:** [Description]
+
+**Lesson:** [Short takeaway]
+
+Have you faced something similar?
+```
+
+RULE: These drafts are auto-generated. User only approves, edits, or rejects. They are NOT created unless user says "session ending", but MUST be created when user says "session ending".
+
+### 5. MISTAKE DATABASE CHECK
+If new errors occurred:
+- Add new entry using docs/mistakes/template.md format
+- If repeated error, update previous entry
+
+---
+
+## RULE: THIS PROTOCOL IS AUTOMATIC
+
+When user says "session ending", "wrap up", "done for today", or similar:
+1. You (Claude) self-execute the 5 steps above
+2. Create/update files
+3. Propose git commit message
+4. Present summary: "Today I did X, learned Y, updated Z files. Proposed commit: [message]. Peerlist draft ready. Approve?"
+5. Only git push after user says "approve"
+
+User's role: Approver and editor. NOT courier.
