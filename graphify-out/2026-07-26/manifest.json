@@ -110,8 +110,8 @@
     "semantic_hash": ""
   },
   "src/components/dashboard/NewIdeaCard.tsx": {
-    "mtime": 1785055274.492242,
-    "ast_hash": "84e67ae38c6e0bf5c8d1722255ed7bf3",
+    "mtime": 1785054472.863311,
+    "ast_hash": "c1c71398ee7df8f4ee3bf44bf8b0773e",
     "semantic_hash": ""
   },
   "src/components/dashboard/ui.tsx": {
@@ -120,8 +120,8 @@
     "semantic_hash": ""
   },
   "src/lib/mock-data.ts": {
-    "mtime": 1785055245.0264142,
-    "ast_hash": "950441b48caf7bb62337ba509ee25893",
+    "mtime": 1785053875.3109634,
+    "ast_hash": "040406c40c5934bdd0f64115a92d7bdd",
     "semantic_hash": ""
   },
   "src/types/css.d.ts": {
@@ -187,16 +187,6 @@
   "docs/workflow/learning.md": {
     "mtime": 1785054666.53379,
     "ast_hash": "df24a2155169cdfa52036955e802feb0",
-    "semantic_hash": ""
-  },
-  "src/components/dashboard/Modal.tsx": {
-    "mtime": 1785055251.692058,
-    "ast_hash": "32ba35acacd8eb88aa71f7effad427d7",
-    "semantic_hash": ""
-  },
-  "src/components/dashboard/NewIdeaFlow.tsx": {
-    "mtime": 1785055265.3187015,
-    "ast_hash": "3ea3be3278522c84d8e167edee3b95ad",
     "semantic_hash": ""
   }
 }

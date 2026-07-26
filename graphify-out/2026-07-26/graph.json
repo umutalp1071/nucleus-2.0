@@ -653,28 +653,6 @@
       "norm_label": "dashboardheader()"
     },
     {
-      "label": "Modal.tsx",
-      "file_type": "code",
-      "source_file": "src/components/dashboard/Modal.tsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "src_components_dashboard_modal",
-      "community": 16,
-      "community_name": "page.tsx",
-      "norm_label": "modal.tsx"
-    },
-    {
-      "label": "Modal()",
-      "file_type": "code",
-      "source_file": "src/components/dashboard/Modal.tsx",
-      "source_location": "L5",
-      "_origin": "ast",
-      "id": "src_components_dashboard_modal_modal",
-      "community": 16,
-      "community_name": "page.tsx",
-      "norm_label": "modal()"
-    },
-    {
       "label": "NewIdeaCard.tsx",
       "file_type": "code",
       "source_file": "src/components/dashboard/NewIdeaCard.tsx",
@@ -689,78 +667,12 @@
       "label": "NewIdeaCard()",
       "file_type": "code",
       "source_file": "src/components/dashboard/NewIdeaCard.tsx",
-      "source_location": "L4",
+      "source_location": "L3",
       "_origin": "ast",
       "id": "src_components_dashboard_newideacard_newideacard",
       "community": 16,
       "community_name": "page.tsx",
       "norm_label": "newideacard()"
-    },
-    {
-      "label": "NewIdeaFlow.tsx",
-      "file_type": "code",
-      "source_file": "src/components/dashboard/NewIdeaFlow.tsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "src_components_dashboard_newideaflow",
-      "community": 16,
-      "community_name": "page.tsx",
-      "norm_label": "newideaflow.tsx"
-    },
-    {
-      "label": "Step",
-      "file_type": "code",
-      "source_file": "src/components/dashboard/NewIdeaFlow.tsx",
-      "source_location": "L7",
-      "_origin": "ast",
-      "id": "src_components_dashboard_newideaflow_step",
-      "community": 16,
-      "community_name": "page.tsx",
-      "norm_label": "step"
-    },
-    {
-      "label": "NewIdeaFlow()",
-      "file_type": "code",
-      "source_file": "src/components/dashboard/NewIdeaFlow.tsx",
-      "source_location": "L9",
-      "_origin": "ast",
-      "id": "src_components_dashboard_newideaflow_newideaflow",
-      "community": 16,
-      "community_name": "page.tsx",
-      "norm_label": "newideaflow()"
-    },
-    {
-      "label": "IdeaInputStep()",
-      "file_type": "code",
-      "source_file": "src/components/dashboard/NewIdeaFlow.tsx",
-      "source_location": "L55",
-      "_origin": "ast",
-      "id": "src_components_dashboard_newideaflow_ideainputstep",
-      "community": 16,
-      "community_name": "page.tsx",
-      "norm_label": "ideainputstep()"
-    },
-    {
-      "label": "AnalyzingStep()",
-      "file_type": "code",
-      "source_file": "src/components/dashboard/NewIdeaFlow.tsx",
-      "source_location": "L86",
-      "_origin": "ast",
-      "id": "src_components_dashboard_newideaflow_analyzingstep",
-      "community": 16,
-      "community_name": "page.tsx",
-      "norm_label": "analyzingstep()"
-    },
-    {
-      "label": "AnalysisResultStep()",
-      "file_type": "code",
-      "source_file": "src/components/dashboard/NewIdeaFlow.tsx",
-      "source_location": "L95",
-      "_origin": "ast",
-      "id": "src_components_dashboard_newideaflow_analysisresultstep",
-      "community": 16,
-      "community_name": "page.tsx",
-      "norm_label": "analysisresultstep()"
     },
     {
       "label": "ui.tsx",
@@ -939,28 +851,6 @@
       "norm_label": "quickactions"
     },
     {
-      "label": "IdeaAnalysis",
-      "file_type": "code",
-      "source_file": "src/lib/mock-data.ts",
-      "source_location": "L78",
-      "_origin": "ast",
-      "id": "src_lib_mock_data_ideaanalysis",
-      "community": 16,
-      "community_name": "page.tsx",
-      "norm_label": "ideaanalysis"
-    },
-    {
-      "label": "generateMockAnalysis()",
-      "file_type": "code",
-      "source_file": "src/lib/mock-data.ts",
-      "source_location": "L86",
-      "_origin": "ast",
-      "id": "src_lib_mock_data_generatemockanalysis",
-      "community": 16,
-      "community_name": "page.tsx",
-      "norm_label": "generatemockanalysis()"
-    },
-    {
       "label": "css.d.ts",
       "file_type": "code",
       "source_file": "src/types/css.d.ts",
@@ -1011,8 +901,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tsconfig",
-      "community": 32,
-      "community_name": "include",
+      "community": 1,
+      "community_name": "compilerOptions",
       "norm_label": "tsconfig.json"
     },
     {
@@ -1220,8 +1110,8 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "tsconfig_include",
-      "community": 32,
-      "community_name": "include",
+      "community": 1,
+      "community_name": "compilerOptions",
       "norm_label": "include"
     },
     {
@@ -1231,8 +1121,8 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "ref_next_env_d_ts",
-      "community": 32,
-      "community_name": "include",
+      "community": 1,
+      "community_name": "compilerOptions",
       "norm_label": "next-env.d.ts"
     },
     {
@@ -1242,8 +1132,8 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "ref_ts",
-      "community": 32,
-      "community_name": "include",
+      "community": 1,
+      "community_name": "compilerOptions",
       "norm_label": "**/*.ts"
     },
     {
@@ -1253,8 +1143,8 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "ref_tsx",
-      "community": 32,
-      "community_name": "include",
+      "community": 1,
+      "community_name": "compilerOptions",
       "norm_label": "**/*.tsx"
     },
     {
@@ -1264,8 +1154,8 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "ref_next_types_ts",
-      "community": 32,
-      "community_name": "include",
+      "community": 1,
+      "community_name": "compilerOptions",
       "norm_label": ".next/types/**/*.ts"
     },
     {
@@ -1275,8 +1165,8 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "ref_src_types_d_ts",
-      "community": 32,
-      "community_name": "include",
+      "community": 1,
+      "community_name": "compilerOptions",
       "norm_label": "src/types/**/*.d.ts"
     },
     {
@@ -1286,8 +1176,8 @@
       "source_location": "L25",
       "_origin": "ast",
       "id": "tsconfig_exclude",
-      "community": 32,
-      "community_name": "include",
+      "community": 1,
+      "community_name": "compilerOptions",
       "norm_label": "exclude"
     },
     {
@@ -1297,8 +1187,8 @@
       "source_location": "L25",
       "_origin": "ast",
       "id": "ref_node_modules",
-      "community": 32,
-      "community_name": "include",
+      "community": 1,
+      "community_name": "compilerOptions",
       "norm_label": "node_modules"
     },
     {
@@ -4142,71 +4032,12 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "src/components/dashboard/Modal.tsx",
-      "source_location": "L5",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "src_components_dashboard_modal",
-      "target": "src_components_dashboard_modal_modal",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/dashboard/NewIdeaFlow.tsx",
-      "source_location": "L4",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "src_components_dashboard_newideaflow",
-      "target": "src_components_dashboard_modal",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/dashboard/NewIdeaFlow.tsx",
-      "source_location": "L4",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "src_components_dashboard_newideaflow",
-      "target": "src_components_dashboard_modal_modal",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
       "source_file": "src/components/dashboard/NewIdeaCard.tsx",
-      "source_location": "L4",
+      "source_location": "L3",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_components_dashboard_newideacard",
       "target": "src_components_dashboard_newideacard_newideacard",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/dashboard/NewIdeaCard.tsx",
-      "source_location": "L2",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "src_components_dashboard_newideacard",
-      "target": "src_components_dashboard_newideaflow",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/dashboard/NewIdeaCard.tsx",
-      "source_location": "L2",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "src_components_dashboard_newideacard",
-      "target": "src_components_dashboard_newideaflow_newideaflow",
       "confidence_score": 1.0
     },
     {
@@ -4231,97 +4062,6 @@
       "_origin": "ast",
       "source": "src_components_dashboard_newideacard",
       "target": "src_components_dashboard_ui_card",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/dashboard/NewIdeaFlow.tsx",
-      "source_location": "L95",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "src_components_dashboard_newideaflow",
-      "target": "src_components_dashboard_newideaflow_analysisresultstep",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/dashboard/NewIdeaFlow.tsx",
-      "source_location": "L86",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "src_components_dashboard_newideaflow",
-      "target": "src_components_dashboard_newideaflow_analyzingstep",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/dashboard/NewIdeaFlow.tsx",
-      "source_location": "L55",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "src_components_dashboard_newideaflow",
-      "target": "src_components_dashboard_newideaflow_ideainputstep",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/dashboard/NewIdeaFlow.tsx",
-      "source_location": "L9",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "src_components_dashboard_newideaflow",
-      "target": "src_components_dashboard_newideaflow_newideaflow",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/dashboard/NewIdeaFlow.tsx",
-      "source_location": "L7",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "src_components_dashboard_newideaflow",
-      "target": "src_components_dashboard_newideaflow_step",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/dashboard/NewIdeaFlow.tsx",
-      "source_location": "L5",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "src_components_dashboard_newideaflow",
-      "target": "src_lib_mock_data",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/dashboard/NewIdeaFlow.tsx",
-      "source_location": "L5",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "src_components_dashboard_newideaflow",
-      "target": "src_lib_mock_data_generatemockanalysis",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/dashboard/NewIdeaFlow.tsx",
-      "source_location": "L5",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "src_components_dashboard_newideaflow",
-      "target": "src_lib_mock_data_ideaanalysis",
       "confidence_score": 1.0
     },
     {
@@ -4418,17 +4158,6 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/mock-data.ts",
-      "source_location": "L86",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "src_lib_mock_data",
-      "target": "src_lib_mock_data_generatemockanalysis",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/mock-data.ts",
       "source_location": "L18",
       "weight": 1.0,
       "_origin": "ast",
@@ -4445,17 +4174,6 @@
       "_origin": "ast",
       "source": "src_lib_mock_data",
       "target": "src_lib_mock_data_growthmetrics",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/mock-data.ts",
-      "source_location": "L78",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "src_lib_mock_data",
-      "target": "src_lib_mock_data_ideaanalysis",
       "confidence_score": 1.0
     },
     {

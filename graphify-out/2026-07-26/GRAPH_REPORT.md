@@ -1,11 +1,11 @@
 # Graph Report - nucleus-2.0  (2026-07-26)
 
 ## Corpus Check
-- 40 files · ~17,943 words
+- 38 files · ~17,353 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 294 nodes · 294 edges · 33 communities (21 shown, 12 thin omitted)
+- 284 nodes · 279 edges · 32 communities (20 shown, 12 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
 - Token cost: 0 input · 0 output
 
@@ -46,7 +46,6 @@
 - .claude/CLAUDE.md
 - extraction-spec.md
 - css.d.ts
-- include
 
 ## God Nodes (most connected - your core abstractions)
 1. `compilerOptions` - 15 edges
@@ -66,15 +65,15 @@
 ## Import Cycles
 - None detected.
 
-## Communities (33 total, 12 thin omitted)
+## Communities (32 total, 12 thin omitted)
 
 ### Community 0 - "ABSOLUTE RULES"
 Cohesion: 0.11
 Nodes (18): 1. What did we accomplish?, 2. What did we learn?, 3. What is the next step?, 4. Quality Score, 5-5-10-5-5 ITERATION RULE, ABSOLUTE RULES, Claude Collaboration Protocol, CORE WORKING PRINCIPLE (+10 more)
 
 ### Community 1 - "compilerOptions"
-Cohesion: 0.11
-Nodes (18): dom, dom.iterable, esnext, compilerOptions, allowJs, esModuleInterop, incremental, isolatedModules (+10 more)
+Cohesion: 0.07
+Nodes (26): dom, dom.iterable, esnext, next-env.d.ts, .next/types/**/*.ts, node_modules, src/types/**/*.d.ts, **/*.ts (+18 more)
 
 ### Community 2 - "vision-check.md"
 Cohesion: 0.12
@@ -117,8 +116,8 @@ Cohesion: 0.50
 Nodes (3): Deploy on Vercel, Getting Started, Learn More
 
 ### Community 16 - "page.tsx"
-Cohesion: 0.09
-Nodes (26): ActiveProjectsCard(), GrowthCard(), QuickActionsCard(), RecentActivityCard(), trendIcon, DashboardHeader(), Modal(), NewIdeaCard() (+18 more)
+Cohesion: 0.13
+Nodes (21): ActiveProjectsCard(), GrowthCard(), QuickActionsCard(), RecentActivityCard(), trendIcon, DashboardHeader(), NewIdeaCard(), Badge() (+13 more)
 
 ### Community 18 - "feature.md"
 Cohesion: 0.09
@@ -144,12 +143,8 @@ Nodes (3): For git commit hook, For native CLAUDE.md integration, graphify refer
 Cohesion: 0.50
 Nodes (3): For --cluster-only, For --update (incremental re-extraction), graphify reference: incremental update and cluster-only
 
-### Community 32 - "include"
-Cohesion: 0.22
-Nodes (8): next-env.d.ts, .next/types/**/*.ts, node_modules, src/types/**/*.d.ts, **/*.ts, **/*.tsx, exclude, include
-
 ## Knowledge Gaps
-- **178 isolated node(s):** `next/core-web-vitals`, `next/typescript`, `nextConfig`, `name`, `version` (+173 more)
+- **177 isolated node(s):** `next/core-web-vitals`, `next/typescript`, `nextConfig`, `name`, `version` (+172 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **12 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
@@ -157,16 +152,16 @@ Nodes (8): next-env.d.ts, .next/types/**/*.ts, node_modules, src/types/**/*.d.ts
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `devDependencies` connect `devDependencies` to `package.json`?**
-  _High betweenness centrality (0.009) - this node is a cross-community bridge._
-- **Why does `compilerOptions` connect `compilerOptions` to `include`?**
-  _High betweenness centrality (0.007) - this node is a cross-community bridge._
+  _High betweenness centrality (0.010) - this node is a cross-community bridge._
 - **What connects `next/core-web-vitals`, `next/typescript`, `nextConfig` to the rest of the system?**
-  _178 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _177 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `ABSOLUTE RULES` be split into smaller, more focused modules?**
   _Cohesion score 0.10526315789473684 - nodes in this community are weakly interconnected._
 - **Should `compilerOptions` be split into smaller, more focused modules?**
-  _Cohesion score 0.1111111111111111 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.07407407407407407 - nodes in this community are weakly interconnected._
 - **Should `vision-check.md` be split into smaller, more focused modules?**
   _Cohesion score 0.11764705882352941 - nodes in this community are weakly interconnected._
 - **Should `devDependencies` be split into smaller, more focused modules?**
   _Cohesion score 0.11764705882352941 - nodes in this community are weakly interconnected._
+- **Should `package.json` be split into smaller, more focused modules?**
+  _Cohesion score 0.1111111111111111 - nodes in this community are weakly interconnected._
