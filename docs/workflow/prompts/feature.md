@@ -1,4 +1,3 @@
-```markdown id="k2m8qd"
 # FEATURE DEVELOPMENT PROMPT TEMPLATE
 ## Nucleus 2.0 — Standard Template for New Feature Implementation
 
