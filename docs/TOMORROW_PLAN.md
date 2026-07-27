@@ -64,13 +64,28 @@ they should see a clean, modern dashboard similar to this:
 
 
 
-## TOMORROW (2026-07-27) — Phase 1, Day 2 Goals
+## TOMORROW (2026-07-27) — Phase 1, Day 2 Goals ✅ (completed)
 
-1. Make the "Continue" button functional → transition to the project creation flow (stub)
-2. Make the "Save" button functional → save ideas (mock storage)
-3. Add a "Saved Ideas" section to the dashboard
-4. Publish a "Day 1" post on Peerlist (with 2 screenshots)
-5. Start budget tracking — monitor OpenRouter usage
+1. ✅ Make the "Continue" button functional → transition to the project creation flow (stub)
+2. ✅ Make the "Save" button functional → save ideas (mock storage)
+3. ✅ Add a "Saved Ideas" section to the dashboard
+4. 🟡 Publish a "Day 1" post on Peerlist (with 2 screenshots) — drafts generated, not yet posted
+5. ⬜ Start budget tracking — monitor OpenRouter usage — deferred to Day 3
 
-Target quality score: > 85
+Quality score achieved: 92/100
+
+---
+
+## NEXT (2026-07-28) — Phase 1, Day 3
+
+### Goal
+- Budget tracking: monitor OpenRouter usage against the $50/month, $10/day, $30/week limits from CONTEXT.md.
+- Warning system: surface a visible alert in the dashboard header/budget widget when the daily limit is approached or exceeded.
+
+### Success Criteria
+- Dashboard budget indicator reflects mock/real spend against daily and monthly caps.
+- A clear warning state (not just a number) appears when the daily $10 limit is close or exceeded.
+
+### Risk
+- No real OpenRouter integration exists yet (Week 2 per MASTER_PLAN.md) — Day 3 is still UI/mock only, same constraints as Day 1-2 (no backend, no API calls).
 ```

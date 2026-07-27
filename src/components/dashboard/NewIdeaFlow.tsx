@@ -6,7 +6,13 @@ import { generateMockAnalysis, type IdeaAnalysis } from "@/lib/mock-data";
 
 type Step = "closed" | "input" | "analyzing" | "result";
 
-export function NewIdeaFlow() {
+export function NewIdeaFlow({
+  onSaveIdea,
+  onContinue,
+}: {
+  onSaveIdea?: (idea: string, analysis: IdeaAnalysis) => void;
+  onContinue?: () => void;
+}) {
   const [step, setStep] = useState<Step>("closed");
   const [idea, setIdea] = useState("");
   const [analysis, setAnalysis] = useState<IdeaAnalysis | null>(null);
@@ -23,6 +29,16 @@ export function NewIdeaFlow() {
       setAnalysis(generateMockAnalysis(idea));
       setStep("result");
     }, 900);
+  }
+
+  function handleSave() {
+    if (analysis) onSaveIdea?.(idea, analysis);
+    reset();
+  }
+
+  function handleContinue() {
+    onContinue?.();
+    reset();
   }
 
   return (
@@ -42,8 +58,8 @@ export function NewIdeaFlow() {
           {step === "result" && analysis && (
             <AnalysisResultStep
               analysis={analysis}
-              onContinue={reset}
-              onSave={reset}
+              onContinue={handleContinue}
+              onSave={handleSave}
             />
           )}
         </Modal>
