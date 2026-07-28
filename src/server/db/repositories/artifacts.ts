@@ -14,6 +14,11 @@ export async function listByVenture(ventureId: string, opts?: RepoOpts): Promise
     .sort((a, b) => b.createdAt.localeCompare(a.createdAt));
 }
 
+export async function listAll(opts?: RepoOpts): Promise<Artifact[]> {
+  const rows = await readCollection<Artifact>(COLLECTION, opts);
+  return [...rows].sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+}
+
 export async function create(
   input: Omit<Artifact, "id" | "createdAt">,
   opts?: RepoOpts

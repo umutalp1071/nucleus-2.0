@@ -6,7 +6,7 @@
 
 ## Current phase
 
-**PHASE 04 — Venture Workspace** — not started
+**PHASE 05 — Budget Console** — not started
 
 ---
 
@@ -18,7 +18,7 @@
 | 01 | Domain & Storage | ✅ done | (pending push) | ship, lesson |
 | 02 | AI Gateway | ✅ done | (pending push) | ship, lesson |
 | 03 | Real Validation | ✅ done | (pending push) | ship, lesson |
-| 04 | Venture Workspace | ⬜ | — | — |
+| 04 | Venture Workspace | ✅ done | (pending push) | ship, lesson |
 | 05 | Budget Console | ⬜ | — | — |
 | 06 | Planning Stage | ⬜ | — | — |
 | 07 | Build Stage | ⬜ | — | — |
@@ -78,6 +78,18 @@ been a boundary violation the moment the client-side result screen needed
 them — resolved by moving the zod schemas into src/lib/domain.ts (client-safe)
 and having the server tasks import back from there, before writing any UI
 code that would have needed a workaround.
+
+### Phase 04 — Venture Workspace
+Files: src/app/ventures/[id]/page.tsx, src/components/venture/*,
+src/components/dashboard/{VenturesCard,BottomRow,DashboardHeader,ThemeToggle,ui}.tsx,
+src/app/api/{budget,artifacts}/route.ts, src/lib/{format,stages}.ts,
+src/lib/idea-export.ts (rewritten against Venture), mock-data.ts (deleted),
+ActiveProjectsCard.tsx + SavedIdeasCard.tsx (deleted, replaced by
+VenturesCard.tsx).
+Risk: Badge was hard-coupled to mock-data.ts's ProjectStatus type, which
+would have blocked deleting that file entirely — generalized to a
+StageTone-based Badge before deleting mock-data.ts, not after, so the app was
+never in a broken intermediate state.
 
 ---
 

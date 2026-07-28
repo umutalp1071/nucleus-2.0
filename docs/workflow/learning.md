@@ -2,6 +2,73 @@
 
 ---
 
+## 2026-07-28 — Plan Phase 04: Venture Workspace
+
+**What we did:**
+Deleted `mock-data.ts` entirely and every component that depended on it
+(`ActiveProjectsCard`, `SavedIdeasCard`) -- the dashboard now renders only
+real data. Built the venture workspace (`/ventures/[id]`): stage timeline
+(with `killed`/`archived` as distinct muted terminal branches, not error
+states), artifact renderers dispatched by `kind` with a safe fallback for
+unknown shapes, Kill/Archive actions, and a real per-venture spend line
+(`aiCalls.sumByVenture`, a new repository function). Extracted the verdict
+and competitor rendering out of `NewIdeaFlow`'s modal into
+`src/components/venture/artifacts/` so the modal and the workspace page
+render identically instead of drifting. Added `/api/budget` and
+`/api/artifacts`. Rewired `idea-export.ts` against the real `Venture`/
+`Artifact` shape with a genuine artifacts array, not the empty placeholder
+Phase 01 had deferred. Added a dark mode toggle (`ThemeToggle`, a small
+dedicated client component so `DashboardHeader` itself stays a server
+component) and generalized `Badge` from a `ProjectStatus`-coupled component to
+a `StageTone`-based one so it survived the mock-data deletion.
+
+**Decisions:**
+- **Fixed the `Badge`/`ProjectStatus` coupling before deleting `mock-data.ts`,
+  not after.** Sequencing mattered here: generalizing `Badge` to accept a
+  `tone` prop (backed by a new `stageTone()` helper in `stages.ts`) first
+  meant the app was never in a broken intermediate state where mock-data.ts
+  was gone but something still imported `ProjectStatus` from it.
+- **"Save for later" now navigates to the real workspace page** instead of
+  just closing the modal -- the venture already exists and is already
+  validated by the time that button is clickable, so showing the user what
+  they just created is more honest than hiding it behind a toast.
+- **Quick Actions reduced from three decorative buttons to two wired ones.**
+  The original "New Idea" and "Check Growth" quick-action buttons had no
+  `onClick` at all -- they never did anything. Rather than carry that forward
+  into a real-data dashboard, replaced them with two actions that actually
+  work: a real export trigger and a scroll-anchor link to the budget card.
+- **Competitors render as a plain expanded block now, not a collapsible
+  `<details>`.** Lost a small interaction in exchange for the workspace page
+  and the modal sharing one component with zero drift. Worth revisiting if
+  the panel gets visually noisy later.
+
+**Mistake caught mid-session:** none in the shipped code, but one wasted
+detour -- inspecting a full-page screenshot of the result modal early in this
+phase's UI work, the action buttons appeared visually clipped at the bottom
+edge. Before treating it as a layout bug, checked the actual computed
+`getBoundingClientRect()` values, which showed the buttons fully inside the
+viewport with room to spare. It was a `fullPage: true` Playwright screenshot
+capture quirk, not a real defect -- caught before spending time "fixing" a
+working layout.
+
+**Next step:** Phase 05 — Budget Console. BYOK settings page, editable caps,
+spend breakdown, and the three degradation UX states (approaching/downgraded/
+blocked) with real designs instead of the current bare failure screen.
+
+**Quality Score: 93/100**
+- All acceptance criteria met: the grep-for-fake-data check returns nothing,
+  every screen browser-verified in both themes at both 1280px and 375px, the
+  full loop (empty state -> create -> validate -> workspace -> kill ->
+  dashboard reflects it) verified in one continuous real-browser session with
+  zero console errors, export verified to actually contain artifact content
+  by reading the downloaded file back, not just checking that a download fired.
+- Docked slightly for the Quick Actions rework and the competitors-collapse
+  regression -- both reasonable calls, but both went a little beyond the
+  phase file's literal step list into adjacent honesty-driven cleanup. Worth
+  naming rather than quietly absorbing into "Phase 04 as planned."
+
+---
+
 ## 2026-07-28 — Plan Phase 03: Real Validation
 
 **What we did:**

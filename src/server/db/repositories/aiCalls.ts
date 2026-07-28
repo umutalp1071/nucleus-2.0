@@ -31,3 +31,10 @@ export async function sumSince(date: Date, opts?: RepoOpts): Promise<number> {
     .filter((c) => new Date(c.createdAt).getTime() >= date.getTime())
     .reduce((sum, c) => sum + c.costUsd, 0);
 }
+
+// The first place a user sees the cost of a decision, attached to the
+// decision -- the venture workspace's "spend on this venture" line.
+export async function sumByVenture(ventureId: string, opts?: RepoOpts): Promise<number> {
+  const rows = await readCollection<AiCall>(COLLECTION, opts);
+  return rows.filter((c) => c.ventureId === ventureId).reduce((sum, c) => sum + c.costUsd, 0);
+}

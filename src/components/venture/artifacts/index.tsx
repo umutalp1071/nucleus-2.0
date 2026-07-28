@@ -1,0 +1,38 @@
+import type { Artifact, Verdict, Competitors } from "@/lib/domain";
+import { ValidationArtifact } from "./ValidationArtifact";
+import { CompetitorsArtifact } from "./CompetitorsArtifact";
+
+// Adding a new artifact kind means adding one file and one case here --
+// never editing the renderers that already exist.
+export function ArtifactRenderer({ artifact }: { artifact: Artifact }) {
+  switch (artifact.kind) {
+    case "validation":
+      return <ValidationArtifact verdict={artifact.content as Verdict} />;
+    case "competitors":
+      return <CompetitorsArtifact competitors={artifact.content as Competitors} />;
+    default:
+      return <UnknownArtifact artifact={artifact} />;
+  }
+}
+
+// Never throw on an unexpected shape -- a renderer crashing takes the whole
+// workspace page down with it. Fall back to a readable definition list.
+function UnknownArtifact({ artifact }: { artifact: Artifact }) {
+  const entries =
+    typeof artifact.content === "object" && artifact.content !== null
+      ? Object.entries(artifact.content as Record<string, unknown>)
+      : [];
+  return (
+    <div className="rounded-md border border-border p-3 text-sm">
+      <p className="font-medium capitalize">{artifact.kind.replace(/_/g, " ")}</p>
+      <dl className="mt-2 flex flex-col gap-1">
+        {entries.map(([key, value]) => (
+          <div key={key} className="flex justify-between gap-2">
+            <dt className="text-muted-foreground">{key}</dt>
+            <dd className="text-right">{typeof value === "string" ? value : JSON.stringify(value)}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+  );
+}

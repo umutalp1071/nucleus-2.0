@@ -133,6 +133,20 @@ describe("aiCalls repository", () => {
     const totalAfter = await aiCalls.sumSince(future, opts);
     expect(totalAfter).toBe(0);
   });
+
+  it("sumByVenture sums only calls attributed to that venture", async () => {
+    const venture = await ventures.create({ title: "Idea", description: "" }, opts);
+    await aiCalls.create(
+      { task: "validate-idea", model: "mock", promptTokens: 10, completionTokens: 10, costUsd: 0.05, cached: false, ventureId: venture.id },
+      opts
+    );
+    await aiCalls.create(
+      { task: "validate-idea", model: "mock", promptTokens: 10, completionTokens: 10, costUsd: 0.07, cached: false, ventureId: null },
+      opts
+    );
+    const total = await aiCalls.sumByVenture(venture.id, opts);
+    expect(total).toBeCloseTo(0.05, 5);
+  });
 });
 
 describe("settings repository", () => {

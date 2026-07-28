@@ -1,15 +1,18 @@
 import type { ReactNode } from "react";
-import type { ProjectStatus } from "@/lib/mock-data";
+import type { StageTone } from "@/lib/stages";
 
 export function Card({
   children,
   className = "",
+  id,
 }: {
   children: ReactNode;
   className?: string;
+  id?: string;
 }) {
   return (
     <div
+      id={id}
       className={`rounded-lg border border-border bg-card text-card-foreground p-5 ${className}`}
     >
       {children}
@@ -17,18 +20,17 @@ export function Card({
   );
 }
 
-const statusStyles: Record<ProjectStatus, string> = {
-  Live: "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400",
-  Building: "bg-amber-500/15 text-amber-600 dark:text-amber-400",
-  Paused: "bg-muted text-muted-foreground",
+const toneStyles: Record<StageTone, string> = {
+  positive: "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400",
+  warning: "bg-amber-500/15 text-amber-600 dark:text-amber-400",
+  danger: "bg-destructive/15 text-destructive",
+  neutral: "bg-muted text-muted-foreground",
 };
 
-export function Badge({ status }: { status: ProjectStatus }) {
+export function Badge({ tone, children }: { tone: StageTone; children: ReactNode }) {
   return (
-    <span
-      className={`rounded-full px-2 py-0.5 text-xs font-medium ${statusStyles[status]}`}
-    >
-      {status}
+    <span className={`rounded-full px-2 py-0.5 text-xs font-medium ${toneStyles[tone]}`}>
+      {children}
     </span>
   );
 }

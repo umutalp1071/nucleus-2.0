@@ -3,24 +3,18 @@
 import { useEffect, useState } from "react";
 import { DashboardHeader } from "@/components/dashboard/DashboardHeader";
 import { NewIdeaCard } from "@/components/dashboard/NewIdeaCard";
-import { ActiveProjectsCard } from "@/components/dashboard/ActiveProjectsCard";
-import { SavedIdeasCard } from "@/components/dashboard/SavedIdeasCard";
-import {
-  RecentActivityCard,
-  GrowthCard,
-  QuickActionsCard,
-} from "@/components/dashboard/BottomRow";
-import {
-  budget,
-  opportunitiesThisMonth,
-  projects,
-  recentActivity,
-  growthMetrics,
-  quickActions,
-} from "@/lib/mock-data";
-import type { Venture } from "@/lib/domain";
+import { VenturesCard } from "@/components/dashboard/VenturesCard";
+import { RecentActivityCard, BudgetCard, QuickActionsCard } from "@/components/dashboard/BottomRow";
+import { exportVenturesAsJSON } from "@/lib/idea-export";
+import type { Venture, NucleusEvent, Artifact } from "@/lib/domain";
 
 const LEGACY_STORAGE_KEY = "nucleus:saved-ideas";
+
+interface Spend {
+  daily: number;
+  weekly: number;
+  monthly: number;
+}
 
 function titleFromIdea(idea: string): string {
   const oneLine = idea.trim().split("\n")[0];
@@ -57,8 +51,14 @@ async function migrateLegacyIdeas(): Promise<number> {
   return legacy.length;
 }
 
+const ZERO_SPEND: Spend = { daily: 0, weekly: 0, monthly: 0 };
+const DEFAULT_CAPS: Spend = { daily: 10, weekly: 30, monthly: 50 };
+
 export default function Home() {
   const [ventures, setVentures] = useState<Venture[]>([]);
+  const [events, setEvents] = useState<NucleusEvent[]>([]);
+  const [spend, setSpend] = useState<Spend>(ZERO_SPEND);
+  const [caps, setCaps] = useState<Spend>(DEFAULT_CAPS);
   const [toast, setToast] = useState<string | null>(null);
 
   async function refreshVentures() {
@@ -66,14 +66,37 @@ export default function Home() {
     if (res.ok) setVentures(await res.json());
   }
 
+  async function refreshEvents() {
+    const res = await fetch("/api/events?limit=10");
+    if (res.ok) setEvents(await res.json());
+  }
+
+  async function refreshBudget() {
+    const res = await fetch("/api/budget");
+    if (res.ok) {
+      const body = await res.json();
+      setSpend(body.spend);
+      setCaps(body.caps);
+    }
+  }
+
+  function refreshAll() {
+    refreshVentures();
+    refreshEvents();
+    refreshBudget();
+  }
+
   useEffect(() => {
     (async () => {
       const migrated = await migrateLegacyIdeas();
-      await refreshVentures();
+      refreshAll();
       if (migrated > 0) {
         setToast(`Moved ${migrated} saved idea${migrated === 1 ? "" : "s"} into Nucleus.`);
       }
     })();
+    // Intentionally mount-only -- refreshAll's identity changes every render
+    // but this effect only ever needs to run once.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -88,32 +111,42 @@ export default function Home() {
 
   function handleKilled() {
     setToast("Killed -- saved time before writing a line of code.");
+    refreshAll();
   }
 
   function handleSaved() {
     setToast("Saved to your ventures.");
   }
 
+  async function handleExport() {
+    const [venturesRes, artifactsRes] = await Promise.all([
+      fetch("/api/ventures"),
+      fetch("/api/artifacts"),
+    ]);
+    const allVentures: Venture[] = venturesRes.ok ? await venturesRes.json() : [];
+    const allArtifacts: Artifact[] = artifactsRes.ok ? await artifactsRes.json() : [];
+    exportVenturesAsJSON(allVentures, allArtifacts);
+  }
+
   return (
     <div className="min-h-screen">
-      <DashboardHeader budgetSpent={budget.spent} budgetLimit={budget.limit} />
+      <DashboardHeader budgetSpent={spend.monthly} budgetLimit={caps.monthly} />
       <main className="flex flex-col gap-6 p-6 sm:p-10">
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-[280px_1fr]">
           <NewIdeaCard
-            opportunities={opportunitiesThisMonth}
-            onChanged={refreshVentures}
+            opportunities={ventures.filter((v) => v.stage !== "archived" && v.stage !== "killed").length}
+            onChanged={refreshAll}
             onContinue={handleContinue}
             onKilled={handleKilled}
             onSaved={handleSaved}
           />
-          <ActiveProjectsCard projects={projects} />
+          <VenturesCard ventures={ventures} />
         </div>
         <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-          <RecentActivityCard activity={recentActivity} />
-          <GrowthCard metrics={growthMetrics} />
-          <QuickActionsCard actions={quickActions} />
+          <RecentActivityCard events={events} />
+          <BudgetCard spend={spend} caps={caps} />
+          <QuickActionsCard onExport={handleExport} />
         </div>
-        <SavedIdeasCard ventures={ventures} />
       </main>
       {toast && (
         <div className="fixed bottom-6 left-1/2 -translate-x-1/2 rounded-md bg-foreground px-4 py-2 text-sm text-background shadow-lg">

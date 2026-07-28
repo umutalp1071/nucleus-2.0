@@ -1,3 +1,6 @@
+import { ThemeToggle } from "./ThemeToggle";
+import { formatUsd } from "@/lib/format";
+
 export function DashboardHeader({
   budgetSpent,
   budgetLimit,
@@ -12,9 +15,13 @@ export function DashboardHeader({
         <span>Nucleus OS v2.0</span>
       </div>
       <div className="flex items-center gap-4 sm:gap-6">
-        <span className="rounded-full bg-secondary px-3 py-1 text-sm font-medium text-secondary-foreground">
-          💰 ${budgetSpent}/${budgetLimit}
-        </span>
+        <a
+          href="#budget"
+          className="rounded-full bg-secondary px-3 py-1 text-sm font-medium text-secondary-foreground hover:opacity-80"
+        >
+          💰 {formatUsd(budgetSpent)}/${budgetLimit}
+        </a>
+        <ThemeToggle />
         <button
           aria-label="Notifications"
           className="text-lg leading-none hover:opacity-70"
