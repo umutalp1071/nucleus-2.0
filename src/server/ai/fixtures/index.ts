@@ -54,4 +54,48 @@ export const FIXTURES: Record<string, unknown> = {
     differentiationVerdict: "The wedge is thin -- most of the obvious angles are already taken by at least one player, and none of the gaps look large enough to build a durable business around without a genuinely new distribution channel.",
     crowdedness: "high",
   },
+
+  "plan-venture": {
+    positioning: {
+      oneLiner: "A focused alternative for the one segment incumbents ignore.",
+      category: "Niche productivity tooling",
+      wedge: "Serve the smallest, most underserved segment of the market first, not everyone at once.",
+    },
+    icp: {
+      who: "Early adopters already frustrated with the incumbent's complexity",
+      where: ["r/productivity", "the Indie Hackers forum", "a niche Discord for this exact workflow"],
+      currentSolution: "A spreadsheet, or an incumbent tool used for 10% of its features",
+      switchTrigger: "Hitting a specific, repeated friction point the incumbent has ignored for years",
+    },
+    differentiation: [
+      "Radically simpler onboarding than any incumbent",
+      "Priced for individuals, not teams",
+    ],
+    firstTenUsers: "Post the working demo directly in the two communities above and personally onboard the first 10 replies.",
+    successMetric: { metric: "Weekly active users", target: "25", by: "6 weeks after launch" },
+    killCriteria: "If fewer than 5 of the first 25 signups return in week 2, the retention hypothesis is wrong -- stop before building further.",
+  },
+
+  "scope-mvp": {
+    coreLoop: "User captures one item, sees it organized automatically, and comes back the next day to add another.",
+    mustHave: [
+      { feature: "Single capture flow", why: "The entire value proposition depends on this being frictionless" },
+      { feature: "Automatic organization", why: "The differentiator versus a plain spreadsheet" },
+    ],
+    explicitlyNot: [
+      "Team collaboration -- v1 is single-player only",
+      "Mobile app -- web-only until there's proof anyone wants this",
+      "Integrations with other tools -- adds surface area before the core loop is proven",
+    ],
+    milestones: [
+      { name: "Capture flow", outcome: "A user can add an item in under 10 seconds", estimateDays: 3 },
+      { name: "Auto-organization", outcome: "Captured items sort themselves with no manual tagging", estimateDays: 5 },
+      { name: "First 10 users onboarded", outcome: "10 real people using it daily, not just signed up", estimateDays: 7 },
+    ],
+    stack: {
+      recommendation: "Next.js + a hosted Postgres, deployed to Vercel",
+      reasoning: "Fastest path to a working product for one operator; matches Nucleus's own stack so there's nothing new to learn.",
+    },
+    riskiestAssumption: "That the organization step actually saves people time versus doing it manually -- unproven until real users try it.",
+  },
 };

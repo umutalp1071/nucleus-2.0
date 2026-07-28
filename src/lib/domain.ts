@@ -116,3 +116,47 @@ export const CompetitorsSchema = z.object({
   crowdedness: z.enum(["low", "medium", "high"]),
 });
 export type Competitors = z.infer<typeof CompetitorsSchema>;
+
+export const PlanSchema = z.object({
+  positioning: z.object({
+    oneLiner: z.string().max(140),
+    category: z.string(),
+    wedge: z.string(),
+  }),
+  icp: z.object({
+    who: z.string(),
+    // Concrete named channels ("r/languagelearning"), never "social media" --
+    // enforced in the prompt with a negative example, not just this schema.
+    where: z.array(z.string()).min(2).max(5),
+    currentSolution: z.string(),
+    switchTrigger: z.string(),
+  }),
+  differentiation: z.array(z.string()).min(2).max(4),
+  firstTenUsers: z.string(),
+  successMetric: z.object({ metric: z.string(), target: z.string(), by: z.string() }),
+  // Required, not optional -- same reasoning as Verdict.whyNot: a plan
+  // without a stopping condition is how people burn a year on nothing.
+  killCriteria: z.string(),
+});
+export type Plan = z.infer<typeof PlanSchema>;
+
+export const MvpScopeSchema = z.object({
+  coreLoop: z.string(),
+  mustHave: z.array(z.object({ feature: z.string(), why: z.string() })).min(1).max(5),
+  // At least 3 required -- the cuts are the scope. Capping mustHave alone
+  // isn't enough; without a floor here explicitlyNot silently stays empty.
+  explicitlyNot: z.array(z.string()).min(3),
+  milestones: z
+    .array(
+      z.object({
+        name: z.string(),
+        outcome: z.string(),
+        estimateDays: z.number().max(14),
+      })
+    )
+    .min(3)
+    .max(6),
+  stack: z.object({ recommendation: z.string(), reasoning: z.string() }),
+  riskiestAssumption: z.string(),
+});
+export type MvpScope = z.infer<typeof MvpScopeSchema>;

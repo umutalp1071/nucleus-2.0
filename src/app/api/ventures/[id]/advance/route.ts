@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import * as ventures from "@/server/db/repositories/ventures";
 import { validateAndAdvance } from "@/server/ventures/validateAndAdvance";
+import { planAndAdvance } from "@/server/ventures/planAndAdvance";
 import { StageSchema } from "@/lib/domain";
 
 export const runtime = "nodejs";
@@ -35,20 +36,32 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
     }
   }
 
-  if (venture.stage !== "captured") {
-    return NextResponse.json({ error: "This venture has no automatic next step." }, { status: 400 });
+  if (venture.stage === "captured") {
+    const result = await validateAndAdvance(venture);
+    if (!result.ok) {
+      return NextResponse.json({ error: result.message, reason: result.reason }, { status: statusFor(result.reason) });
+    }
+    return NextResponse.json({
+      venture: result.venture,
+      verdict: result.verdict,
+      competitors: result.competitors,
+      demo: result.demo,
+      downgraded: result.downgraded,
+    });
   }
 
-  const result = await validateAndAdvance(venture);
-  if (!result.ok) {
-    return NextResponse.json({ error: result.message, reason: result.reason }, { status: statusFor(result.reason) });
+  if (venture.stage === "validated") {
+    const result = await planAndAdvance(venture);
+    if (!result.ok) {
+      return NextResponse.json({ error: result.message, reason: result.reason }, { status: statusFor(result.reason) });
+    }
+    return NextResponse.json({
+      venture: result.venture,
+      plan: result.plan,
+      mvpScope: result.mvpScope,
+      demo: result.demo,
+    });
   }
 
-  return NextResponse.json({
-    venture: result.venture,
-    verdict: result.verdict,
-    competitors: result.competitors,
-    demo: result.demo,
-    downgraded: result.downgraded,
-  });
+  return NextResponse.json({ error: "This venture has no automatic next step." }, { status: 400 });
 }

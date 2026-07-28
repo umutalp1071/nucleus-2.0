@@ -1,6 +1,11 @@
-import type { Artifact, Verdict, Competitors } from "@/lib/domain";
+import type { Artifact, Verdict, Competitors, Plan, MvpScope } from "@/lib/domain";
 import { ValidationArtifact } from "./ValidationArtifact";
 import { CompetitorsArtifact } from "./CompetitorsArtifact";
+import { PlanArtifact } from "./PlanArtifact";
+import { MvpScopeArtifact } from "./MvpScopeArtifact";
+import { RegenerateControl } from "./RegenerateControl";
+
+const REGENERATABLE = new Set<Artifact["kind"]>(["plan", "mvp_scope"]);
 
 // Adding a new artifact kind means adding one file and one case here --
 // never editing the renderers that already exist.
@@ -9,6 +14,9 @@ export function ArtifactRenderer({ artifact }: { artifact: Artifact }) {
     <div className="flex flex-col gap-2">
       {artifact.demo && <DemoMarker />}
       <ArtifactBody artifact={artifact} />
+      {REGENERATABLE.has(artifact.kind) && (
+        <RegenerateControl ventureId={artifact.ventureId} kind={artifact.kind as "plan" | "mvp_scope"} />
+      )}
     </div>
   );
 }
@@ -30,6 +38,10 @@ function ArtifactBody({ artifact }: { artifact: Artifact }) {
       return <ValidationArtifact verdict={artifact.content as Verdict} />;
     case "competitors":
       return <CompetitorsArtifact competitors={artifact.content as Competitors} />;
+    case "plan":
+      return <PlanArtifact plan={artifact.content as Plan} />;
+    case "mvp_scope":
+      return <MvpScopeArtifact scope={artifact.content as MvpScope} />;
     default:
       return <UnknownArtifact artifact={artifact} />;
   }

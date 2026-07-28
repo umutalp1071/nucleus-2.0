@@ -2,6 +2,77 @@
 
 ---
 
+## 2026-07-28 — Plan Phase 06: Planning Stage
+
+**What we did:**
+Added the second stage of real AI work: `plan-venture` (positioning, ICP with
+concrete named channels, differentiation, first-10-users plan, success
+metric, and a required `killCriteria`) and `scope-mvp` (core loop, must-have
+features capped at 5, `explicitlyNot` cuts floored at 3, 3-6 milestones each
+capped at 14 days, stack recommendation, riskiest assumption). Both chained
+in `planAndAdvance()`, advancing `validated -> planned` only after both
+succeed -- if the second call fails, the first artifact (the plan) stays
+saved and the venture stays at `validated`, so partial progress is never
+discarded. Added `regenerateArtifact()` and a "Not quite -- tell Nucleus why"
+UI control that re-runs a task with the founder's feedback appended to the
+prompt, versioning artifacts by `createdAt` rather than overwriting. The
+workspace page now groups artifacts by kind in a fixed display order
+(preventing a just-regenerated `mvp_scope` from jumping above its own
+prerequisite `validation`), showing the latest of each kind with older
+versions collapsed.
+
+**Decisions:**
+- **`explicitlyNot` given a `.min(3)` floor, not just documented as a
+  requirement.** A cap alone (`mustHave.max(5)`) forces triage; a floor on a
+  different field forces the model to actually produce cuts instead of
+  leaving the array empty or writing one throwaway line. Both directions of
+  the same lesson: a schema constraint is a stopping condition prose can't
+  give you.
+- **Artifacts render in a fixed `KIND_ORDER`, not recency order.** The
+  natural approach (sort all artifacts by `createdAt` and render) would put a
+  freshly-regenerated `mvp_scope` above the `validation` artifact it depends
+  on, which reads as backwards. Grouped by kind, ordered by the domain's own
+  logical sequence instead.
+- **`VentureActions`'s "Advance to Planning" needed a genuinely different
+  request shape than "Kill"/"Archive".** Those send `{ to: "killed" }` (a
+  plain transition, no AI task). Sending `{ to: "planned" }` the same way
+  would have skipped generating the plan entirely -- planning requires the
+  AI-driven path (empty body, server infers the task from current stage).
+  Two distinct functions in the component, not one generalized one, because
+  they're not actually the same operation.
+
+**Mistake caught mid-session:** browser-verifying dark mode on the venture
+workspace page (not just the dashboard, where it had been checked back in
+Phase 04) surfaced a real bug -- the "dark" class on `<html>` was only ever
+applied by `ThemeToggle`'s own mount effect, and neither the workspace page
+nor the settings page render `DashboardHeader` (where `ThemeToggle` lives).
+Dark mode silently reset to light on every page except the dashboard. Fixed
+by moving theme application into a blocking inline script in the root
+layout's `<head>`, which also incidentally closes the flash-of-wrong-theme
+gap noted as a known limitation back in Phase 04. Verified with a genuinely
+fresh hard navigation (`page.goto`, not `page.goBack()`) so client-side
+routing couldn't mask the bug the way it apparently did during the first,
+misleading test run.
+
+**Next step:** Phase 07 — Build Stage. Milestones become checkable tasks
+(zero AI calls -- the plan already has the content), and a
+`generate-build-spec` task produces a handoff document formatted for a
+coding agent.
+
+**Quality Score: 92/100**
+- All acceptance criteria met: both fixtures validate, the 7-mustHave-entries
+  rejection is directly tested, the blocked-second-call partial-progress case
+  is tested and browser-adjacent verified, regenerate-with-feedback confirmed
+  to retain both versions and to actually pass the feedback text into the
+  prompt (not just assumed from the code).
+- Docked for the dark-mode bug existing in the first place -- it was a gap
+  from Phase 04's incomplete verification (dashboard-only), not something
+  introduced this phase, but it shipped for two phases before this session's
+  more thorough check caught it. Worth verifying every page a feature claims
+  to affect, not just the one it was built on.
+
+---
+
 ## 2026-07-28 — Plan Phase 05: Budget Console
 
 **What we did:**

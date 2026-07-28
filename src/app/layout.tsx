@@ -16,6 +16,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        {/* Blocking, not an effect -- runs before paint so every page (not
+            just the dashboard, where the toggle lives) respects the stored
+            theme with no flash and no dependency on ThemeToggle being mounted. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "try{if(localStorage.getItem('nucleus:theme')==='dark')document.documentElement.classList.add('dark')}catch(e){}",
+          }}
+        />
+      </head>
       <body className={inter.className}>{children}</body>
     </html>
   );

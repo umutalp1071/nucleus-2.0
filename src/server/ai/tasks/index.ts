@@ -2,6 +2,8 @@ import { z } from "zod";
 import type { Tier } from "../models";
 import { validateIdea } from "./validate-idea";
 import { analyzeCompetitors } from "./analyze-competitors";
+import { planVenture } from "./plan-venture";
+import { scopeMvp } from "./scope-mvp";
 
 export interface TaskDef<I = unknown, O = unknown> {
   name: string;
@@ -33,6 +35,8 @@ export const TASKS = {
   "echo-check": echoCheck,
   "validate-idea": validateIdea,
   "analyze-competitors": analyzeCompetitors,
+  "plan-venture": planVenture,
+  "scope-mvp": scopeMvp,
 } as const satisfies Record<string, TaskDef>;
 
 export type TaskName = keyof typeof TASKS;

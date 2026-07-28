@@ -6,7 +6,7 @@
 
 ## Current phase
 
-**PHASE 06 — Planning Stage** — not started
+**PHASE 07 — Build Stage** — not started
 
 ---
 
@@ -20,7 +20,7 @@
 | 03 | Real Validation | ✅ done | (pending push) | ship, lesson |
 | 04 | Venture Workspace | ✅ done | (pending push) | ship, lesson |
 | 05 | Budget Console | ✅ done | (pending push) | ship, lesson |
-| 06 | Planning Stage | ⬜ | — | — |
+| 06 | Planning Stage | ✅ done | (pending push) | ship, lesson |
 | 07 | Build Stage | ⬜ | — | — |
 | 08 | Launch Stage | ⬜ | — | — |
 | 09 | Growth Stage | ⬜ | — | — |
@@ -103,6 +103,23 @@ a restart — a real architectural change, not just additive UI. Verified with
 curl end-to-end (set a fake key, confirm aiMode flips; set a near-zero cap,
 confirm block; raise it, confirm the very next request succeeds) rather than
 trusting the code reading correctly.
+
+### Phase 06 — Planning Stage
+Files: src/lib/domain.ts (Plan/MvpScope schemas), src/server/ai/tasks/
+{plan-venture,scope-mvp}.ts, src/server/ventures/{planAndAdvance,
+regenerateArtifact}.ts, src/app/api/ventures/[id]/{advance,regenerate}/route.ts,
+src/components/venture/artifacts/{PlanArtifact,MvpScopeArtifact,
+RegenerateControl}.tsx, src/app/ventures/[id]/page.tsx (kind-grouped display,
+older versions collapsed), VentureActions.tsx (Advance to Planning enabled).
+Risk/catch: browser verification of dark mode on the venture workspace page
+surfaced a real cross-page bug — the theme class was only ever applied by
+ThemeToggle's own mount effect, and the workspace/settings pages don't render
+DashboardHeader at all, so dark mode silently reset to light off the
+dashboard. Fixed by moving theme application into a blocking inline script in
+the root layout's <head> (also incidentally fixes the flash-of-wrong-theme
+noted as a known gap back in Phase 04) — verified with a genuinely fresh hard
+navigation to /settings, not a client-side back-navigation that could have
+masked the bug.
 
 ---
 
