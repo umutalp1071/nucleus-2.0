@@ -1,31 +1,62 @@
-First, read the following files in order:
+# START HERE
 
-1. `docs/CONTEXT.md`  
-   (Project vision, architecture, principles, and key decisions)
+## For Claude — every session
 
-2. `docs/mistakes/nucleus-1.0-lessons.md`  
-   (Past mistakes that must not be repeated)
+Read these three, in order, then work:
 
-3. `docs/workflow/PROTOCOL.md`  
-   (Working rules, execution principles, and collaboration protocol)
+1. `docs/plan/PROGRESS.md` — which phase is current, what's blocked, what was decided
+2. `docs/plan/PHASE-NN-*.md` — the current phase, including its "Out of scope" list
+3. `docs/plan/CONVENTIONS.md` — the Definition of Done
 
-4. `docs/workflow/prompts/feature.md`  
-   (Template and structure for today's implementation task)
+Then run `/nucleus-phase`.
 
-5. `docs/TOMORROW_PLAN.md`  
-   (Today's objective, priorities, and execution steps)
+**First session only**, also read `docs/plan/00-ANSWER.md` (why the system is
+shaped this way) and `docs/plan/ARCHITECTURE.md` (the target system).
 
-After reading all files, respond only with:
+Do not use `docs/CONTEXT.md`, `docs/MASTER_PLAN.md`, or `docs/TOMORROW_PLAN.md`
+for scope. They are historical record. `docs/plan/` supersedes them.
+`docs/mistakes/nucleus-1.0-lessons.md` is still worth reading once — the whole
+plan is shaped around avoiding those sixteen failures.
 
-"Ready, let's begin."
+---
 
+## For the founder
 
-# 5–5–10–5–5 EXECUTION FRAMEWORK
+**What you own:** direction, and the approve/reject button on the Peerlist
+drafts in `docs/content/drafts/`.
 
-| Phase | Time | Objective |
-|--------|------|-----------|
-| **Plan** | 5 min | Review the dashboard structure and agree on the component hierarchy. |
-| **Decide** | 5 min | Evaluate implementation choices (custom components vs. libraries) and make architectural decisions before writing code. |
-| **Build** | 10 min | Implement the dashboard layout: header, sidebar, content area, cards, and responsive structure. |
-| **Review** | 5 min | Verify that everything renders correctly, matches the intended design, and contains no errors. |
-| **Refine** | 5 min | Polish spacing, typography, responsiveness, and identify the next milestone. |
+**What you don't have to do:** decide implementation details, create accounts,
+or supply credentials. The plan runs without any of that — Nucleus works in
+demo mode with zero configuration and switches to live AI the moment an
+OpenRouter key is added in Settings.
+
+**Where things stand:** `docs/plan/PROGRESS.md`.
+
+**What's being built:** a single-operator, self-hosted venture copilot. It
+validates ideas (and will tell you to kill them), plans them, scopes the MVP,
+generates and deploys a landing page, and writes the growth content — under a
+$50/month AI budget the system cannot structurally exceed.
+
+It does not write your app's source code. That was a deliberate call; the
+reasoning is in `docs/plan/00-ANSWER.md` §2.
+
+---
+
+## Running it
+
+```bash
+npm install
+npm run dev      # http://localhost:3000
+npm run verify   # tsc + lint + tests — run before every commit
+```
+
+Your data lives in `.nucleus/` as plain JSON. It's yours, it's gitignored, and
+you can read it, back it up, or delete it.
+
+---
+
+## The 5–5–10–5–5 rhythm
+
+Still the working cadence within a phase: Plan 5 · Decide 5 · Build 10 ·
+Review 5 · Refine 5. The phase files replace the per-day objective that used
+to live here.

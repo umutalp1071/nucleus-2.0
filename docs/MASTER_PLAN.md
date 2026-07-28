@@ -1,3 +1,19 @@
+> ## ⚠️ SUPERSEDED FOR SCOPE — 2026-07-28
+>
+> **`docs/plan/` is now the authoritative implementation plan.** Read
+> `docs/plan/PROGRESS.md` to find the current phase.
+>
+> This file is kept as historical record and for its rituals (daily / weekly /
+> monthly cadence, checkpoints, risk table), which still apply. Its **feature
+> timeline does not** — "Week 3: Idea → Code → MVP generation" and "Week 4:
+> Deploy + Growth" were not achievable and their scope has been deliberately
+> corrected. See `docs/plan/00-ANSWER.md` §2 for the reasoning, and
+> `docs/plan/BACKLOG.md` for where Phases 2–4 of this document went.
+>
+> The ambition here was right. The timeline was fiction.
+
+---
+
 # NUCLEUS 2.0 — MASTER PLAN
 ## Daily / Weekly / Monthly Roadmap
 
