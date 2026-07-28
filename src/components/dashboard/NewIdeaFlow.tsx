@@ -36,6 +36,8 @@ export function NewIdeaFlow({
   const [ventureId, setVentureId] = useState<string | null>(null);
   const [verdict, setVerdict] = useState<Verdict | null>(null);
   const [competitors, setCompetitors] = useState<Competitors | null>(null);
+  const [demo, setDemo] = useState(false);
+  const [downgraded, setDowngraded] = useState(false);
   const [failure, setFailure] = useState<Failure | null>(null);
 
   function reset() {
@@ -44,6 +46,8 @@ export function NewIdeaFlow({
     setVentureId(null);
     setVerdict(null);
     setCompetitors(null);
+    setDemo(false);
+    setDowngraded(false);
     setFailure(null);
   }
 
@@ -66,6 +70,8 @@ export function NewIdeaFlow({
 
     setVerdict(body.verdict);
     setCompetitors(body.competitors ?? null);
+    setDemo(Boolean(body.demo));
+    setDowngraded(Boolean(body.downgraded));
     setStep("result");
     onChanged?.();
   }
@@ -150,6 +156,8 @@ export function NewIdeaFlow({
             <AnalysisResultStep
               verdict={verdict}
               competitors={competitors}
+              demo={demo}
+              downgraded={downgraded}
               onKill={handleKill}
               onSave={handleSave}
               onContinue={handleContinue}
@@ -207,20 +215,34 @@ function AnalyzingStep() {
 function AnalysisResultStep({
   verdict,
   competitors,
+  demo,
+  downgraded,
   onKill,
   onSave,
   onContinue,
 }: {
   verdict: Verdict;
   competitors: Competitors | null;
+  demo: boolean;
+  downgraded: boolean;
   onKill: () => void;
   onSave: () => void;
   onContinue: () => void;
 }) {
   return (
     <div className="flex max-h-[70vh] flex-col gap-4 overflow-y-auto">
+      {demo && (
+        <span className="self-start rounded-full bg-secondary px-2 py-0.5 text-xs font-medium text-secondary-foreground">
+          Demo result -- add an OpenRouter key in Settings for real analysis
+        </span>
+      )}
       <ValidationArtifact verdict={verdict} />
       {competitors && <CompetitorsArtifact competitors={competitors} />}
+      {downgraded && (
+        <p className="text-xs text-muted-foreground">
+          Used a faster, cheaper model to stay within budget.
+        </p>
+      )}
 
       <div className="flex gap-2">
         <button

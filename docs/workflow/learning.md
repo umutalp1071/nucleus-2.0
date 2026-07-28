@@ -2,6 +2,77 @@
 
 ---
 
+## 2026-07-28 — Plan Phase 05: Budget Console
+
+**What we did:**
+Built the real Settings page: BYOK OpenRouter key entry (tested via a real
+minimum-cost call through `runTask()` before saving, never as a special
+path), editable budget caps with `daily ≤ weekly ≤ monthly` validation, a
+spend breakdown (by task, by venture, a 30-day sparkline), a "Your data"
+panel printing the literal on-disk path, and a danger zone (clear cache;
+delete-all gated behind typing `DELETE`). Restructured `provider.ts` from a
+static module-load-time singleton (`hasAiKey() ? openrouter : mock`, decided
+once, env-only) into `resolveProvider()`, resolved fresh on every gateway
+call, checking Settings first and falling back to the env var -- the
+architectural change that makes "add a key, it works on the very next
+request, no restart" actually true. Added a `demo: boolean` flag threaded
+from the gateway through `validateAndAdvance` to stored artifacts and the
+New Idea modal, and a `downgraded: boolean` flag for the "used a cheaper
+model to stay in budget" inline note. Added the three degradation states:
+an amber "approaching 80%" header pill, a quiet downgraded note, and the
+existing budget-blocked failure screen (already correct from Phase 03).
+Central redaction (`redactKey`, `redactSecrets`) so a key can only ever leak
+from one place.
+
+**Decisions:**
+- **Cache-key correctness carried over from Phase 02 still holds**: since the
+  demo/downgraded flags are computed in the gateway from the *resolved* tier
+  and provider, not the task's preferred ones, there was no need to touch the
+  cache-key logic at all this phase -- it was already keyed correctly.
+- **`isApproaching()` extracted into `src/lib/budgetStatus.ts`**, not left
+  inline in `DashboardHeader.tsx`. Importing a `.tsx` file (even for one pure
+  function) into a plain `.test.ts` file broke Vitest, which has no JSX
+  transform configured -- the fix was the same pattern already used for
+  `stages.ts`/`format.ts`: pure logic lives in a plain module, components
+  import it, never the other way around for testability.
+- **The Test-key button goes through `runTask()` like every other call, not
+  a bypass.** It constructs a `Provider` for the *candidate* (unsaved) key via
+  `makeOpenRouterProvider()` and passes it as the gateway's provider
+  override -- reusing the exact extensibility point the tests already use,
+  rather than adding a second code path for "test mode."
+- **No key encryption at rest.** Considered and rejected: the decryption key
+  would live on the same disk as the ciphertext, which doesn't raise the bar
+  against the threat that matters (filesystem access) and would let
+  `encrypted: true` misrepresent the actual security boundary to anyone who
+  doesn't check. Plain storage, documented honestly in the UI, is the
+  trustworthy choice.
+
+**Verification note:** the redaction and live-cap-effect claims were verified
+with real commands, not just read from the code: `curl` to set a fake key and
+confirm `GET /api/settings` never echoes it back; `grep -ri "sk-or-"
+.nucleus/*.json` confirming the key exists in exactly one file and nowhere in
+the dev server log; setting a near-zero daily cap and confirming the very
+next `advance` call blocks, then raising the cap and confirming the very next
+call (same running server, no restart) succeeds.
+
+**Next step:** Phase 06 — Planning Stage. `plan-venture` and `scope-mvp`
+tasks, with `killCriteria` and `explicitlyNot` as required fields for the
+same reason `whyNot` was required in Phase 03.
+
+**Quality Score: 94/100**
+- Every acceptance criterion in the phase file verified directly against
+  running output, not inferred: the redaction grep, the block-then-immediate-
+  recovery cap test, the demo flag confirmed present on the actual artifact
+  written to disk, the typed-DELETE gate confirmed both to block on the wrong
+  input and unlock on the exact one.
+- Docked slightly for the sparkline being a genuinely minimal implementation
+  (single SVG path, native `<title>` tooltips, no crosshair) -- an honest
+  scope call given this is an internal ops widget, not a marketing chart, but
+  flagged with a `ponytail:` comment naming the upgrade path rather than
+  silently under-building.
+
+---
+
 ## 2026-07-28 — Plan Phase 04: Venture Workspace
 
 **What we did:**

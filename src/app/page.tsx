@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { DashboardHeader } from "@/components/dashboard/DashboardHeader";
 import { NewIdeaCard } from "@/components/dashboard/NewIdeaCard";
 import { VenturesCard } from "@/components/dashboard/VenturesCard";
@@ -59,6 +60,8 @@ export default function Home() {
   const [events, setEvents] = useState<NucleusEvent[]>([]);
   const [spend, setSpend] = useState<Spend>(ZERO_SPEND);
   const [caps, setCaps] = useState<Spend>(DEFAULT_CAPS);
+  const [aiMode, setAiMode] = useState<"live" | "mock" | null>(null);
+  const [bannerDismissed, setBannerDismissed] = useState(false);
   const [toast, setToast] = useState<string | null>(null);
 
   async function refreshVentures() {
@@ -80,13 +83,20 @@ export default function Home() {
     }
   }
 
+  async function refreshAiMode() {
+    const res = await fetch("/api/health");
+    if (res.ok) setAiMode((await res.json()).aiMode);
+  }
+
   function refreshAll() {
     refreshVentures();
     refreshEvents();
     refreshBudget();
+    refreshAiMode();
   }
 
   useEffect(() => {
+    setBannerDismissed(localStorage.getItem("nucleus:demo-banner-dismissed") === "1");
     (async () => {
       const migrated = await migrateLegacyIdeas();
       refreshAll();
@@ -118,6 +128,11 @@ export default function Home() {
     setToast("Saved to your ventures.");
   }
 
+  function dismissBanner() {
+    setBannerDismissed(true);
+    localStorage.setItem("nucleus:demo-banner-dismissed", "1");
+  }
+
   async function handleExport() {
     const [venturesRes, artifactsRes] = await Promise.all([
       fetch("/api/ventures"),
@@ -130,8 +145,26 @@ export default function Home() {
 
   return (
     <div className="min-h-screen">
-      <DashboardHeader budgetSpent={spend.monthly} budgetLimit={caps.monthly} />
+      <DashboardHeader spend={spend} caps={caps} />
       <main className="flex flex-col gap-6 p-6 sm:p-10">
+        {aiMode === "mock" && !bannerDismissed && (
+          <div className="flex items-center justify-between gap-3 rounded-md border border-border bg-secondary/40 px-4 py-2 text-sm">
+            <span>
+              Demo mode: showing example AI results.{" "}
+              <Link href="/settings" className="font-medium underline">
+                Add your OpenRouter key
+              </Link>{" "}
+              to analyze real ideas.
+            </span>
+            <button
+              onClick={dismissBanner}
+              aria-label="Dismiss"
+              className="shrink-0 text-muted-foreground hover:text-foreground"
+            >
+              &times;
+            </button>
+          </div>
+        )}
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-[280px_1fr]">
           <NewIdeaCard
             opportunities={ventures.filter((v) => v.stage !== "archived" && v.stage !== "killed").length}

@@ -12,7 +12,14 @@ import type { Venture } from "@/lib/domain";
 const COMPETITOR_ANALYSIS_MIN_SCORE = 40;
 
 export type ValidateAndAdvanceResult =
-  | { ok: true; venture: Venture; verdict: Verdict; competitors: Competitors | null }
+  | {
+      ok: true;
+      venture: Venture;
+      verdict: Verdict;
+      competitors: Competitors | null;
+      demo: boolean;
+      downgraded: boolean;
+    }
   | { ok: false; reason: "budget_exceeded" | "invalid_output" | "provider_error"; message: string };
 
 interface Opts {
@@ -42,6 +49,7 @@ export async function validateAndAdvance(venture: Venture, opts?: Opts): Promise
       content: verdict,
       model: "validate-idea",
       costUsd: verdictResult.costUsd,
+      demo: verdictResult.demo,
     },
     { baseDir: opts?.baseDir }
   );
@@ -68,6 +76,7 @@ export async function validateAndAdvance(venture: Venture, opts?: Opts): Promise
           content: competitors,
           model: "analyze-competitors",
           costUsd: competitorsResult.costUsd,
+          demo: competitorsResult.demo,
         },
         { baseDir: opts?.baseDir }
       );
@@ -79,5 +88,12 @@ export async function validateAndAdvance(venture: Venture, opts?: Opts): Promise
   await ventures.update(venture.id, { verdictScore: verdict.score }, { baseDir: opts?.baseDir });
   const updated = await ventures.advance(venture.id, "validated", { baseDir: opts?.baseDir });
 
-  return { ok: true, venture: updated, verdict, competitors };
+  return {
+    ok: true,
+    venture: updated,
+    verdict,
+    competitors,
+    demo: verdictResult.demo,
+    downgraded: verdictResult.downgraded,
+  };
 }

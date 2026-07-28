@@ -4,11 +4,11 @@ import { MODELS, TIER_ORDER, estimateCost, actualCost, type Tier } from "./model
 import * as budget from "./budget";
 import type { Caps } from "./budget";
 import { cacheKey, getCached, putCached } from "./cache";
-import { provider as defaultProvider, type Provider } from "./provider";
+import { resolveProvider, type Provider } from "./provider";
 import { recordEvent } from "../events";
 
 export type GatewayResult<T> =
-  | { ok: true; data: T; costUsd: number; cached: boolean }
+  | { ok: true; data: T; costUsd: number; cached: boolean; demo: boolean; downgraded: boolean }
   | {
       ok: false;
       reason: "budget_exceeded" | "invalid_output" | "provider_error";
@@ -66,9 +66,16 @@ export async function runTask<T>(
   opts?: RunTaskOpts
 ): Promise<GatewayResult<T>> {
   const task = TASKS[taskName];
-  const activeProvider = opts?.provider ?? defaultProvider;
   const budgetOpts = { baseDir: opts?.baseDir, caps: opts?.caps };
   const eventOpts = { ventureId: opts?.ventureId, baseDir: opts?.baseDir };
+
+  // A caller-supplied provider (tests) is never treated as demo mode --
+  // "demo" specifically means "no real key configured, using Nucleus's own
+  // mock fixtures," resolved fresh so a key added in Settings takes effect
+  // on the very next call with no restart.
+  const { provider: activeProvider, isMock: isDemo } = opts?.provider
+    ? { provider: opts.provider, isMock: false }
+    : await resolveProvider({ baseDir: opts?.baseDir });
 
   const prompt = task.prompt(input as never);
 
@@ -108,6 +115,7 @@ export async function runTask<T>(
     };
   }
 
+  const downgraded = tier !== task.tier;
   const modelId = MODELS[tier].id;
 
   // Cache is keyed on the RESOLVED tier's model, not the task's preferred
@@ -116,7 +124,7 @@ export async function runTask<T>(
   const key = cacheKey(taskName, modelId, prompt);
   const hit = await getCached<T>(key, { baseDir: opts?.baseDir });
   if (hit !== null) {
-    return { ok: true, data: hit, costUsd: 0, cached: true };
+    return { ok: true, data: hit, costUsd: 0, cached: true, demo: isDemo, downgraded };
   }
 
   let completion;
@@ -170,7 +178,7 @@ export async function runTask<T>(
     await putCached(key, parsed.data, { baseDir: opts?.baseDir });
     const cost = actualCost(tier, completion.promptTokens, completion.completionTokens) +
       actualCost(tier, repair.promptTokens, repair.completionTokens);
-    return { ok: true, data: parsed.data, costUsd: cost, cached: false };
+    return { ok: true, data: parsed.data, costUsd: cost, cached: false, demo: isDemo, downgraded };
   }
 
   await putCached(key, parsed.data, { baseDir: opts?.baseDir });
@@ -179,5 +187,7 @@ export async function runTask<T>(
     data: parsed.data,
     costUsd: actualCost(tier, completion.promptTokens, completion.completionTokens),
     cached: false,
+    demo: isDemo,
+    downgraded,
   };
 }

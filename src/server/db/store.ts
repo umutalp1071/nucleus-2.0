@@ -64,6 +64,16 @@ export async function writeCollection<T>(name: string, rows: T[], opts?: StoreOp
   fs.renameSync(tmp, file);
 }
 
+// For the Settings "Your data" panel -- printing the on-disk path and backup
+// count is the most concrete possible expression of "under your own control."
+export async function dataDirInfo(opts?: StoreOpts): Promise<{ dir: string; backupCount: number }> {
+  const dir = resolveDir(opts);
+  const dir_ = backupsDir(dir);
+  if (!fs.existsSync(dir_)) return { dir, backupCount: 0 };
+  const backupCount = fs.readdirSync(dir_).filter((f) => f.endsWith(".json")).length;
+  return { dir, backupCount };
+}
+
 function pruneBackups(name: string, dir: string): void {
   const dir_ = backupsDir(dir);
   const prefix = `${name}.`;

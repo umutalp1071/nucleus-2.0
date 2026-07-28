@@ -38,3 +38,7 @@ export async function sumByVenture(ventureId: string, opts?: RepoOpts): Promise<
   const rows = await readCollection<AiCall>(COLLECTION, opts);
   return rows.filter((c) => c.ventureId === ventureId).reduce((sum, c) => sum + c.costUsd, 0);
 }
+
+export async function listAll(opts?: RepoOpts): Promise<AiCall[]> {
+  return readCollection<AiCall>(COLLECTION, opts);
+}

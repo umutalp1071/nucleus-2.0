@@ -44,5 +44,11 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
     return NextResponse.json({ error: result.message, reason: result.reason }, { status: statusFor(result.reason) });
   }
 
-  return NextResponse.json({ venture: result.venture, verdict: result.verdict, competitors: result.competitors });
+  return NextResponse.json({
+    venture: result.venture,
+    verdict: result.verdict,
+    competitors: result.competitors,
+    demo: result.demo,
+    downgraded: result.downgraded,
+  });
 }

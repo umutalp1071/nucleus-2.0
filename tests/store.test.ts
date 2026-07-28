@@ -67,4 +67,20 @@ describe("store", () => {
     await writeCollection("ventures", [{ id: "1" }], { baseDir: nested });
     expect(fs.existsSync(path.join(nested, "ventures.json"))).toBe(true);
   });
+
+  it("dataDirInfo reports the dir and a zero backup count before any write", async () => {
+    const { dataDirInfo } = await import("@/server/db/store");
+    const info = await dataDirInfo({ baseDir: tmpDir });
+    expect(info.dir).toBe(tmpDir);
+    expect(info.backupCount).toBe(0);
+  });
+
+  it("dataDirInfo counts backups after writes accumulate them", async () => {
+    const { writeCollection, dataDirInfo } = await import("@/server/db/store");
+    await writeCollection("ventures", [{ id: "1" }], { baseDir: tmpDir });
+    await writeCollection("ventures", [{ id: "2" }], { baseDir: tmpDir }); // 1st backup
+    await writeCollection("ventures", [{ id: "3" }], { baseDir: tmpDir }); // 2nd backup
+    const info = await dataDirInfo({ baseDir: tmpDir });
+    expect(info.backupCount).toBe(2);
+  });
 });

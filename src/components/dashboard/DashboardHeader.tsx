@@ -1,13 +1,17 @@
+import Link from "next/link";
 import { ThemeToggle } from "./ThemeToggle";
 import { formatUsd } from "@/lib/format";
+import { isApproaching } from "@/lib/budgetStatus";
 
-export function DashboardHeader({
-  budgetSpent,
-  budgetLimit,
-}: {
-  budgetSpent: number;
-  budgetLimit: number;
-}) {
+interface Spend {
+  daily: number;
+  weekly: number;
+  monthly: number;
+}
+
+export function DashboardHeader({ spend, caps }: { spend: Spend; caps: Spend }) {
+  const approaching = isApproaching(spend, caps);
+
   return (
     <header className="flex items-center justify-between border-b border-border px-6 py-4 sm:px-10">
       <div className="flex items-center gap-2 text-lg font-semibold">
@@ -17,9 +21,14 @@ export function DashboardHeader({
       <div className="flex items-center gap-4 sm:gap-6">
         <a
           href="#budget"
-          className="rounded-full bg-secondary px-3 py-1 text-sm font-medium text-secondary-foreground hover:opacity-80"
+          title={approaching ? "Approaching a spending limit -- check Budget below" : undefined}
+          className={`rounded-full px-3 py-1 text-sm font-medium hover:opacity-80 ${
+            approaching
+              ? "bg-amber-500/20 text-amber-700 dark:text-amber-400"
+              : "bg-secondary text-secondary-foreground"
+          }`}
         >
-          💰 {formatUsd(budgetSpent)}/${budgetLimit}
+          💰 {formatUsd(spend.monthly)}/${caps.monthly}
         </a>
         <ThemeToggle />
         <button
@@ -28,12 +37,13 @@ export function DashboardHeader({
         >
           🔔
         </button>
-        <div
-          aria-label="User avatar"
-          className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-sm text-primary-foreground"
+        <Link
+          href="/settings"
+          aria-label="Settings"
+          className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-sm text-primary-foreground hover:opacity-90"
         >
           👤
-        </div>
+        </Link>
       </div>
     </header>
   );

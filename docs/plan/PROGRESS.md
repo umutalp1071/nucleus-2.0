@@ -6,7 +6,7 @@
 
 ## Current phase
 
-**PHASE 05 — Budget Console** — not started
+**PHASE 06 — Planning Stage** — not started
 
 ---
 
@@ -19,7 +19,7 @@
 | 02 | AI Gateway | ✅ done | (pending push) | ship, lesson |
 | 03 | Real Validation | ✅ done | (pending push) | ship, lesson |
 | 04 | Venture Workspace | ✅ done | (pending push) | ship, lesson |
-| 05 | Budget Console | ⬜ | — | — |
+| 05 | Budget Console | ✅ done | (pending push) | ship, lesson |
 | 06 | Planning Stage | ⬜ | — | — |
 | 07 | Build Stage | ⬜ | — | — |
 | 08 | Launch Stage | ⬜ | — | — |
@@ -90,6 +90,19 @@ Risk: Badge was hard-coupled to mock-data.ts's ProjectStatus type, which
 would have blocked deleting that file entirely — generalized to a
 StageTone-based Badge before deleting mock-data.ts, not after, so the app was
 never in a broken intermediate state.
+
+### Phase 05 — Budget Console
+Files: src/app/settings/page.tsx, src/app/api/settings/**,
+src/app/api/budget/breakdown/route.ts, src/server/ai/provider.ts (dynamic key
+resolution), src/server/ai/gateway.ts (demo/downgraded flags), src/server/redact.ts,
+src/components/settings/Sparkline.tsx, src/lib/budgetStatus.ts, domain.ts
+(Artifact.demo field).
+Risk: provider.ts's static `export const provider` singleton had to become a
+dynamic `resolveProvider()` for a key added in Settings to take effect without
+a restart — a real architectural change, not just additive UI. Verified with
+curl end-to-end (set a fake key, confirm aiMode flips; set a near-zero cap,
+confirm block; raise it, confirm the very next request succeeds) rather than
+trusting the code reading correctly.
 
 ---
 

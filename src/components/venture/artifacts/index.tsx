@@ -5,6 +5,26 @@ import { CompetitorsArtifact } from "./CompetitorsArtifact";
 // Adding a new artifact kind means adding one file and one case here --
 // never editing the renderers that already exist.
 export function ArtifactRenderer({ artifact }: { artifact: Artifact }) {
+  return (
+    <div className="flex flex-col gap-2">
+      {artifact.demo && <DemoMarker />}
+      <ArtifactBody artifact={artifact} />
+    </div>
+  );
+}
+
+// Must never be mistaken for a real analysis -- every artifact generated
+// with no AI key configured carries this, persistently, not just a
+// dismissible banner elsewhere on the page.
+function DemoMarker() {
+  return (
+    <span className="self-start rounded-full bg-secondary px-2 py-0.5 text-xs font-medium text-secondary-foreground">
+      Demo result -- add an OpenRouter key in Settings for real analysis
+    </span>
+  );
+}
+
+function ArtifactBody({ artifact }: { artifact: Artifact }) {
   switch (artifact.kind) {
     case "validation":
       return <ValidationArtifact verdict={artifact.content as Verdict} />;

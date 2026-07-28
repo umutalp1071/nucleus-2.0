@@ -79,12 +79,12 @@ describe("artifacts repository", () => {
   it("creates and lists artifacts scoped to a venture, newest first", async () => {
     const venture = await ventures.create({ title: "Idea", description: "" }, opts);
     await artifacts.create(
-      { ventureId: venture.id, kind: "validation", stage: "captured", content: { score: 34 }, model: "mock", costUsd: 0 },
+      { ventureId: venture.id, kind: "validation", stage: "captured", content: { score: 34 }, model: "mock", costUsd: 0, demo: false },
       opts
     );
     await new Promise((r) => setTimeout(r, 2));
     await artifacts.create(
-      { ventureId: venture.id, kind: "competitors", stage: "validated", content: {}, model: "mock", costUsd: 0 },
+      { ventureId: venture.id, kind: "competitors", stage: "validated", content: {}, model: "mock", costUsd: 0, demo: false },
       opts
     );
 
@@ -96,12 +96,12 @@ describe("artifacts repository", () => {
   it("latestOfKind returns the most recent artifact of that kind only", async () => {
     const venture = await ventures.create({ title: "Idea", description: "" }, opts);
     await artifacts.create(
-      { ventureId: venture.id, kind: "plan", stage: "validated", content: { v: 1 }, model: "mock", costUsd: 0 },
+      { ventureId: venture.id, kind: "plan", stage: "validated", content: { v: 1 }, model: "mock", costUsd: 0, demo: false },
       opts
     );
     await new Promise((r) => setTimeout(r, 2));
     await artifacts.create(
-      { ventureId: venture.id, kind: "plan", stage: "validated", content: { v: 2 }, model: "mock", costUsd: 0 },
+      { ventureId: venture.id, kind: "plan", stage: "validated", content: { v: 2 }, model: "mock", costUsd: 0, demo: false },
       opts
     );
 

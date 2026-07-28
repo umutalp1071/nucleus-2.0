@@ -32,3 +32,7 @@ export async function putCached(key: string, value: unknown, opts?: CacheOpts): 
   filtered.unshift({ key, value, createdAt: new Date().toISOString() });
   await writeCollection(COLLECTION, filtered, opts);
 }
+
+export async function clearCache(opts?: CacheOpts): Promise<void> {
+  await writeCollection(COLLECTION, [], opts);
+}
