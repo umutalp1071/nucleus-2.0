@@ -4,28 +4,6 @@
   "graph": {},
   "nodes": [
     {
-      "label": "smoke.js",
-      "file_type": "code",
-      "source_file": ".claude/skills/run-dashboard/smoke.js",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "claude_skills_run_dashboard_smoke",
-      "community": 41,
-      "community_name": "smoke.js",
-      "norm_label": "smoke.js"
-    },
-    {
-      "label": "{ chromium }",
-      "file_type": "code",
-      "source_file": ".claude/skills/run-dashboard/smoke.js",
-      "source_location": "L4",
-      "_origin": "ast",
-      "id": "claude_skills_run_dashboard_smoke_chromium",
-      "community": 41,
-      "community_name": "smoke.js",
-      "norm_label": "{ chromium }"
-    },
-    {
       "label": ".eslintrc.json",
       "file_type": "code",
       "source_file": ".eslintrc.json",
@@ -799,7 +777,7 @@
       "label": "SavedIdeasCard()",
       "file_type": "code",
       "source_file": "src/components/dashboard/SavedIdeasCard.tsx",
-      "source_location": "L5",
+      "source_location": "L4",
       "_origin": "ast",
       "id": "src_components_dashboard_savedideascard_savedideascard",
       "community": 16,
@@ -860,72 +838,6 @@
       "community": 16,
       "community_name": "page.tsx",
       "norm_label": "progressbar()"
-    },
-    {
-      "label": "idea-export.ts",
-      "file_type": "code",
-      "source_file": "src/lib/idea-export.ts",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "src_lib_idea_export",
-      "community": 16,
-      "community_name": "page.tsx",
-      "norm_label": "idea-export.ts"
-    },
-    {
-      "label": "download()",
-      "file_type": "code",
-      "source_file": "src/lib/idea-export.ts",
-      "source_location": "L3",
-      "_origin": "ast",
-      "id": "src_lib_idea_export_download",
-      "community": 16,
-      "community_name": "page.tsx",
-      "norm_label": "download()"
-    },
-    {
-      "label": "todayStamp()",
-      "file_type": "code",
-      "source_file": "src/lib/idea-export.ts",
-      "source_location": "L13",
-      "_origin": "ast",
-      "id": "src_lib_idea_export_todaystamp",
-      "community": 16,
-      "community_name": "page.tsx",
-      "norm_label": "todaystamp()"
-    },
-    {
-      "label": "exportIdeasAsJSON()",
-      "file_type": "code",
-      "source_file": "src/lib/idea-export.ts",
-      "source_location": "L17",
-      "_origin": "ast",
-      "id": "src_lib_idea_export_exportideasasjson",
-      "community": 16,
-      "community_name": "page.tsx",
-      "norm_label": "exportideasasjson()"
-    },
-    {
-      "label": "csvCell()",
-      "file_type": "code",
-      "source_file": "src/lib/idea-export.ts",
-      "source_location": "L25",
-      "_origin": "ast",
-      "id": "src_lib_idea_export_csvcell",
-      "community": 16,
-      "community_name": "page.tsx",
-      "norm_label": "csvcell()"
-    },
-    {
-      "label": "exportIdeasAsCSV()",
-      "file_type": "code",
-      "source_file": "src/lib/idea-export.ts",
-      "source_location": "L29",
-      "_origin": "ast",
-      "id": "src_lib_idea_export_exportideasascsv",
-      "community": 16,
-      "community_name": "page.tsx",
-      "norm_label": "exportideasascsv()"
     },
     {
       "label": "idea-storage.ts",
@@ -1478,18 +1390,7 @@
       "norm_label": "graphify"
     },
     {
-      "label": "run-dashboard",
-      "file_type": "document",
-      "source_file": ".claude/CLAUDE.md",
-      "source_location": "L5",
-      "_origin": "ast",
-      "id": "claude_claude_run_dashboard",
-      "community": 29,
-      "community_name": ".claude/CLAUDE.md",
-      "norm_label": "run-dashboard"
-    },
-    {
-      "label": "graphify/SKILL.md",
+      "label": "SKILL.md",
       "file_type": "document",
       "source_file": ".claude/skills/graphify/SKILL.md",
       "source_location": "L1",
@@ -1497,7 +1398,7 @@
       "id": "claude_skills_graphify_skill",
       "community": 9,
       "community_name": "include",
-      "norm_label": "graphify/skill.md"
+      "norm_label": "skill.md"
     },
     {
       "label": "/graphify",
@@ -2149,83 +2050,6 @@
       "norm_label": "for --cluster-only"
     },
     {
-      "label": "run-dashboard/SKILL.md",
-      "file_type": "document",
-      "source_file": ".claude/skills/run-dashboard/SKILL.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "claude_skills_run_dashboard_skill",
-      "community": 39,
-      "community_name": "Run the Nucleus 2.0 dashboard",
-      "norm_label": "run-dashboard/skill.md"
-    },
-    {
-      "label": "Run the Nucleus 2.0 dashboard",
-      "file_type": "document",
-      "source_file": ".claude/skills/run-dashboard/SKILL.md",
-      "source_location": "L6",
-      "_origin": "ast",
-      "id": "claude_skills_run_dashboard_skill_run_the_nucleus_2_0_dashboard",
-      "community": 39,
-      "community_name": "Run the Nucleus 2.0 dashboard",
-      "norm_label": "run the nucleus 2.0 dashboard"
-    },
-    {
-      "label": "1. Start the dev server",
-      "file_type": "document",
-      "source_file": ".claude/skills/run-dashboard/SKILL.md",
-      "source_location": "L12",
-      "_origin": "ast",
-      "id": "claude_skills_run_dashboard_skill_1_start_the_dev_server",
-      "community": 39,
-      "community_name": "Run the Nucleus 2.0 dashboard",
-      "norm_label": "1. start the dev server"
-    },
-    {
-      "label": "2. Drive it",
-      "file_type": "document",
-      "source_file": ".claude/skills/run-dashboard/SKILL.md",
-      "source_location": "L29",
-      "_origin": "ast",
-      "id": "claude_skills_run_dashboard_skill_2_drive_it",
-      "community": 39,
-      "community_name": "Run the Nucleus 2.0 dashboard",
-      "norm_label": "2. drive it"
-    },
-    {
-      "label": "3. Adapt for a new feature",
-      "file_type": "document",
-      "source_file": ".claude/skills/run-dashboard/SKILL.md",
-      "source_location": "L55",
-      "_origin": "ast",
-      "id": "claude_skills_run_dashboard_skill_3_adapt_for_a_new_feature",
-      "community": 39,
-      "community_name": "Run the Nucleus 2.0 dashboard",
-      "norm_label": "3. adapt for a new feature"
-    },
-    {
-      "label": "Constraints (don't violate these)",
-      "file_type": "document",
-      "source_file": ".claude/skills/run-dashboard/SKILL.md",
-      "source_location": "L62",
-      "_origin": "ast",
-      "id": "claude_skills_run_dashboard_skill_constraints_don_t_violate_these",
-      "community": 39,
-      "community_name": "Run the Nucleus 2.0 dashboard",
-      "norm_label": "constraints (don't violate these)"
-    },
-    {
-      "label": "Gotchas",
-      "file_type": "document",
-      "source_file": ".claude/skills/run-dashboard/SKILL.md",
-      "source_location": "L70",
-      "_origin": "ast",
-      "id": "claude_skills_run_dashboard_skill_gotchas",
-      "community": 39,
-      "community_name": "Run the Nucleus 2.0 dashboard",
-      "norm_label": "gotchas"
-    },
-    {
       "label": "CLAUDE.md",
       "file_type": "document",
       "source_file": "CLAUDE.md",
@@ -2455,17 +2279,6 @@
       "community": 6,
       "community_name": "NUCLEUS 2.0 \u2014 CONTEXT TRANSFER",
       "norm_label": "9. working principles (with claude)"
-    },
-    {
-      "label": "PUSH RULES (For Claude)",
-      "file_type": "document",
-      "source_file": "docs/CONTEXT.md",
-      "source_location": "L89",
-      "_origin": "ast",
-      "id": "docs_context_push_rules_for_claude",
-      "community": 6,
-      "community_name": "NUCLEUS 2.0 \u2014 CONTEXT TRANSFER",
-      "norm_label": "push rules (for claude)"
     },
     {
       "label": "MASTER_PLAN.md",
@@ -2730,72 +2543,6 @@
       "community": 32,
       "community_name": "include",
       "norm_label": "last update"
-    },
-    {
-      "label": "NEXT_FEATURES.md",
-      "file_type": "document",
-      "source_file": "docs/NEXT_FEATURES.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "docs_next_features",
-      "community": 40,
-      "community_name": "Feature: Idea Export (JSON + CSV)",
-      "norm_label": "next_features.md"
-    },
-    {
-      "label": "Feature: Idea Export (JSON + CSV)",
-      "file_type": "document",
-      "source_file": "docs/NEXT_FEATURES.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "docs_next_features_feature_idea_export_json_csv",
-      "community": 40,
-      "community_name": "Feature: Idea Export (JSON + CSV)",
-      "norm_label": "feature: idea export (json + csv)"
-    },
-    {
-      "label": "Context",
-      "file_type": "document",
-      "source_file": "docs/NEXT_FEATURES.md",
-      "source_location": "L3",
-      "_origin": "ast",
-      "id": "docs_next_features_context",
-      "community": 40,
-      "community_name": "Feature: Idea Export (JSON + CSV)",
-      "norm_label": "context"
-    },
-    {
-      "label": "Goal",
-      "file_type": "document",
-      "source_file": "docs/NEXT_FEATURES.md",
-      "source_location": "L9",
-      "_origin": "ast",
-      "id": "docs_next_features_goal",
-      "community": 40,
-      "community_name": "Feature: Idea Export (JSON + CSV)",
-      "norm_label": "goal"
-    },
-    {
-      "label": "Requirements",
-      "file_type": "document",
-      "source_file": "docs/NEXT_FEATURES.md",
-      "source_location": "L16",
-      "_origin": "ast",
-      "id": "docs_next_features_requirements",
-      "community": 40,
-      "community_name": "Feature: Idea Export (JSON + CSV)",
-      "norm_label": "requirements"
-    },
-    {
-      "label": "JSON Export",
-      "file_type": "document",
-      "source_file": "docs/NEXT_FEATURES.md",
-      "source_location": "L18",
-      "_origin": "ast",
-      "id": "docs_next_features_json_export",
-      "community": 40,
-      "community_name": "Feature: Idea Export (JSON + CSV)",
-      "norm_label": "json export"
     },
     {
       "label": "TOMORROW_PLAN.md",
@@ -4177,17 +3924,6 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": ".claude/skills/run-dashboard/smoke.js",
-      "source_location": "L4",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "claude_skills_run_dashboard_smoke",
-      "target": "claude_skills_run_dashboard_smoke_chromium",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
       "source_file": ".eslintrc.json",
       "source_location": "L2",
       "weight": 1.0,
@@ -5394,7 +5130,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/components/dashboard/SavedIdeasCard.tsx",
-      "source_location": "L5",
+      "source_location": "L4",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_components_dashboard_savedideascard",
@@ -5430,42 +5166,6 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/components/dashboard/SavedIdeasCard.tsx",
-      "source_location": "L3",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "src_components_dashboard_savedideascard",
-      "target": "src_lib_idea_export",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/dashboard/SavedIdeasCard.tsx",
-      "source_location": "L3",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "src_components_dashboard_savedideascard",
-      "target": "src_lib_idea_export_exportideasascsv",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/dashboard/SavedIdeasCard.tsx",
-      "source_location": "L3",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "src_components_dashboard_savedideascard",
-      "target": "src_lib_idea_export_exportideasasjson",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/dashboard/SavedIdeasCard.tsx",
       "source_location": "L2",
       "weight": 1.0,
       "_origin": "ast",
@@ -5484,30 +5184,6 @@
       "source": "src_components_dashboard_savedideascard",
       "target": "src_lib_idea_storage_savedidea",
       "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/components/dashboard/SavedIdeasCard.tsx",
-      "source_location": "L19",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "src_components_dashboard_savedideascard_savedideascard",
-      "target": "src_lib_idea_export_exportideasascsv"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/components/dashboard/SavedIdeasCard.tsx",
-      "source_location": "L13",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "src_components_dashboard_savedideascard_savedideascard",
-      "target": "src_lib_idea_export_exportideasasjson"
     },
     {
       "relation": "contains",
@@ -5576,145 +5252,6 @@
       "source": "src_components_dashboard_ui",
       "target": "src_lib_mock_data_projectstatus",
       "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/idea-export.ts",
-      "source_location": "L25",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "src_lib_idea_export",
-      "target": "src_lib_idea_export_csvcell",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/idea-export.ts",
-      "source_location": "L3",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "src_lib_idea_export",
-      "target": "src_lib_idea_export_download",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/idea-export.ts",
-      "source_location": "L29",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "src_lib_idea_export",
-      "target": "src_lib_idea_export_exportideasascsv",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/idea-export.ts",
-      "source_location": "L17",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "src_lib_idea_export",
-      "target": "src_lib_idea_export_exportideasasjson",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/idea-export.ts",
-      "source_location": "L13",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "src_lib_idea_export",
-      "target": "src_lib_idea_export_todaystamp",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/idea-export.ts",
-      "source_location": "L1",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "src_lib_idea_export",
-      "target": "src_lib_idea_storage",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/idea-export.ts",
-      "source_location": "L1",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "src_lib_idea_export",
-      "target": "src_lib_idea_storage_savedidea",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/idea-export.ts",
-      "source_location": "L52",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "src_lib_idea_export_exportideasascsv",
-      "target": "src_lib_idea_export_download",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/idea-export.ts",
-      "source_location": "L18",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "src_lib_idea_export_exportideasasjson",
-      "target": "src_lib_idea_export_download",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/idea-export.ts",
-      "source_location": "L53",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "src_lib_idea_export_exportideasascsv",
-      "target": "src_lib_idea_export_todaystamp",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/idea-export.ts",
-      "source_location": "L19",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "src_lib_idea_export_exportideasasjson",
-      "target": "src_lib_idea_export_todaystamp",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "indirect_call",
-      "context": "argument",
-      "confidence": "INFERRED",
-      "source_file": "src/lib/idea-export.ts",
-      "source_location": "L49",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "src_lib_idea_export_exportideasascsv",
-      "target": "src_lib_idea_export_csvcell",
-      "confidence_score": 0.5
     },
     {
       "relation": "contains",
@@ -6255,17 +5792,6 @@
       "_origin": "ast",
       "source": "claude_claude",
       "target": "claude_claude_graphify",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": ".claude/CLAUDE.md",
-      "source_location": "L5",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "claude_claude",
-      "target": "claude_claude_run_dashboard",
       "confidence_score": 1.0
     },
     {
@@ -6832,72 +6358,6 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": ".claude/skills/run-dashboard/SKILL.md",
-      "source_location": "L6",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "claude_skills_run_dashboard_skill",
-      "target": "claude_skills_run_dashboard_skill_run_the_nucleus_2_0_dashboard",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": ".claude/skills/run-dashboard/SKILL.md",
-      "source_location": "L12",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "claude_skills_run_dashboard_skill_run_the_nucleus_2_0_dashboard",
-      "target": "claude_skills_run_dashboard_skill_1_start_the_dev_server",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": ".claude/skills/run-dashboard/SKILL.md",
-      "source_location": "L29",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "claude_skills_run_dashboard_skill_run_the_nucleus_2_0_dashboard",
-      "target": "claude_skills_run_dashboard_skill_2_drive_it",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": ".claude/skills/run-dashboard/SKILL.md",
-      "source_location": "L55",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "claude_skills_run_dashboard_skill_run_the_nucleus_2_0_dashboard",
-      "target": "claude_skills_run_dashboard_skill_3_adapt_for_a_new_feature",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": ".claude/skills/run-dashboard/SKILL.md",
-      "source_location": "L62",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "claude_skills_run_dashboard_skill_run_the_nucleus_2_0_dashboard",
-      "target": "claude_skills_run_dashboard_skill_constraints_don_t_violate_these",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": ".claude/skills/run-dashboard/SKILL.md",
-      "source_location": "L70",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "claude_skills_run_dashboard_skill_run_the_nucleus_2_0_dashboard",
-      "target": "claude_skills_run_dashboard_skill_gotchas",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
       "source_file": "CLAUDE.md",
       "source_location": "L1",
       "weight": 1.0,
@@ -7080,17 +6540,6 @@
       "_origin": "ast",
       "source": "docs_context_nucleus_2_0_context_transfer",
       "target": "docs_context_next_session_2026_07_26_phase_1_mvp_start",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/CONTEXT.md",
-      "source_location": "L89",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "docs_context_nucleus_2_0_context_transfer",
-      "target": "docs_context_push_rules_for_claude",
       "confidence_score": 1.0
     },
     {
@@ -7344,61 +6793,6 @@
       "_origin": "ast",
       "source": "docs_master_plan_phase_4_platform_3_6_months_goal_ecosystem",
       "target": "docs_master_plan_january_march_2027",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/NEXT_FEATURES.md",
-      "source_location": "L1",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "docs_next_features",
-      "target": "docs_next_features_feature_idea_export_json_csv",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/NEXT_FEATURES.md",
-      "source_location": "L3",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "docs_next_features_feature_idea_export_json_csv",
-      "target": "docs_next_features_context",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/NEXT_FEATURES.md",
-      "source_location": "L9",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "docs_next_features_feature_idea_export_json_csv",
-      "target": "docs_next_features_goal",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/NEXT_FEATURES.md",
-      "source_location": "L16",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "docs_next_features_feature_idea_export_json_csv",
-      "target": "docs_next_features_requirements",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/NEXT_FEATURES.md",
-      "source_location": "L18",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "docs_next_features_requirements",
-      "target": "docs_next_features_json_export",
       "confidence_score": 1.0
     },
     {
@@ -8635,5 +8029,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "2e338c52feb763dcb6e1de08daa56af378357f15"
+  "built_at_commit": "f8762a877a0c8594b752995803d9a260d79f73aa"
 }

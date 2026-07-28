@@ -1,16 +1,16 @@
-# Graph Report - nucleus-2.0  (2026-07-28)
+# Graph Report - nucleus-2.0  (2026-07-27)
 
 ## Corpus Check
-- 52 files · ~21,900 words
+- 48 files · ~20,783 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 379 nodes · 397 edges · 42 communities (28 shown, 14 thin omitted)
-- Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 1 edges (avg confidence: 0.5)
+- 356 nodes · 366 edges · 39 communities (26 shown, 13 thin omitted)
+- Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `2e338c52`
+- Built from commit: `f8762a87`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -53,36 +53,29 @@
 - Nucleus 2.0 — Day {{DAY_NUMBER}}: {{TITLE}}
 - 2026-07-27-lesson.md
 - lesson-post.md
-- Run the Nucleus 2.0 dashboard
-- Feature: Idea Export (JSON + CSV)
-- smoke.js
 
 ## God Nodes (most connected - your core abstractions)
 1. `compilerOptions` - 15 edges
-2. `NUCLEUS 2.0 — CONTEXT TRANSFER` - 13 edges
-3. `What You Must Do When Invoked` - 12 edges
+2. `What You Must Do When Invoked` - 12 edges
+3. `NUCLEUS 2.0 — CONTEXT TRANSFER` - 12 edges
 4. `/graphify` - 10 edges
 5. `ABSOLUTE RULES` - 10 edges
 6. `graphify reference: extra exports and benchmark` - 8 edges
 7. `ERROR LOG #[NUMBER]` - 8 edges
-8. `exportIdeasAsCSV()` - 6 edges
-9. `IdeaAnalysis` - 6 edges
-10. `include` - 6 edges
+8. `IdeaAnalysis` - 6 edges
+9. `include` - 6 edges
+10. `SESSION-END PROTOCOL (Automatic — Executed Every Session End)` - 6 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `Home()` --calls--> `getSavedIdeas()`  [EXTRACTED]
   src/app/page.tsx → src/lib/idea-storage.ts
-- `SavedIdeasCard()` --calls--> `exportIdeasAsCSV()`  [EXTRACTED]
-  src/components/dashboard/SavedIdeasCard.tsx → src/lib/idea-export.ts
-- `SavedIdeasCard()` --calls--> `exportIdeasAsJSON()`  [EXTRACTED]
-  src/components/dashboard/SavedIdeasCard.tsx → src/lib/idea-export.ts
 - `SavedIdea` --references--> `IdeaAnalysis`  [EXTRACTED]
   src/lib/idea-storage.ts → src/lib/mock-data.ts
 
 ## Import Cycles
 - None detected.
 
-## Communities (42 total, 14 thin omitted)
+## Communities (39 total, 13 thin omitted)
 
 ### Community 0 - "ABSOLUTE RULES"
 Cohesion: 0.07
@@ -109,8 +102,8 @@ Cohesion: 0.14
 Nodes (13): 1. Diagnosis, 2. Fix, 3. Validation, 4. Learning Record, BUG FIX PROMPT TEMPLATE, ERROR, FINAL CHECK, LOCATION (+5 more)
 
 ### Community 6 - "NUCLEUS 2.0 — CONTEXT TRANSFER"
-Cohesion: 0.14
-Nodes (13): 1. VISION (One Sentence), 2. DIFFERENTIATION (What Separates It From Competitors), 3. CHARACTER (8 Principles — Code + UX + Communication), 4. TECHNICAL ARCHITECTURE (5 Layers), 5. ROADMAP, 6. CRITICAL DECISIONS (Lessons From Nucleus 1.0), 7. CURRENT STATUS, 8. TOMORROW'S GOAL (2026-07-26) (+5 more)
+Cohesion: 0.15
+Nodes (12): 1. VISION (One Sentence), 2. DIFFERENTIATION (What Separates It From Competitors), 3. CHARACTER (8 Principles — Code + UX + Communication), 4. TECHNICAL ARCHITECTURE (5 Layers), 5. ROADMAP, 6. CRITICAL DECISIONS (Lessons From Nucleus 1.0), 7. CURRENT STATUS, 8. TOMORROW'S GOAL (2026-07-26) (+4 more)
 
 ### Community 8 - "ERROR LOG #[NUMBER]"
 Cohesion: 0.22
@@ -133,8 +126,8 @@ Cohesion: 0.50
 Nodes (3): Deploy on Vercel, Getting Started, Learn More
 
 ### Community 16 - "page.tsx"
-Cohesion: 0.11
-Nodes (32): Home(), ActiveProjectsCard(), GrowthCard(), QuickActionsCard(), RecentActivityCard(), trendIcon, DashboardHeader(), NewIdeaCard() (+24 more)
+Cohesion: 0.12
+Nodes (27): Home(), ActiveProjectsCard(), GrowthCard(), QuickActionsCard(), RecentActivityCard(), trendIcon, DashboardHeader(), NewIdeaCard() (+19 more)
 
 ### Community 18 - "feature.md"
 Cohesion: 0.09
@@ -184,26 +177,18 @@ Nodes (5): Next Step, Nucleus 2.0 — Day 2: Ideas That Stick, Problem & Solutio
 Cohesion: 0.33
 Nodes (5): Next Step, Nucleus 2.0 — Day {{DAY_NUMBER}}: {{TITLE}}, Problem & Solution, Technical Detail (Optional), What Was Built
 
-### Community 39 - "Run the Nucleus 2.0 dashboard"
-Cohesion: 0.29
-Nodes (6): 1. Start the dev server, 2. Drive it, 3. Adapt for a new feature, Constraints (don't violate these), Gotchas, Run the Nucleus 2.0 dashboard
-
-### Community 40 - "Feature: Idea Export (JSON + CSV)"
-Cohesion: 0.33
-Nodes (5): Context, Feature: Idea Export (JSON + CSV), Goal, JSON Export, Requirements
-
 ## Knowledge Gaps
-- **228 isolated node(s):** `{ chromium }`, `next/core-web-vitals`, `next/typescript`, `nextConfig`, `name` (+223 more)
+- **217 isolated node(s):** `next/core-web-vitals`, `next/typescript`, `nextConfig`, `name`, `version` (+212 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **14 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **13 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `devDependencies` connect `devDependencies` to `package.json`?**
   _High betweenness centrality (0.006) - this node is a cross-community bridge._
-- **What connects `{ chromium }`, `next/core-web-vitals`, `next/typescript` to the rest of the system?**
-  _228 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **What connects `next/core-web-vitals`, `next/typescript`, `nextConfig` to the rest of the system?**
+  _217 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `ABSOLUTE RULES` be split into smaller, more focused modules?**
   _Cohesion score 0.07407407407407407 - nodes in this community are weakly interconnected._
 - **Should `compilerOptions` be split into smaller, more focused modules?**

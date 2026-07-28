@@ -25,8 +25,8 @@
     "semantic_hash": ""
   },
   "src/app/page.tsx": {
-    "mtime": 1785134281.3857684,
-    "ast_hash": "b7655c9c062c3f9c64da0c65c3840832",
+    "mtime": 1785054504.239638,
+    "ast_hash": "0eacf1ab867153a1b2c3ad9a24051e99",
     "semantic_hash": ""
   },
   "tailwind.config.ts": {
@@ -45,18 +45,18 @@
     "semantic_hash": ""
   },
   "START_HERE.md": {
-    "mtime": 1785068646.6888003,
-    "ast_hash": "6c81b6813df3c5088a267241b62ec737",
+    "mtime": 1785004550.160771,
+    "ast_hash": "91d011a4be66262f24e7e7abe76d972b",
     "semantic_hash": ""
   },
   "docs/CONTEXT.md": {
-    "mtime": 1785141201.5371666,
-    "ast_hash": "cb724b9ac18f5e34e5e02cb928e52f1d",
+    "mtime": 1784974497.698752,
+    "ast_hash": "a346c675e6ad114ea966a8922cf0fb30",
     "semantic_hash": ""
   },
   "docs/TOMORROW_PLAN.md": {
-    "mtime": 1785135026.042598,
-    "ast_hash": "2ad759ac42e150fb3e87d51535d85318",
+    "mtime": 1784999387.924251,
+    "ast_hash": "b1e612a0f257c8e1188aee38bb17ea78",
     "semantic_hash": ""
   },
   "docs/mistakes/nucleus-1.0-lessons.md": {
@@ -70,8 +70,8 @@
     "semantic_hash": ""
   },
   "docs/workflow/PROTOCOL.md": {
-    "mtime": 1785070474.876289,
-    "ast_hash": "9c5be0ebf45add03c16451554ee0f8a7",
+    "mtime": 1784976661.641449,
+    "ast_hash": "8bf998586737edcca94bc7f9d10d8a36",
     "semantic_hash": ""
   },
   "docs/workflow/prompts/bugfix.md": {
@@ -110,8 +110,8 @@
     "semantic_hash": ""
   },
   "src/components/dashboard/NewIdeaCard.tsx": {
-    "mtime": 1785134270.360971,
-    "ast_hash": "995c8ce73a99e7a6259351996c36b270",
+    "mtime": 1785055274.492242,
+    "ast_hash": "84e67ae38c6e0bf5c8d1722255ed7bf3",
     "semantic_hash": ""
   },
   "src/components/dashboard/ui.tsx": {
@@ -130,8 +130,8 @@
     "semantic_hash": ""
   },
   ".claude/CLAUDE.md": {
-    "mtime": 1785141521.0448694,
-    "ast_hash": "15d254a8fb4c8e6bbc34758671d299a3",
+    "mtime": 1785004335.1926973,
+    "ast_hash": "c232166e6492ba1ed955030b16979b05",
     "semantic_hash": ""
   },
   ".claude/skills/graphify/SKILL.md": {
@@ -185,8 +185,8 @@
     "semantic_hash": ""
   },
   "docs/workflow/learning.md": {
-    "mtime": 1785135014.6828792,
-    "ast_hash": "083fd57f727c5014da6b318fc0399619",
+    "mtime": 1785054666.53379,
+    "ast_hash": "df24a2155169cdfa52036955e802feb0",
     "semantic_hash": ""
   },
   "src/components/dashboard/Modal.tsx": {
@@ -195,68 +195,8 @@
     "semantic_hash": ""
   },
   "src/components/dashboard/NewIdeaFlow.tsx": {
-    "mtime": 1785134263.064625,
-    "ast_hash": "5894a58c2e29ce27ea6cd6057d9975ac",
-    "semantic_hash": ""
-  },
-  "src/components/dashboard/SavedIdeasCard.tsx": {
-    "mtime": 1785236581.710718,
-    "ast_hash": "04be9942f4e55da00374c513a181b552",
-    "semantic_hash": ""
-  },
-  "src/lib/idea-storage.ts": {
-    "mtime": 1785134239.5032525,
-    "ast_hash": "77ec76fb9863031b8c878332ffff7ed3",
-    "semantic_hash": ""
-  },
-  "docs/MASTER_PLAN.md": {
-    "mtime": 1785135037.056325,
-    "ast_hash": "d979b3066e925d7a696f43b9fecc1990",
-    "semantic_hash": ""
-  },
-  "docs/content/README.md": {
-    "mtime": 1785070481.5561032,
-    "ast_hash": "14f2850dc897a0f540b2ecfbd322845b",
-    "semantic_hash": ""
-  },
-  "docs/content/drafts/2026-07-27-lesson.md": {
-    "mtime": 1785135054.1008644,
-    "ast_hash": "e54f3aa350f9baddced3603b5c5d089e",
-    "semantic_hash": ""
-  },
-  "docs/content/drafts/2026-07-27-ship.md": {
-    "mtime": 1785135046.4762259,
-    "ast_hash": "84f873ff9c41865c404df484a2083f54",
-    "semantic_hash": ""
-  },
-  "docs/content/templates/lesson-post.md": {
-    "mtime": 1785070492.717281,
-    "ast_hash": "f9f5efed9bc11d292409e68bb8f11822",
-    "semantic_hash": ""
-  },
-  "docs/content/templates/ship-post.md": {
-    "mtime": 1785070486.9276521,
-    "ast_hash": "48ca3e5315df7f56d7730cb2810c5370",
-    "semantic_hash": ""
-  },
-  ".claude/skills/run-dashboard/smoke.js": {
-    "mtime": 1785141508.6900914,
-    "ast_hash": "136777eb2aaac7889389cc569af8b6fd",
-    "semantic_hash": ""
-  },
-  "src/lib/idea-export.ts": {
-    "mtime": 1785236574.8332193,
-    "ast_hash": "41143d3a04abc898c1055ab49e11593f",
-    "semantic_hash": ""
-  },
-  ".claude/skills/run-dashboard/SKILL.md": {
-    "mtime": 1785141493.753368,
-    "ast_hash": "de3f529f1f3bf2e9b46ff9074dc42cd1",
-    "semantic_hash": ""
-  },
-  "docs/NEXT_FEATURES.md": {
-    "mtime": 1785150302.9100277,
-    "ast_hash": "96ae8bbccfe71eac6239728ebbb13893",
+    "mtime": 1785055265.3187015,
+    "ast_hash": "3ea3be3278522c84d8e167edee3b95ad",
     "semantic_hash": ""
   }
 }
