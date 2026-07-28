@@ -1,20 +1,23 @@
 import { Card } from "./ui";
 import { NewIdeaFlow } from "./NewIdeaFlow";
-import type { IdeaAnalysis } from "@/lib/mock-data";
 
 export function NewIdeaCard({
   opportunities,
-  onSaveIdea,
+  onChanged,
   onContinue,
+  onKilled,
+  onSaved,
 }: {
   opportunities: number;
-  onSaveIdea?: (idea: string, analysis: IdeaAnalysis) => void;
+  onChanged?: () => void;
   onContinue?: () => void;
+  onKilled?: () => void;
+  onSaved?: () => void;
 }) {
   return (
     <div className="flex flex-col gap-4">
       <Card className="flex flex-col items-center justify-center gap-2 py-10 text-center">
-        <NewIdeaFlow onSaveIdea={onSaveIdea} onContinue={onContinue} />
+        <NewIdeaFlow onChanged={onChanged} onContinue={onContinue} onKilled={onKilled} onSaved={onSaved} />
         <p className="text-xs text-muted-foreground">
           Turn a thought into a venture
         </p>

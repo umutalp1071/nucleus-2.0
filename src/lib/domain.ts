@@ -68,3 +68,48 @@ export const AiCallSchema = z.object({
   createdAt: z.string(),
 });
 export type AiCall = z.infer<typeof AiCallSchema>;
+
+// AI task output shapes. Defined here (client-safe) rather than in
+// src/server/ai/tasks/, so the venture-result UI can import the type without
+// importing server code -- the tasks themselves import these schemas back.
+export const VerdictSchema = z.object({
+  score: z.number().min(0).max(100),
+  recommendation: z.enum(["build", "refine", "kill"]),
+  headline: z.string().max(120),
+  marketSize: z.object({
+    estimate: z.string(),
+    confidence: z.enum(["low", "medium", "high"]),
+    reasoning: z.string(),
+  }),
+  audience: z.object({
+    who: z.string(),
+    painLevel: z.enum(["nice-to-have", "painful", "urgent"]),
+  }),
+  risks: z
+    .array(z.object({ risk: z.string(), severity: z.enum(["low", "medium", "high"]) }))
+    .min(2)
+    .max(5),
+  moat: z.string(),
+  cheapestTest: z.string(),
+  // Required, not optional -- an optional field gets omitted by the model.
+  // A required one forces it to argue against the idea it just described.
+  whyNot: z.string(),
+});
+export type Verdict = z.infer<typeof VerdictSchema>;
+
+export const CompetitorsSchema = z.object({
+  competitors: z
+    .array(
+      z.object({
+        name: z.string(),
+        whatTheyDo: z.string(),
+        weakness: z.string(),
+        howYouWin: z.string(),
+      })
+    )
+    .min(3)
+    .max(6),
+  differentiationVerdict: z.string(),
+  crowdedness: z.enum(["low", "medium", "high"]),
+});
+export type Competitors = z.infer<typeof CompetitorsSchema>;

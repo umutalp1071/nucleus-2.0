@@ -1,12 +1,15 @@
-import type { IdeaAnalysis } from "./mock-data";
-
 // Local shape mirroring the old localStorage-era SavedIdea, kept only so
 // this file still compiles while it's disconnected. Phase 04 rewires this
 // whole module against Venture — see docs/plan/PHASE-04-venture-workspace.md.
 interface SavedIdea {
   id: string;
   idea: string;
-  analysis: IdeaAnalysis;
+  analysis: {
+    marketSize: string;
+    competition: string;
+    estimatedCost: string;
+    revenueOpportunity: string;
+  };
   savedAt: string;
 }
 

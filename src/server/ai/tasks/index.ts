@@ -1,5 +1,7 @@
 import { z } from "zod";
 import type { Tier } from "../models";
+import { validateIdea } from "./validate-idea";
+import { analyzeCompetitors } from "./analyze-competitors";
 
 export interface TaskDef<I = unknown, O = unknown> {
   name: string;
@@ -29,6 +31,8 @@ export const echoCheck: TaskDef<{ message: string }, z.infer<typeof echoCheckSch
 
 export const TASKS = {
   "echo-check": echoCheck,
+  "validate-idea": validateIdea,
+  "analyze-competitors": analyzeCompetitors,
 } as const satisfies Record<string, TaskDef>;
 
 export type TaskName = keyof typeof TASKS;

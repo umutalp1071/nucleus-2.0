@@ -2,6 +2,77 @@
 
 ---
 
+## 2026-07-28 — Plan Phase 03: Real Validation
+
+**What we did:**
+Replaced `generateMockAnalysis` with real AI validation. Two new tasks:
+`validate-idea` (tier mid, produces a `Verdict` with a required `score`,
+`recommendation`, `whyNot`, risks, market size, audience pain level, moat,
+and cheapest test) and `analyze-competitors` (tier frontier, 3-6 named
+competitors, gated to only run for ideas scoring >= 40). Extracted the
+orchestration -- run validate-idea, conditionally run analyze-competitors,
+advance the venture -- into `src/server/ventures/validateAndAdvance.ts`
+rather than inlining it in the API route, specifically so it could be
+unit-tested with a stub provider the same way the gateway already is.
+Rewrote `NewIdeaFlow.tsx` end to end: real fetch calls instead of a fake
+timer, a genuine result screen with `whyNot` above the fold, and three
+distinct failure screens (`budget_exceeded`, `invalid_output`,
+`provider_error`) each with human-readable copy and no leaked technical
+detail. Deleted `generateMockAnalysis`/`IdeaAnalysis` from `mock-data.ts`.
+
+**Decisions:**
+- **Moved `Verdict`/`Competitors` zod schemas into `src/lib/domain.ts`**
+  instead of leaving them defined in `src/server/ai/tasks/*.ts`. Caught this
+  before writing any client code: the result screen (a `"use client"`
+  component) needs these types, and importing them from `@/server/...` --
+  even as a type-only import -- would have violated the client/server
+  boundary rule in spirit, if not in the exact letter the regex checks. One
+  clean move avoided a workaround entirely.
+- **Extracted `validateAndAdvance()` out of the API route.** Testing the
+  "competitor analysis skipped below score 40" claim properly needs a stub
+  provider and an isolated temp data dir -- fighting `NextRequest`/
+  `NextResponse` to get that inside a route handler test would have been
+  worse than just factoring the orchestration into a plain, directly
+  testable function. The route is now a thin wrapper.
+- **Kill produces a distinct, better event summary** ("Killed \"X\" -- saved
+  time before writing a line of code") rather than the generic "moved to
+  killed" -- this is the single most shareable outcome the product has, and
+  the copy should say so.
+
+**Verification note:** browser-verified all three failure screens, not just
+the happy path, per the phase's explicit requirement. Budget-exceeded was
+forced honestly (seeding a real near-zero cap in `.nucleus/settings.json`).
+invalid_output and provider_error were forced with a temporary conditional in
+the mock provider triggered by a marker string in the prompt, screenshotted,
+then the file was reverted and confirmed to produce an exact-empty `git diff`
+before moving on -- no test-only code shipped.
+
+**Mistake caught mid-session:** a `fullPage: true` Playwright screenshot made
+the result modal's action buttons look clipped at the bottom edge. Before
+"fixing" a UI that might not have been broken, checked the actual DOM via
+`getBoundingClientRect()` -- the buttons were fully within the viewport
+(bottom at y=872 of a 1000px-tall viewport). The screenshot capture mode was
+misleading, not the layout. Worth remembering: verify with the DOM, not just
+by eyeballing a screenshot, before spending time on a fix that isn't needed.
+
+**Next step:** Phase 04 — Venture Workspace. Delete `mock-data.ts`'s
+remaining fake projects/growth/activity, build `/ventures/[id]`, and make
+every number on the dashboard real.
+
+**Quality Score: 92/100**
+- All acceptance criteria met, including the ones easy to skip: all three
+  failure screens actually forced and screenshotted, not just the two easy
+  ones; the score-band reconciliation tested at exact boundary values (39,
+  40, 69, 70); competitor-analysis gating verified via a direct call-count
+  assertion, not inferred from the artifact list.
+- Docked slightly: the mock provider's temporary test-forcing hack, while
+  fully reverted and diff-verified, is a slightly fragile manual verification
+  technique (string matching in the prompt) that would be worth formalizing
+  into a small `--force-failure` test harness if this kind of verification
+  becomes routine across future phases.
+
+---
+
 ## 2026-07-28 — Plan Phase 02: AI Gateway
 
 **What we did:**

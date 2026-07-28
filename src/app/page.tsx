@@ -17,7 +17,6 @@ import {
   recentActivity,
   growthMetrics,
   quickActions,
-  type IdeaAnalysis,
 } from "@/lib/mock-data";
 import type { Venture } from "@/lib/domain";
 
@@ -83,14 +82,16 @@ export default function Home() {
     return () => clearTimeout(timer);
   }, [toast]);
 
-  async function handleSaveIdea(idea: string, analysis: IdeaAnalysis) {
-    void analysis; // stored as a real artifact once Phase 03 adds the AI gateway
-    await createVenture(idea);
-    await refreshVentures();
-  }
-
   function handleContinue() {
     setToast("Taking you to project creation...");
+  }
+
+  function handleKilled() {
+    setToast("Killed -- saved time before writing a line of code.");
+  }
+
+  function handleSaved() {
+    setToast("Saved to your ventures.");
   }
 
   return (
@@ -100,8 +101,10 @@ export default function Home() {
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-[280px_1fr]">
           <NewIdeaCard
             opportunities={opportunitiesThisMonth}
-            onSaveIdea={handleSaveIdea}
+            onChanged={refreshVentures}
             onContinue={handleContinue}
+            onKilled={handleKilled}
+            onSaved={handleSaved}
           />
           <ActiveProjectsCard projects={projects} />
         </div>

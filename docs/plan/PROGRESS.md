@@ -6,7 +6,7 @@
 
 ## Current phase
 
-**PHASE 03 — Real Validation** — not started
+**PHASE 04 — Venture Workspace** — not started
 
 ---
 
@@ -17,7 +17,7 @@
 | 00 | Ground Truth | ✅ done | (pending push) | ship, lesson |
 | 01 | Domain & Storage | ✅ done | (pending push) | ship, lesson |
 | 02 | AI Gateway | ✅ done | (pending push) | ship, lesson |
-| 03 | Real Validation | ⬜ | — | — |
+| 03 | Real Validation | ✅ done | (pending push) | ship, lesson |
 | 04 | Venture Workspace | ⬜ | — | — |
 | 05 | Budget Console | ⬜ | — | — |
 | 06 | Planning Stage | ⬜ | — | — |
@@ -66,6 +66,18 @@ check later. Also caught mid-phase: Next.js statically optimized the
 GET-only /api/health route (no dynamic Request API usage), which would have
 frozen spend/ventureCount at build time — fixed with `export const dynamic =
 "force-dynamic"`.
+
+### Phase 03 — Real Validation
+Files: src/lib/domain.ts (Verdict/Competitors schemas moved here),
+src/server/ai/tasks/{validate-idea,analyze-competitors}.ts,
+src/server/ventures/validateAndAdvance.ts,
+src/app/api/ventures/[id]/advance/route.ts, NewIdeaFlow.tsx (rewritten),
+NewIdeaCard.tsx, page.tsx, mock-data.ts (generateMockAnalysis removed).
+Risk: Verdict/Competitors types living under src/server/ai/tasks/ would have
+been a boundary violation the moment the client-side result screen needed
+them — resolved by moving the zod schemas into src/lib/domain.ts (client-safe)
+and having the server tasks import back from there, before writing any UI
+code that would have needed a workaround.
 
 ---
 

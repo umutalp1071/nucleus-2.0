@@ -46,7 +46,7 @@ export async function create(
 
 export async function update(
   id: string,
-  patch: { title?: string; description?: string },
+  patch: { title?: string; description?: string; verdictScore?: number | null },
   opts?: RepoOpts
 ): Promise<Venture> {
   const rows = await readCollection<Venture>(COLLECTION, opts);
@@ -73,7 +73,12 @@ export async function advance(id: string, toStage: Stage, opts?: RepoOpts): Prom
   const updated: Venture = { ...venture, stage: toStage, updatedAt: new Date().toISOString() };
   rows[idx] = updated;
   await writeCollection(COLLECTION, rows, opts);
-  await recordEvent("venture.advanced", `"${venture.title}" moved to ${toStage}`, {
+
+  const summary =
+    toStage === "killed"
+      ? `Killed "${venture.title}" -- saved time before writing a line of code.`
+      : `"${venture.title}" moved to ${toStage}`;
+  await recordEvent("venture.advanced", summary, {
     ventureId: id,
     payload: { from: venture.stage, to: toStage },
     baseDir: opts?.baseDir,
