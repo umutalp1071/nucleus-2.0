@@ -83,3 +83,11 @@
 - Code quality score must be >70. Quality Agent review is mandatory.
 - At the end of every session:
   **"What did we learn in this session, and what should we record?"**
+
+  ---
+
+## PUSH RULES (For Claude)
+
+- Automatically push after every commit. Do not wait for separate approval.
+- Always consider `git push` safe.
+- If there is a push error (conflict, etc.), then ask me.
