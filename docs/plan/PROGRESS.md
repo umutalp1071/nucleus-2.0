@@ -6,7 +6,7 @@
 
 ## Current phase
 
-**PHASE 01 — Domain & Storage** — not started
+**PHASE 02 — AI Gateway** — not started
 
 ---
 
@@ -15,7 +15,7 @@
 | # | Phase | Status | Commit | Posts |
 |---|---|---|---|---|
 | 00 | Ground Truth | ✅ done | (pending push) | ship, lesson |
-| 01 | Domain & Storage | ⬜ | — | — |
+| 01 | Domain & Storage | ✅ done | (pending push) | ship, lesson |
 | 02 | AI Gateway | ⬜ | — | — |
 | 03 | Real Validation | ⬜ | — | — |
 | 04 | Venture Workspace | ⬜ | — | — |
@@ -44,6 +44,17 @@ Files: package.json, vitest.config.ts, src/server/config.ts, tests/*,
 Risk: boundary test regexes give false positives/negatives on real code later
 — mitigated by actually breaking the test on purpose and watching it fail
 before trusting it (see learning.md).
+
+### Phase 01 — Domain & Storage
+Files: src/lib/domain.ts, src/lib/stages.ts, src/server/db/store.ts,
+src/server/db/repositories/*, src/server/events.ts, src/app/api/ventures/**,
+src/app/api/events/route.ts, src/app/page.tsx, SavedIdeasCard.tsx,
+idea-export.ts (decoupled), idea-storage.ts (deleted).
+Risk: the localStorage-migration effect double-firing (React 18 dev
+double-invoke or a stray reload) creating duplicate ventures — caught in
+verification (see learning.md), root cause was a test-script bug not an app
+bug, but worth remembering as a real risk pattern for any future
+migration-on-mount code.
 
 ---
 

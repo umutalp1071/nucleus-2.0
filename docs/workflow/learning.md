@@ -2,6 +2,65 @@
 
 ---
 
+## 2026-07-28 — Plan Phase 01: Domain & Storage
+
+**What we did:**
+Replaced the `Idea`/localStorage model with a real `Venture` domain: zod
+schemas for `Venture`, `Artifact`, `NucleusEvent`, `AiCall` in
+`src/lib/domain.ts`; a stage machine (`src/lib/stages.ts`) with an explicit
+transition table (`killed` only reachable from `captured`/`validated`,
+`archived` terminal); an atomic JSON file store
+(`src/server/db/store.ts` — temp-file-then-rename writes, corrupt-file
+recovery with backup, last-5-backup pruning); five repositories
+(ventures, artifacts, events, aiCalls, settings); an event-recording spine
+(`src/server/events.ts`); and `/api/ventures`, `/api/ventures/[id]`,
+`/api/events` route handlers. The dashboard now reads/writes through that
+API instead of `localStorage`, with a one-time migration of any
+`nucleus:saved-ideas` data into real ventures on first load.
+
+**Decisions:**
+- **Optional `{ baseDir }` on every store/repository function.** Not in the
+  original phase spec verbatim, but needed to unit-test filesystem code
+  against a temp directory instead of the real `.nucleus/` — avoids test
+  pollution and lets tests run in parallel. Production code just omits it
+  and falls back to `config.NUCLEUS_DATA_DIR`.
+- **`idea-export.ts` kept but decoupled, not deleted.** Its `SavedIdea` type
+  came from the file being deleted this phase. Rather than either deleting
+  the module (losing real Day-2 work) or prematurely wiring it to `Venture`
+  (Phase 04's explicit job), gave it a local copy of the old type so it still
+  compiles while sitting unused. Zero behavior change, smallest possible diff.
+- **Export buttons removed from `SavedIdeasCard` for this phase.** Their only
+  data source (`SavedIdea`) no longer exists after the migration; re-adding
+  them against `Venture` is explicitly Phase 04 scope, not squeezed in here.
+
+**Mistake caught mid-session:** the first version of the Playwright
+verification script used `page.addInitScript()` to seed a legacy
+`localStorage` idea, then called `page.reload()` later in the same script to
+check persistence. `addInitScript` re-fires on every navigation in that page,
+including reloads — so the reload re-seeded the legacy key and the migration
+ran a second time, creating a duplicate venture and failing the test's
+`waitForSelector`. Root cause was in the *test script*, not the app (the
+migration itself is correctly idempotent — it clears the key synchronously
+before any `await`). Fixed by splitting verification into two isolated pages:
+one with the init script for the migration check, a second clean page for the
+save/reload/continue flow. Worth remembering as a general Playwright gotcha,
+not just a one-off.
+
+**Next step:** Phase 02 — the AI gateway. `runTask()`, the budget preflight
+guard, and the mock/OpenRouter provider split. This is the phase the plan
+calls the one to protect if time is ever short.
+
+**Quality Score: 91/100**
+- All acceptance criteria met: migration verified in a real browser with a
+  legacy key seeded, `Saved Ideas (2)` confirmed to survive a real reload
+  (file-store persistence, not just React state), illegal stage transitions
+  proven to throw via both a unit test and a rejected API call path.
+- Docked slightly: the export-button removal is a real (if temporary and
+  planned) UX regression for this phase — acceptable per Phase 04's explicit
+  scope, but worth naming rather than glossing over.
+
+---
+
 ## 2026-07-28 — Plan Phase 00: Ground Truth
 
 **What we did:**
