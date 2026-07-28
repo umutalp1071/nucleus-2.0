@@ -2,6 +2,71 @@
 
 ---
 
+## 2026-07-28 — Plan Phase 02: AI Gateway
+
+**What we did:**
+Built the AI chokepoint every future model call routes through: a model
+pricing table with three tiers (`cheap`/`mid`/`frontier`) and cost estimation
+biased to round up; a budget guard (`preflight()`) that derives spend by
+summing the `aiCalls` ledger per window (daily/weekly/monthly, local time,
+handles midnight and Sunday->Monday rollovers correctly) and returns
+`ok | downgrade | block` *before* any request goes out; a provider
+abstraction (`openrouter` real / `mock` deterministic, selected by whether an
+API key is configured); a content-hash cache keyed on the resolved model tier;
+a task registry (one placeholder task, `echo-check`, used only by tests); and
+`runTask()` itself, which wires all of that together with one repair retry on
+schema-invalid output. Added `/api/health` as a system self-check endpoint.
+
+**Decisions:**
+- **`prompt` declared as a method (`prompt(input: I): string`), not a
+  function-typed property.** A heterogeneous `TASKS` registry holding
+  `TaskDef<SpecificInput, SpecificOutput>` entries under one shared `TaskDef`
+  type hit a TypeScript contravariance error on the property form. Method
+  shorthand is checked bivariantly, which is the correct call for a registry
+  like this — avoided reaching for an `any` escape hatch (which ESLint then
+  also rejected) in favor of a type-correct fix.
+- **Cache key uses the *resolved* tier's model, not the task's preferred
+  tier.** If budget forces a downgrade, that answer is only ever cached
+  under the cheaper model's key — otherwise a later request, once budget
+  recovers, could silently replay a downgraded (lower-quality) cached answer
+  under what looks like the preferred-tier key.
+- **`echo-check` set to tier `"mid"` with `minTier: "cheap"`**, not `"cheap"`
+  outright, specifically so the gateway's downgrade path has somewhere to go
+  in tests. The phase spec calls for exactly one task this phase; this way
+  one task still exercises the full tier-resolution state machine.
+- **Every gateway test's cap values were computed from the actual prompt
+  string and pricing table**, not guessed — the first draft of the
+  downgrade/minTier tests used round-number caps that turned out not to
+  actually force the branch they were meant to test. Caught immediately
+  because the assertions failed against real behavior instead of quietly
+  passing on a coincidence.
+
+**Mistake caught mid-session:** `next build` statically optimized
+`GET /api/health` — it has no dynamic Request API usage (no searchParams,
+cookies, headers), so Next.js pre-rendered it once at build time instead of
+per request. For a health endpoint reporting live spend and venture counts,
+that's a real bug: production would have served a permanently stale
+snapshot from build time. Caught by reading the build output route table
+(`○` static vs `ƒ` dynamic) rather than assuming. Fixed with
+`export const dynamic = "force-dynamic"`.
+
+**Next step:** Phase 03 — Real Validation. The `validate-idea` and
+`analyze-competitors` tasks, the verdict schema with a required `whyNot`
+field, and wiring the New Idea flow to real (or mock) AI instead of
+`generateMockAnalysis`.
+
+**Quality Score: 93/100**
+- All acceptance criteria met, TDD followed strictly on models/budget/gateway
+  per the phase's explicit requirement, and the single most load-bearing
+  assertion in the plan so far (zero provider calls on a blocked request) is
+  verified directly, not inferred.
+- Docked slightly for the two rounds of test-value corrections on the
+  downgrade tests — not a design flaw, but worth naming that hand-computed
+  cost thresholds in test fixtures are worth double-checking programmatically
+  before trusting them, every time.
+
+---
+
 ## 2026-07-28 — Plan Phase 01: Domain & Storage
 
 **What we did:**

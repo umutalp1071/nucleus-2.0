@@ -6,7 +6,7 @@
 
 ## Current phase
 
-**PHASE 02 — AI Gateway** — not started
+**PHASE 03 — Real Validation** — not started
 
 ---
 
@@ -16,7 +16,7 @@
 |---|---|---|---|---|
 | 00 | Ground Truth | ✅ done | (pending push) | ship, lesson |
 | 01 | Domain & Storage | ✅ done | (pending push) | ship, lesson |
-| 02 | AI Gateway | ⬜ | — | — |
+| 02 | AI Gateway | ✅ done | (pending push) | ship, lesson |
 | 03 | Real Validation | ⬜ | — | — |
 | 04 | Venture Workspace | ⬜ | — | — |
 | 05 | Budget Console | ⬜ | — | — |
@@ -55,6 +55,17 @@ double-invoke or a stray reload) creating duplicate ventures — caught in
 verification (see learning.md), root cause was a test-script bug not an app
 bug, but worth remembering as a real risk pattern for any future
 migration-on-mount code.
+
+### Phase 02 — AI Gateway
+Files: src/server/ai/{models,budget,provider,cache,gateway}.ts,
+src/server/ai/tasks/index.ts, src/server/ai/fixtures/index.ts,
+src/app/api/health/route.ts.
+Risk: cost estimation drifting from actual provider pricing over time —
+mitigated by a dated comment on the pricing table now, a Phase 11 staleness
+check later. Also caught mid-phase: Next.js statically optimized the
+GET-only /api/health route (no dynamic Request API usage), which would have
+frozen spend/ventureCount at build time — fixed with `export const dynamic =
+"force-dynamic"`.
 
 ---
 
