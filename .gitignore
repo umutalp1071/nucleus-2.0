@@ -37,3 +37,7 @@ next-env.d.ts
 
 # Nucleus 2.0
 .env.local
+.nucleus/
+
+# graphify cache
+/graphify-out/cache/

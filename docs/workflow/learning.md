@@ -2,6 +2,55 @@
 
 ---
 
+## 2026-07-28 — Plan Phase 00: Ground Truth
+
+**What we did:**
+Built the test harness the project had zero of: Vitest, a Zod-validated
+`src/server/config.ts` (safe defaults on an empty env, so demo mode needs no
+setup), a boundary test that walks `src/` and enforces four architecture
+rules by regex (no client component imports server code; only
+`server/ai/provider.ts` may ever mention the OpenRouter host; only
+`server/db/store.ts` may import `node:fs`; `src/lib/` stays free of Node
+builtins), GitHub Actions CI running `npm run verify` + `npm run build` on
+every push, and the `verify` script itself (`tsc --noEmit && next lint &&
+vitest run`). Also banner-marked `docs/MASTER_PLAN.md` as superseded for
+scope by the new `docs/plan/` (written in the prior planning session).
+
+**Decisions:**
+- **Boundary rules as a regex-walking test, not ESLint config.** An ESLint
+  `no-restricted-imports` rule can't express "only this exact file is
+  exempt" as cleanly, and its errors are worse to read. A 70-line test file
+  said precisely what was meant and prints the offending path directly.
+- **`zod` moved to runtime dependencies, not dev.** It validates LLM output
+  and env at request time in later phases — this isn't a build-time-only tool.
+- **Config defaults make every env var optional except the ones with
+  defaults.** No `OPENROUTER_API_KEY` set is not an error state — it's the
+  signal that selects the mock AI provider in Phase 02. The whole demo-mode
+  design depends on an empty environment parsing cleanly.
+
+**Verification note:** the phase file explicitly required not just writing
+the boundary test but watching it fail. Added a temporary `node:fs` import to
+`src/lib/mock-data.ts`, reran `vitest run tests/boundaries.test.ts`, confirmed
+two rules failed with the exact filename in the output, then reverted. A test
+that has never been seen to fail is unverified in the same way as code that's
+never been run — worth doing every time a new boundary rule is added, not
+just this once.
+
+**Mistake caught mid-session:** none. `npm run verify` and `npm run build`
+both passed clean on first attempt.
+
+**Next step:** Phase 01 — Domain & Storage. Replace `Idea`/localStorage with
+a `Venture` domain model and an atomic JSON file store under `.nucleus/`.
+
+**Quality Score: 90/100**
+- All acceptance criteria met, including the "don't just write the test, break
+  it on purpose" requirement, which is easy to skip and wasn't skipped.
+- Docked slightly: no new feature shipped this phase (by design — it's pure
+  foundation), so the Peerlist posts lean on process rather than a demoable
+  result. That's an honest trade for phase 00, not a flaw to fix.
+
+---
+
 ## 2026-07-26 — Phase 1, Day 1: Dashboard Foundation
 
 **What we did:**
