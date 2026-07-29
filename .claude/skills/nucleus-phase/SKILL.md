@@ -31,7 +31,12 @@ seems to contradict them — in which case the documents win.
      write the failing test  →  implement the minimum  →  npm run verify
 3. UI touched? Run the run-dashboard skill. LOOK at the screenshots.
 4. Write both Peerlist posts (docs/plan/PEERLIST-PLAYBOOK.md, angles are
-   pre-assigned at the bottom of the phase file)
+   pre-assigned at the bottom of the phase file). Each post gets, per the
+   playbook: a `**Publish date:**` line under the title (scan
+   docs/content/drafts/*.md for the latest assigned date and continue one
+   day per post from there; skip posts already marked `PAYLAŞTIM`), and a
+   `## Visual` section at the end naming the exact screenshot, recording, or
+   AI-image prompt to accompany it.
 5. Update PROGRESS.md — status, decisions, dependency ledger
 6. Append to docs/workflow/learning.md in PROTOCOL.md format, honest Quality Score
 7. git commit + push (push is pre-approved by project rule)
@@ -50,7 +55,8 @@ seems to contradict them — in which case the documents win.
 - **No new dependency** without a Dependency Ledger row in `PROGRESS.md`
   naming what you rejected.
 - **Both posts, or the phase isn't done.** Marketing runs in parallel or this
-  project fails the way 1.0 did.
+  project fails the way 1.0 did. A post without a `**Publish date:**` line
+  and a `## Visual` section is not done either — see PEERLIST-PLAYBOOK.md.
 - **Never stall on the founder.** Blocked means: write a `BLOCKED` entry with
   the exact question, then start the next unblocked phase.
 - **No network in tests.** Every external dependency has a deterministic fake.
@@ -73,7 +79,7 @@ Phase NN — [name] ✅
 Shipped:   [3 bullets]
 Verified:  [the commands you ran + what the screenshots showed]
 Decisions: [anything non-obvious, already in PROGRESS.md]
-Posts:     [the two draft filenames]
+Posts:     [the two draft filenames, each with its assigned publish date]
 Next:      Phase NN+1 — [name]
 ```
 

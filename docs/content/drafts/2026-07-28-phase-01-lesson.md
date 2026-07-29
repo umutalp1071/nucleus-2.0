@@ -1,5 +1,7 @@
 # I chose JSON files over Postgres, on purpose
 
+**Publish date:** 2026-07-31
+
 My own planning doc from three days ago said Supabase. I built plain JSON
 files on disk instead, and I'd do it again.
 
@@ -39,3 +41,21 @@ the same.
 Where's your line for "just use a file" versus "just use a database"?
 
 #buildinpublic #nucleus2 #architecture
+
+---
+
+## Visual (production note — not part of the post)
+
+**Type:** Screenshot (terminal)
+
+From the project root, with the app run at least once so `.nucleus/` exists:
+
+1. Run `ls -la .nucleus/` to list the files.
+2. Run `cat .nucleus/ventures.json` (pick a file with real content, ideally
+   after creating one venture through the app) and let it print in full.
+3. Screenshot both outputs together — the directory listing on top, the
+   formatted JSON of a real venture object below it.
+
+Do **not** include `.nucleus/settings.json` in the screenshot or scrollback
+if an API key has ever been saved to it — even redacted, don't take the
+chance. Stick to `ventures.json` or `artifacts.json`.

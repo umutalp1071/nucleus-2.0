@@ -1,5 +1,7 @@
 # I refused to encrypt the stored API key, and I think that's the honest call
 
+**Publish date:** 2026-08-08
+
 The tempting move when you store a user's API key locally is to encrypt it
 at rest. I looked at it seriously and backed away.
 
@@ -39,3 +41,21 @@ Where's your line between real security and security theater in a
 local-first tool?
 
 #buildinpublic #nucleus2 #security
+
+---
+
+## Visual (production note — not part of the post)
+
+**Type:** Screenshot (live app)
+
+1. Go to `/settings`.
+2. In the "AI connection" section, paste any OpenRouter-shaped placeholder
+   key (format `sk-or-v1-...`, doesn't need to be a real working key for the
+   screenshot) and save.
+3. Screenshot the field once it re-renders showing the redacted preview
+   (something like `sk-or-...7890`) — never the full key — alongside the
+   "connected" status indicator.
+
+This is the visual proof of the post's actual claim: the raw key is never
+echoed back, not even to you, on the same page where a naive implementation
+would show it in plaintext.

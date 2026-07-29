@@ -1,5 +1,7 @@
 # A test you've never seen fail isn't a test
 
+**Publish date:** 2026-07-29
+
 I wrote a boundary test asserting that only one file in the codebase is
 allowed to import `node:fs`. It passed immediately. That told me nothing —
 the file it was supposed to catch didn't exist yet either.
@@ -32,3 +34,24 @@ Do you ever intentionally break your own tests before trusting them, or does
 that feel like overkill for something this small?
 
 #buildinpublic #nucleus2 #testing
+
+---
+
+## Visual (production note — not part of the post)
+
+**Type:** Screenshot (terminal)
+
+Recreate the exact failure quoted in the post, live:
+
+1. Temporarily add `import fs from "node:fs";` to the top of an unrelated
+   file, e.g. `src/lib/format.ts`.
+2. Run `npx vitest run tests/boundaries.test.ts`.
+3. Screenshot the red failure block — it should show the exact assertion
+   diff from the post (`expected [ 'lib/mock-data.ts' ] to deeply equal []`)
+   with the filename that triggered it.
+4. Revert the change: `git checkout -- src/lib/format.ts`.
+
+Dark terminal theme, full width so the diff isn't wrapped oddly, crop to just
+the failing test block (no need for the whole scrollback).
+
+PAYLAŞTIM

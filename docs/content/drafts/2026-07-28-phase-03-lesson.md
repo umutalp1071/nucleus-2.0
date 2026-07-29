@@ -1,5 +1,7 @@
 # Every AI idea-validator I've used is a hype machine
 
+**Publish date:** 2026-08-04
+
 Ask a model to evaluate a startup idea and it scores 80. Ask it about a
 genuinely bad one and it still scores 75. I didn't want to build a fourth
 version of that.
@@ -38,3 +40,20 @@ accident -- it's the actual product, not a watered-down demo.
 How do you stop an LLM from just agreeing with you?
 
 #buildinpublic #nucleus2 #llm
+
+---
+
+## Visual (production note — not part of the post)
+
+**Type:** Screenshot (live app)
+
+This one's directly capturable today, and demo mode makes it deterministic:
+
+1. Run the dashboard with no API key configured (demo mode).
+2. Click "New Idea," type any idea, click Analyze.
+3. The fixture returns a kill verdict (score 34) — screenshot the result
+   screen once it renders, framed so the score badge (red/kill), the
+   recommendation, and the `whyNot` paragraph are all visible together. If
+   risks are visible without scrolling, even better — the point is "required
+   field, not a vibe," so the more of the honest-verdict structure is on
+   screen at once, the better it lands.

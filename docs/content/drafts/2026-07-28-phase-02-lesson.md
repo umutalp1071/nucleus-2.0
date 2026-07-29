@@ -1,5 +1,7 @@
 # A dashboard that shows your spending is not a budget
 
+**Publish date:** 2026-08-02
+
 I almost built a spend meter first. Glad I didn't.
 
 **What I hit:** the obvious version of "budget tracking" is a number that goes
@@ -42,3 +44,18 @@ Has anyone actually shipped pre-flight cost control on an LLM feature, or
 does everyone just watch the graph and hope?
 
 #buildinpublic #nucleus2 #llm
+
+---
+
+## Visual (production note — not part of the post)
+
+**Type:** Screenshot (terminal)
+
+There's no budget UI yet at this point (Settings/spend breakdown ships in
+Phase 05) — prove the claim with the test suite instead of a mock graphic.
+
+Run `npx vitest run tests/budget.test.ts --reporter=verbose` and screenshot
+the output. Make sure the three named cases for `ok`, `downgrade`, and
+`block` decisions are all visible and passing in the same frame — that list
+of three outcomes *is* the point of the post, more convincing than a diagram
+of something that isn't built yet.

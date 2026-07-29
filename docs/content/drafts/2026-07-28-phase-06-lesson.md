@@ -1,5 +1,7 @@
 # Capping a schema field at 5 improved my AI output more than any prompt tweak
 
+**Publish date:** 2026-08-10
+
 Asking a model for "the must-have features" always got me the same result:
 twelve items, which is the same as no scope at all.
 
@@ -37,3 +39,16 @@ extra code and improved the actual content.
 What's the best output constraint you've found that wasn't a prompt change?
 
 #buildinpublic #nucleus2 #llm
+
+---
+
+## Visual (production note — not part of the post)
+
+**Type:** Screenshot (live app)
+
+Open a venture that's reached the "planned" stage (advance one through
+Planning if you don't have one yet) at `/ventures/[id]`, and screenshot the
+MVP Scope artifact card so both lists are visible in the same frame: "Must
+have" (5 items max) and "Explicitly not" (struck-through). Seeing the
+strike-through styling next to the capped list is the whole point — it's the
+`.max()`/`.min()` schema constraint made visible as UI.
