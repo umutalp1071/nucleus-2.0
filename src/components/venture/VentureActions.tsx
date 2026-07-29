@@ -21,10 +21,11 @@ export function VentureActions({ ventureId, stage }: { ventureId: string; stage:
     router.refresh();
   }
 
-  // No `to` in the body -- the route runs the AI task appropriate to the
-  // venture's current stage (plan-venture + scope-mvp for a validated one)
-  // and only then advances. A plain {to:"planned"} would skip generating
-  // the plan entirely.
+  // No `to` in the body -- the route runs whatever step is appropriate to
+  // the venture's current stage (plan-venture + scope-mvp for a validated
+  // one, milestone expansion with zero AI calls for a planned one) and only
+  // then advances. A plain {to:"planned"} would skip generating the plan
+  // entirely.
   async function runNextStep() {
     setBusy(true);
     setError(null);
@@ -42,21 +43,27 @@ export function VentureActions({ ventureId, stage }: { ventureId: string; stage:
     router.refresh();
   }
 
-  const canPlan = stage === "validated";
+  const nextStep =
+    stage === "validated"
+      ? { label: "Advance to Planning", busyLabel: "Planning..." }
+      : stage === "planned"
+      ? { label: "Start Building", busyLabel: "Starting..." }
+      : null;
   const canKill = stage === "captured" || stage === "validated";
   const canArchive = stage !== "archived";
 
   return (
     <div className="flex flex-col gap-2">
       <div className="flex flex-wrap gap-2">
-        <button
-          onClick={canPlan ? runNextStep : undefined}
-          disabled={!canPlan || busy}
-          title={canPlan ? undefined : "Available once this venture is validated"}
-          className="rounded-md border border-border px-3 py-2 text-sm font-semibold hover:bg-accent hover:text-accent-foreground disabled:cursor-not-allowed disabled:opacity-50"
-        >
-          {busy && canPlan ? "Planning..." : "Advance to Planning"}
-        </button>
+        {nextStep && (
+          <button
+            onClick={runNextStep}
+            disabled={busy}
+            className="rounded-md border border-border px-3 py-2 text-sm font-semibold hover:bg-accent hover:text-accent-foreground disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            {busy ? nextStep.busyLabel : nextStep.label}
+          </button>
+        )}
         {canKill && (
           <button
             onClick={() => advanceTo("killed")}

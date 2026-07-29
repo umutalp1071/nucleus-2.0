@@ -4,6 +4,7 @@ import { validateIdea } from "./validate-idea";
 import { analyzeCompetitors } from "./analyze-competitors";
 import { planVenture } from "./plan-venture";
 import { scopeMvp } from "./scope-mvp";
+import { generateBuildSpec } from "./generate-build-spec";
 
 export interface TaskDef<I = unknown, O = unknown> {
   name: string;
@@ -37,6 +38,7 @@ export const TASKS = {
   "analyze-competitors": analyzeCompetitors,
   "plan-venture": planVenture,
   "scope-mvp": scopeMvp,
+  "generate-build-spec": generateBuildSpec,
 } as const satisfies Record<string, TaskDef>;
 
 export type TaskName = keyof typeof TASKS;

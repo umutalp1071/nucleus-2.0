@@ -6,7 +6,7 @@
 
 ## Current phase
 
-**PHASE 07 — Build Stage** — not started
+**PHASE 08 — Launch Stage** — not started
 
 ---
 
@@ -21,7 +21,7 @@
 | 04 | Venture Workspace | ✅ done | (pending push) | ship, lesson |
 | 05 | Budget Console | ✅ done | (pending push) | ship, lesson |
 | 06 | Planning Stage | ✅ done | (pending push) | ship, lesson |
-| 07 | Build Stage | ⬜ | — | — |
+| 07 | Build Stage | ✅ done | (pending push) | ship, lesson |
 | 08 | Launch Stage | ⬜ | — | — |
 | 09 | Growth Stage | ⬜ | — | — |
 | 10 | Build-in-Public Engine | ⬜ | — | — |
@@ -121,6 +121,19 @@ noted as a known gap back in Phase 04) — verified with a genuinely fresh hard
 navigation to /settings, not a client-side back-navigation that could have
 masked the bug.
 
+### Phase 07 — Build Stage
+Files: src/lib/domain.ts (BuildTask/BuildSpec schemas, Venture.buildUrl),
+src/lib/build-spec-export.ts (new), src/server/db/repositories/buildTasks.ts
+(new), src/server/ventures/{startBuilding,generateBuildSpec}.ts (new),
+src/server/ai/tasks/generate-build-spec.ts, src/app/api/ventures/[id]/{advance,
+build-spec,tasks/[taskId]}/route.ts, src/components/venture/BuildStagePanel.tsx
+(new), src/components/venture/artifacts/BuildSpecArtifact.tsx (new).
+Risk: the milestone-to-task expansion looks trivial but "milestone" the field
+already means two different things (MvpScope's structured milestone objects
+vs. a plain grouping label on BuildTask) — mitigated by keeping the mapping
+1 milestone -> 1 task literally (no invented sub-tasks, no AI), so the data
+transformation stays honest to what "no AI call" means.
+
 ---
 
 ## Decisions log
@@ -160,6 +173,44 @@ Over: a Nucleus-hosted key with quotas.
 Because: zero marginal cost, no billing infra, no abuse surface, and it is the
 literal implementation of "under their own control."
 Revisit if: a hosted tier is ever offered.
+
+### 2026-07-29 · Build Stage · One milestone equals one task
+Chose: `planned -> building` maps each MVP milestone 1:1 to a BuildTask
+(`milestone: m.name, title: m.outcome`), with zero AI calls.
+Over: prompting a model to expand each milestone into several finer-grained
+sub-tasks.
+Because: the milestone objects already contain the content a task needs; a
+model call here would pay to reformat data already on disk and introduce
+nondeterminism into what should be a pure function. Guarded by a test that
+mocks `runTask` and asserts it is never called.
+Revisit if: users repeatedly ask for finer-grained checklists than 3-6 items
+per venture.
+
+### 2026-07-29 · Build Stage · Agent brief tested before shipping
+Chose: rendered a real `generate-build-spec` fixture through
+`buildSpecToAgentBrief` and read it as a fresh coding agent would, before
+writing the ship post.
+Over: trusting the schema/format design without running it.
+Because: the first draft named "auto-organizes" as a differentiator with no
+stated mechanism, and defined a `User` entity with no sign-in screen -- both
+would have left a real coding agent guessing. Fixed by adding two explicit
+requirements to the `generate-build-spec` prompt (name the mechanism behind
+any "automatic" claim; a User-shaped entity requires a sign-in screen) and
+updating the demo fixture to match.
+Revisit if: a future model provider makes these omissions common again --
+worth a schema-level check, not just a prompt instruction.
+
+### 2026-07-29 · Build Stage · Launch gating lives in the route, not a workflow engine
+Chose: `building -> launched` checks build-task completion inline in the
+advance route (409 + `reason: "tasks_incomplete"` unless `skipRemaining` is
+set), with the client showing a plain `window.confirm`.
+Over: a generic workflow/approval engine, or silently allowing the
+transition.
+Because: the stage machine's honesty is the point -- a half-built venture
+must never be silently marked launched -- and one conditional in one route is
+the smallest thing that enforces that.
+Revisit if: more stage transitions need similar gating (extract a shared
+helper only then, not preemptively).
 
 ### 2026-07-28 · Planning · Mock adapters are permanent
 Chose: AI provider and deploy target each have a deterministic fake, selected

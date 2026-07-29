@@ -3,13 +3,15 @@ import Link from "next/link";
 import * as ventures from "@/server/db/repositories/ventures";
 import * as artifactsRepo from "@/server/db/repositories/artifacts";
 import * as aiCallsRepo from "@/server/db/repositories/aiCalls";
+import * as buildTasksRepo from "@/server/db/repositories/buildTasks";
 import { Card, Badge } from "@/components/dashboard/ui";
 import { StageTimeline } from "@/components/venture/StageTimeline";
 import { VentureActions } from "@/components/venture/VentureActions";
+import { BuildStagePanel } from "@/components/venture/BuildStagePanel";
 import { ArtifactRenderer } from "@/components/venture/artifacts";
 import { stageLabel, stageTone } from "@/lib/stages";
 import { formatUsd, relativeTime } from "@/lib/format";
-import type { Artifact, ArtifactKind } from "@/lib/domain";
+import type { Artifact, ArtifactKind, MvpScope } from "@/lib/domain";
 
 export const dynamic = "force-dynamic";
 
@@ -42,11 +44,15 @@ export default async function VentureWorkspace({ params }: { params: { id: strin
   const venture = await ventures.get(params.id);
   if (!venture) notFound();
 
-  const [artifacts, spend] = await Promise.all([
+  const [artifacts, spend, buildTasks] = await Promise.all([
     artifactsRepo.listByVenture(venture.id),
     aiCallsRepo.sumByVenture(venture.id),
+    buildTasksRepo.listByVenture(venture.id),
   ]);
   const groups = groupByKind(artifacts);
+  const mvpScopeGroup = groups.find((g) => g.kind === "mvp_scope");
+  const stack = mvpScopeGroup ? (mvpScopeGroup.latest.content as MvpScope).stack : undefined;
+  const buildSpecContext = { ventureTitle: venture.title, stack };
 
   return (
     <div className="min-h-screen">
@@ -73,7 +79,7 @@ export default async function VentureWorkspace({ params }: { params: { id: strin
         ) : (
           groups.map(({ kind, latest, older }) => (
             <Card key={kind} className="flex flex-col gap-3">
-              <ArtifactRenderer artifact={latest} />
+              <ArtifactRenderer artifact={latest} buildSpecContext={buildSpecContext} />
               {older.length > 0 && (
                 <details className="text-xs text-muted-foreground">
                   <summary className="cursor-pointer">
@@ -83,7 +89,7 @@ export default async function VentureWorkspace({ params }: { params: { id: strin
                     {older.map((artifact) => (
                       <div key={artifact.id} className="opacity-70">
                         <p className="mb-1">{relativeTime(artifact.createdAt)}</p>
-                        <ArtifactRenderer artifact={artifact} />
+                        <ArtifactRenderer artifact={artifact} buildSpecContext={buildSpecContext} />
                       </div>
                     ))}
                   </div>
@@ -92,6 +98,14 @@ export default async function VentureWorkspace({ params }: { params: { id: strin
             </Card>
           ))
         )}
+
+        <BuildStagePanel
+          ventureId={venture.id}
+          stage={venture.stage}
+          tasks={buildTasks}
+          buildUrl={venture.buildUrl ?? null}
+          hasBuildSpec={groups.some((g) => g.kind === "build_spec")}
+        />
 
         <Card className="flex flex-col gap-3">
           <VentureActions ventureId={venture.id} stage={venture.stage} />

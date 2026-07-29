@@ -2,6 +2,70 @@
 
 ---
 
+## 2026-07-29 — Plan Phase 07: Build Stage
+
+**What we did:**
+Added the Build stage: `planned -> building` expands each MVP milestone
+1:1 into a checkable `BuildTask` (`milestone: name, title: outcome`) with
+zero AI calls, guarded by a test that mocks the gateway's `runTask` and
+asserts it is never invoked. A new `generate-build-spec` task produces the
+handoff artifact -- user stories with acceptance criteria, a data model,
+screens, an explicit out-of-scope list, and a literal first commit -- and one
+"Copy for..." control renders it three ways (Markdown, an agent brief, and a
+single paste-ready prompt for Lovable/v0/Bolt), copying to clipboard and
+offering a download for each. The workspace page gained a `BuildStagePanel`:
+milestone-grouped task checkboxes, a derived progress bar, an "up next" line,
+a plain external-build-link text field (`Venture.buildUrl`, no integration),
+and the spec-generation trigger. `building -> launched` now refuses silently
+skipping unchecked tasks -- it 409s with `reason: "tasks_incomplete"` unless
+the client explicitly confirms and resends with `skipRemaining: true`.
+
+**Decisions:**
+- **One milestone, one task -- no invented sub-tasks.** The milestone
+  objects already carry a name and an outcome; the temptation was to prompt a
+  model to break each into finer steps, which would have paid for
+  reformatting data already on disk and introduced nondeterminism into a
+  step that should be a pure function.
+- **`BuildSpecSchema` has no `stack` field, even though the agent brief needs
+  a stack recommendation.** The phase spec's schema is authoritative and
+  doesn't include one. Threaded the `mvp_scope` artifact's `stack` through as
+  optional export context instead of widening the artifact's own schema for
+  one rendering concern.
+- **Launch gating lives inline in the advance route, not a workflow engine.**
+  One conditional (check incomplete tasks, 409 unless `skipRemaining`) is the
+  smallest thing that keeps a half-built venture from being silently marked
+  launched -- extracting a generic gate would be solving a problem this
+  project doesn't have yet.
+
+**Mistake caught mid-session:** the phase file explicitly requires testing
+the agent-brief format in a real coding-agent session before writing the
+ship post, not just designing it and trusting the schema. Rendered a real
+`generate-build-spec` fixture through `buildSpecToAgentBrief` and read it
+cold, the way a fresh agent would. It named "auto-organizes" as the
+differentiating feature with no stated mechanism, and defined a `User`
+entity with no sign-in screen anywhere in `screens` -- a real coding agent
+would have had to invent both. Fixed by adding two explicit requirements to
+the `generate-build-spec` prompt (name the mechanism behind any "automatic"
+claim; a user-shaped entity requires a sign-in screen) and updating the demo
+fixture to match, then re-rendered to confirm the gap closed.
+
+**Next step:** Phase 08 — Launch Stage. Deploy the generated landing page for
+real.
+
+**Quality Score: 91/100**
+- All acceptance criteria met: the zero-AI-calls assertion is a real mock-based
+  guard rather than an inference from reading the code, all three export
+  formats are tested against the fixture, and the agent brief was genuinely
+  round-tripped (not just designed) before the ship post was written, catching
+  a real content gap.
+- Docked for: the browser smoke test's first pass used a Playwright `.check()`
+  assertion that raced React's `router.refresh()` DOM swap and failed on a
+  false positive (fixed by switching to a plain `.click()` + re-query) -- a
+  reminder that the app was fine, the test's assumption about DOM node
+  identity across a server-component refresh was not.
+
+---
+
 ## 2026-07-28 — Plan Phase 06: Planning Stage
 
 **What we did:**

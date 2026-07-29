@@ -98,4 +98,49 @@ export const FIXTURES: Record<string, unknown> = {
     },
     riskiestAssumption: "That the organization step actually saves people time versus doing it manually -- unproven until real users try it.",
   },
+
+  "generate-build-spec": {
+    summary: "A single-player capture tool that automatically organizes what you save, so you never have to manually file anything again.",
+    userStories: [
+      {
+        as: "a returning user",
+        iWant: "to capture a new item in under 10 seconds",
+        soThat: "the friction of saving something never stops me from doing it",
+        acceptance: [
+          "A capture form is reachable within one click/tap from any screen",
+          "Submitting the form returns the user to a ready-to-capture state, not a dead end",
+        ],
+      },
+      {
+        as: "a user with several captured items",
+        iWant: "them organized automatically",
+        soThat: "I never have to manually tag or file anything",
+        acceptance: [
+          "Each new item is assigned to the category whose existing items share the most keywords with it -- no manual tagging step",
+          "Reloading the page preserves the organization",
+        ],
+      },
+      {
+        as: "a first-time visitor",
+        iWant: "to understand what the product does within a few seconds",
+        soThat: "I decide whether to try it instead of bouncing",
+        acceptance: ["The landing view names the core loop in one sentence, above the fold"],
+      },
+    ],
+    dataModel: [
+      { entity: "User", fields: ["id", "email", "createdAt"] },
+      { entity: "Item", fields: ["id", "userId", "content", "category", "createdAt"] },
+    ],
+    screens: [
+      { name: "Sign in", purpose: "Authenticate a returning user", elements: ["email field", "magic link button"] },
+      { name: "Capture", purpose: "Add a new item in one step", elements: ["input field", "submit button"] },
+      { name: "Organized view", purpose: "See everything captured, auto-grouped", elements: ["grouped list", "empty state"] },
+    ],
+    outOfScope: [
+      "Team collaboration -- v1 is single-player only",
+      "Mobile app -- web-only until there's proof anyone wants this",
+      "Integrations with other tools -- adds surface area before the core loop is proven",
+    ],
+    firstCommit: "Set up the data model (User, Item) and a single capture form that writes an Item.",
+  },
 };

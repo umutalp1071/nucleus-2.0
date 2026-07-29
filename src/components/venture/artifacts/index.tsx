@@ -1,19 +1,28 @@
-import type { Artifact, Verdict, Competitors, Plan, MvpScope } from "@/lib/domain";
+import type { Artifact, Verdict, Competitors, Plan, MvpScope, BuildSpec } from "@/lib/domain";
+import type { BuildSpecContext } from "@/lib/build-spec-export";
 import { ValidationArtifact } from "./ValidationArtifact";
 import { CompetitorsArtifact } from "./CompetitorsArtifact";
 import { PlanArtifact } from "./PlanArtifact";
 import { MvpScopeArtifact } from "./MvpScopeArtifact";
+import { BuildSpecArtifact } from "./BuildSpecArtifact";
 import { RegenerateControl } from "./RegenerateControl";
 
 const REGENERATABLE = new Set<Artifact["kind"]>(["plan", "mvp_scope"]);
 
 // Adding a new artifact kind means adding one file and one case here --
-// never editing the renderers that already exist.
-export function ArtifactRenderer({ artifact }: { artifact: Artifact }) {
+// never editing the renderers that already exist. `buildSpecContext` is only
+// read by the build_spec case; every other kind ignores it.
+export function ArtifactRenderer({
+  artifact,
+  buildSpecContext,
+}: {
+  artifact: Artifact;
+  buildSpecContext?: BuildSpecContext;
+}) {
   return (
     <div className="flex flex-col gap-2">
       {artifact.demo && <DemoMarker />}
-      <ArtifactBody artifact={artifact} />
+      <ArtifactBody artifact={artifact} buildSpecContext={buildSpecContext} />
       {REGENERATABLE.has(artifact.kind) && (
         <RegenerateControl ventureId={artifact.ventureId} kind={artifact.kind as "plan" | "mvp_scope"} />
       )}
@@ -32,7 +41,13 @@ function DemoMarker() {
   );
 }
 
-function ArtifactBody({ artifact }: { artifact: Artifact }) {
+function ArtifactBody({
+  artifact,
+  buildSpecContext,
+}: {
+  artifact: Artifact;
+  buildSpecContext?: BuildSpecContext;
+}) {
   switch (artifact.kind) {
     case "validation":
       return <ValidationArtifact verdict={artifact.content as Verdict} />;
@@ -42,6 +57,13 @@ function ArtifactBody({ artifact }: { artifact: Artifact }) {
       return <PlanArtifact plan={artifact.content as Plan} />;
     case "mvp_scope":
       return <MvpScopeArtifact scope={artifact.content as MvpScope} />;
+    case "build_spec":
+      return (
+        <BuildSpecArtifact
+          spec={artifact.content as BuildSpec}
+          ctx={buildSpecContext ?? { ventureTitle: "" }}
+        />
+      );
     default:
       return <UnknownArtifact artifact={artifact} />;
   }

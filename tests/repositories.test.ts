@@ -7,6 +7,7 @@ import * as artifacts from "@/server/db/repositories/artifacts";
 import * as events from "@/server/db/repositories/events";
 import * as aiCalls from "@/server/db/repositories/aiCalls";
 import * as settings from "@/server/db/repositories/settings";
+import * as buildTasks from "@/server/db/repositories/buildTasks";
 
 let tmpDir: string;
 let opts: { baseDir: string };
@@ -146,6 +147,48 @@ describe("aiCalls repository", () => {
     );
     const total = await aiCalls.sumByVenture(venture.id, opts);
     expect(total).toBeCloseTo(0.05, 5);
+  });
+});
+
+describe("buildTasks repository", () => {
+  it("createMany creates one task per input, in order, all undone", async () => {
+    const venture = await ventures.create({ title: "Idea", description: "" }, opts);
+    const created = await buildTasks.createMany(
+      venture.id,
+      [
+        { milestone: "m1", title: "t1" },
+        { milestone: "m2", title: "t2" },
+      ],
+      opts
+    );
+    expect(created).toHaveLength(2);
+    expect(created.every((t) => t.done === false && t.doneAt === null)).toBe(true);
+
+    const listed = await buildTasks.listByVenture(venture.id, opts);
+    expect(listed.map((t) => t.title)).toEqual(["t1", "t2"]);
+  });
+
+  it("setDone toggles done and stamps/clears doneAt", async () => {
+    const venture = await ventures.create({ title: "Idea", description: "" }, opts);
+    const [task] = await buildTasks.createMany(venture.id, [{ milestone: "m1", title: "t1" }], opts);
+
+    const done = await buildTasks.setDone(task.id, true, opts);
+    expect(done.done).toBe(true);
+    expect(done.doneAt).not.toBeNull();
+
+    const undone = await buildTasks.setDone(task.id, false, opts);
+    expect(undone.done).toBe(false);
+    expect(undone.doneAt).toBeNull();
+  });
+
+  it("listByVenture only returns tasks for that venture", async () => {
+    const a = await ventures.create({ title: "A", description: "" }, opts);
+    const b = await ventures.create({ title: "B", description: "" }, opts);
+    await buildTasks.createMany(a.id, [{ milestone: "m", title: "a-task" }], opts);
+    await buildTasks.createMany(b.id, [{ milestone: "m", title: "b-task" }], opts);
+
+    const listed = await buildTasks.listByVenture(a.id, opts);
+    expect(listed.map((t) => t.title)).toEqual(["a-task"]);
   });
 });
 

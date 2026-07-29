@@ -18,6 +18,11 @@ export const VentureSchema = z.object({
   description: z.string(),
   stage: StageSchema,
   verdictScore: z.number().min(0).max(100).nullable(),
+  // Where the venture is actually being built -- a repo, a Lovable project, a
+  // folder path. A plain text field, never an integration. Defaulted so
+  // ventures saved before this field existed still parse. See
+  // docs/plan/PHASE-07-build-stage.md.
+  buildUrl: z.string().nullable().default(null),
   createdAt: z.string(),
   updatedAt: z.string(),
 });
@@ -160,3 +165,41 @@ export const MvpScopeSchema = z.object({
   riskiestAssumption: z.string(),
 });
 export type MvpScope = z.infer<typeof MvpScopeSchema>;
+
+// One checkable task per MVP milestone. Created by expanding milestones on
+// planned -> building; never by an AI call -- the plan already contains the
+// content. See docs/plan/PHASE-07-build-stage.md.
+export const BuildTaskSchema = z.object({
+  id: z.string(),
+  ventureId: z.string(),
+  milestone: z.string(),
+  title: z.string(),
+  done: z.boolean(),
+  createdAt: z.string(),
+  doneAt: z.string().nullable(),
+});
+export type BuildTask = z.infer<typeof BuildTaskSchema>;
+
+// The artifact that leaves Nucleus and enters a build tool -- three export
+// formats render the same data. See docs/plan/PHASE-07-build-stage.md.
+export const BuildSpecSchema = z.object({
+  summary: z.string(),
+  userStories: z
+    .array(
+      z.object({
+        as: z.string(),
+        iWant: z.string(),
+        soThat: z.string(),
+        acceptance: z.array(z.string()).min(1),
+      })
+    )
+    .min(3)
+    .max(10),
+  dataModel: z.array(z.object({ entity: z.string(), fields: z.array(z.string()) })),
+  screens: z.array(z.object({ name: z.string(), purpose: z.string(), elements: z.array(z.string()) })),
+  outOfScope: z.array(z.string()).min(3),
+  // The literal first thing to build -- naming it removes the hardest part
+  // of starting, which is starting.
+  firstCommit: z.string(),
+});
+export type BuildSpec = z.infer<typeof BuildSpecSchema>;

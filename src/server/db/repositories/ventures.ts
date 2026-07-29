@@ -30,6 +30,7 @@ export async function create(
     description: input.description,
     stage: "captured",
     verdictScore: null,
+    buildUrl: null,
     createdAt: now,
     updatedAt: now,
   };
@@ -46,7 +47,7 @@ export async function create(
 
 export async function update(
   id: string,
-  patch: { title?: string; description?: string; verdictScore?: number | null },
+  patch: { title?: string; description?: string; verdictScore?: number | null; buildUrl?: string | null },
   opts?: RepoOpts
 ): Promise<Venture> {
   const rows = await readCollection<Venture>(COLLECTION, opts);

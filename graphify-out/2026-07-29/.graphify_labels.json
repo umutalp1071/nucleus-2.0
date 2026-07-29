@@ -86,20 +86,5 @@
   "84": "config.test.ts",
   "85": "smoke.test.ts",
   "86": "store.test.ts",
-  "87": "vitest.config.ts",
-  "88": "validateAndAdvance.ts",
-  "89": "planAndAdvance.ts",
-  "90": "domain.ts",
-  "91": "repositories/events.ts",
-  "92": "artifacts.ts",
-  "93": "aiCalls.ts",
-  "94": "buildTasks.ts",
-  "95": "Provider",
-  "96": "ventures.ts",
-  "97": "idea-export.ts",
-  "98": "settings.ts",
-  "99": "ventures/route.ts",
-  "100": "budget.test.ts",
-  "101": "The best feature I shipped this week makes zero AI calls",
-  "102": "Nucleus doesn't write your code. It writes the brief that does."
+  "87": "vitest.config.ts"
 }

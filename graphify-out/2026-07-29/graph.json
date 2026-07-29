@@ -582,8 +582,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_app_api_artifacts_route",
-      "community": 92,
-      "community_name": "artifacts.ts",
+      "community": 42,
+      "community_name": "writeCollection",
       "norm_label": "artifacts/route.ts"
     },
     {
@@ -593,8 +593,8 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "src_app_api_artifacts_route_get",
-      "community": 92,
-      "community_name": "artifacts.ts",
+      "community": 42,
+      "community_name": "writeCollection",
       "norm_label": "get()"
     },
     {
@@ -604,8 +604,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_app_api_budget_breakdown_route",
-      "community": 93,
-      "community_name": "aiCalls.ts",
+      "community": 42,
+      "community_name": "writeCollection",
       "norm_label": "breakdown/route.ts"
     },
     {
@@ -615,8 +615,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "src_app_api_budget_breakdown_route_get",
-      "community": 93,
-      "community_name": "aiCalls.ts",
+      "community": 42,
+      "community_name": "writeCollection",
       "norm_label": "get()"
     },
     {
@@ -648,8 +648,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_app_api_events_route",
-      "community": 91,
-      "community_name": "repositories/events.ts",
+      "community": 42,
+      "community_name": "writeCollection",
       "norm_label": "events/route.ts"
     },
     {
@@ -659,8 +659,8 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "src_app_api_events_route_get",
-      "community": 91,
-      "community_name": "repositories/events.ts",
+      "community": 42,
+      "community_name": "writeCollection",
       "norm_label": "get()"
     },
     {
@@ -835,8 +835,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_app_api_ventures_id_advance_route",
-      "community": 89,
-      "community_name": "planAndAdvance.ts",
+      "community": 3,
+      "community_name": "devDependencies",
       "norm_label": "advance/route.ts"
     },
     {
@@ -846,8 +846,8 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "src_app_api_ventures_id_advance_route_bodyschema",
-      "community": 89,
-      "community_name": "planAndAdvance.ts",
+      "community": 3,
+      "community_name": "devDependencies",
       "norm_label": "bodyschema"
     },
     {
@@ -857,8 +857,8 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "src_app_api_ventures_id_advance_route_statusfor",
-      "community": 89,
-      "community_name": "planAndAdvance.ts",
+      "community": 3,
+      "community_name": "devDependencies",
       "norm_label": "statusfor()"
     },
     {
@@ -868,8 +868,8 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "src_app_api_ventures_id_advance_route_post",
-      "community": 89,
-      "community_name": "planAndAdvance.ts",
+      "community": 3,
+      "community_name": "devDependencies",
       "norm_label": "post()"
     },
     {
@@ -1011,8 +1011,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_app_api_ventures_id_tasks_taskid_route",
-      "community": 94,
-      "community_name": "buildTasks.ts",
+      "community": 42,
+      "community_name": "writeCollection",
       "norm_label": "[taskid]/route.ts"
     },
     {
@@ -1022,8 +1022,8 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "src_app_api_ventures_id_tasks_taskid_route_bodyschema",
-      "community": 94,
-      "community_name": "buildTasks.ts",
+      "community": 42,
+      "community_name": "writeCollection",
       "norm_label": "bodyschema"
     },
     {
@@ -1033,8 +1033,8 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "src_app_api_ventures_id_tasks_taskid_route_patch",
-      "community": 94,
-      "community_name": "buildTasks.ts",
+      "community": 42,
+      "community_name": "writeCollection",
       "norm_label": "patch()"
     },
     {
@@ -1044,8 +1044,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_app_api_ventures_route",
-      "community": 99,
-      "community_name": "ventures/route.ts",
+      "community": 3,
+      "community_name": "devDependencies",
       "norm_label": "ventures/route.ts"
     },
     {
@@ -1055,8 +1055,8 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "src_app_api_ventures_route_createventureschema",
-      "community": 99,
-      "community_name": "ventures/route.ts",
+      "community": 3,
+      "community_name": "devDependencies",
       "norm_label": "createventureschema"
     },
     {
@@ -1066,8 +1066,8 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "src_app_api_ventures_route_get",
-      "community": 99,
-      "community_name": "ventures/route.ts",
+      "community": 3,
+      "community_name": "devDependencies",
       "norm_label": "get()"
     },
     {
@@ -1077,8 +1077,8 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "src_app_api_ventures_route_post",
-      "community": 99,
-      "community_name": "ventures/route.ts",
+      "community": 3,
+      "community_name": "devDependencies",
       "norm_label": "post()"
     },
     {
@@ -2188,8 +2188,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_domain",
-      "community": 90,
-      "community_name": "domain.ts",
+      "community": 33,
+      "community_name": "NewIdeaFlow.tsx",
       "norm_label": "domain.ts"
     },
     {
@@ -2199,8 +2199,8 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "src_lib_domain_stageschema",
-      "community": 89,
-      "community_name": "planAndAdvance.ts",
+      "community": 3,
+      "community_name": "devDependencies",
       "norm_label": "stageschema"
     },
     {
@@ -2221,8 +2221,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "src_lib_domain_ventureschema",
-      "community": 96,
-      "community_name": "ventures.ts",
+      "community": 3,
+      "community_name": "devDependencies",
       "norm_label": "ventureschema"
     },
     {
@@ -2232,8 +2232,8 @@
       "source_location": "L29",
       "_origin": "ast",
       "id": "src_lib_domain_venture",
-      "community": 89,
-      "community_name": "planAndAdvance.ts",
+      "community": 3,
+      "community_name": "devDependencies",
       "norm_label": "venture"
     },
     {
@@ -2243,8 +2243,8 @@
       "source_location": "L31",
       "_origin": "ast",
       "id": "src_lib_domain_artifactkindschema",
-      "community": 90,
-      "community_name": "domain.ts",
+      "community": 33,
+      "community_name": "NewIdeaFlow.tsx",
       "norm_label": "artifactkindschema"
     },
     {
@@ -2265,8 +2265,8 @@
       "source_location": "L42",
       "_origin": "ast",
       "id": "src_lib_domain_artifactschema",
-      "community": 92,
-      "community_name": "artifacts.ts",
+      "community": 42,
+      "community_name": "writeCollection",
       "norm_label": "artifactschema"
     },
     {
@@ -2276,8 +2276,8 @@
       "source_location": "L55",
       "_origin": "ast",
       "id": "src_lib_domain_artifact",
-      "community": 95,
-      "community_name": "Provider",
+      "community": 33,
+      "community_name": "NewIdeaFlow.tsx",
       "norm_label": "artifact"
     },
     {
@@ -2287,8 +2287,8 @@
       "source_location": "L57",
       "_origin": "ast",
       "id": "src_lib_domain_nucleuseventschema",
-      "community": 91,
-      "community_name": "repositories/events.ts",
+      "community": 42,
+      "community_name": "writeCollection",
       "norm_label": "nucleuseventschema"
     },
     {
@@ -2298,8 +2298,8 @@
       "source_location": "L65",
       "_origin": "ast",
       "id": "src_lib_domain_nucleusevent",
-      "community": 91,
-      "community_name": "repositories/events.ts",
+      "community": 16,
+      "community_name": "page.tsx",
       "norm_label": "nucleusevent"
     },
     {
@@ -2309,8 +2309,8 @@
       "source_location": "L67",
       "_origin": "ast",
       "id": "src_lib_domain_aicallschema",
-      "community": 93,
-      "community_name": "aiCalls.ts",
+      "community": 42,
+      "community_name": "writeCollection",
       "norm_label": "aicallschema"
     },
     {
@@ -2320,8 +2320,8 @@
       "source_location": "L78",
       "_origin": "ast",
       "id": "src_lib_domain_aicall",
-      "community": 100,
-      "community_name": "budget.test.ts",
+      "community": 42,
+      "community_name": "writeCollection",
       "norm_label": "aicall"
     },
     {
@@ -2331,8 +2331,8 @@
       "source_location": "L83",
       "_origin": "ast",
       "id": "src_lib_domain_verdictschema",
-      "community": 88,
-      "community_name": "validateAndAdvance.ts",
+      "community": 33,
+      "community_name": "NewIdeaFlow.tsx",
       "norm_label": "verdictschema"
     },
     {
@@ -2342,8 +2342,8 @@
       "source_location": "L106",
       "_origin": "ast",
       "id": "src_lib_domain_verdict",
-      "community": 88,
-      "community_name": "validateAndAdvance.ts",
+      "community": 33,
+      "community_name": "NewIdeaFlow.tsx",
       "norm_label": "verdict"
     },
     {
@@ -2353,8 +2353,8 @@
       "source_location": "L108",
       "_origin": "ast",
       "id": "src_lib_domain_competitorsschema",
-      "community": 88,
-      "community_name": "validateAndAdvance.ts",
+      "community": 33,
+      "community_name": "NewIdeaFlow.tsx",
       "norm_label": "competitorsschema"
     },
     {
@@ -2364,8 +2364,8 @@
       "source_location": "L123",
       "_origin": "ast",
       "id": "src_lib_domain_competitors",
-      "community": 88,
-      "community_name": "validateAndAdvance.ts",
+      "community": 33,
+      "community_name": "NewIdeaFlow.tsx",
       "norm_label": "competitors"
     },
     {
@@ -2375,8 +2375,8 @@
       "source_location": "L125",
       "_origin": "ast",
       "id": "src_lib_domain_planschema",
-      "community": 90,
-      "community_name": "domain.ts",
+      "community": 33,
+      "community_name": "NewIdeaFlow.tsx",
       "norm_label": "planschema"
     },
     {
@@ -2386,8 +2386,8 @@
       "source_location": "L146",
       "_origin": "ast",
       "id": "src_lib_domain_plan",
-      "community": 90,
-      "community_name": "domain.ts",
+      "community": 33,
+      "community_name": "NewIdeaFlow.tsx",
       "norm_label": "plan"
     },
     {
@@ -2397,8 +2397,8 @@
       "source_location": "L148",
       "_origin": "ast",
       "id": "src_lib_domain_mvpscopeschema",
-      "community": 90,
-      "community_name": "domain.ts",
+      "community": 33,
+      "community_name": "NewIdeaFlow.tsx",
       "norm_label": "mvpscopeschema"
     },
     {
@@ -2408,8 +2408,8 @@
       "source_location": "L167",
       "_origin": "ast",
       "id": "src_lib_domain_mvpscope",
-      "community": 90,
-      "community_name": "domain.ts",
+      "community": 33,
+      "community_name": "NewIdeaFlow.tsx",
       "norm_label": "mvpscope"
     },
     {
@@ -2419,8 +2419,8 @@
       "source_location": "L172",
       "_origin": "ast",
       "id": "src_lib_domain_buildtaskschema",
-      "community": 94,
-      "community_name": "buildTasks.ts",
+      "community": 42,
+      "community_name": "writeCollection",
       "norm_label": "buildtaskschema"
     },
     {
@@ -2430,8 +2430,8 @@
       "source_location": "L181",
       "_origin": "ast",
       "id": "src_lib_domain_buildtask",
-      "community": 89,
-      "community_name": "planAndAdvance.ts",
+      "community": 16,
+      "community_name": "page.tsx",
       "norm_label": "buildtask"
     },
     {
@@ -2441,8 +2441,8 @@
       "source_location": "L185",
       "_origin": "ast",
       "id": "src_lib_domain_buildspecschema",
-      "community": 90,
-      "community_name": "domain.ts",
+      "community": 33,
+      "community_name": "NewIdeaFlow.tsx",
       "norm_label": "buildspecschema"
     },
     {
@@ -2496,8 +2496,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_idea_export",
-      "community": 97,
-      "community_name": "idea-export.ts",
+      "community": 16,
+      "community_name": "page.tsx",
       "norm_label": "idea-export.ts"
     },
     {
@@ -2507,8 +2507,8 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "src_lib_idea_export_download",
-      "community": 97,
-      "community_name": "idea-export.ts",
+      "community": 16,
+      "community_name": "page.tsx",
       "norm_label": "download()"
     },
     {
@@ -2518,8 +2518,8 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "src_lib_idea_export_todaystamp",
-      "community": 97,
-      "community_name": "idea-export.ts",
+      "community": 16,
+      "community_name": "page.tsx",
       "norm_label": "todaystamp()"
     },
     {
@@ -2529,8 +2529,8 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "src_lib_idea_export_exportventuresasjson",
-      "community": 97,
-      "community_name": "idea-export.ts",
+      "community": 16,
+      "community_name": "page.tsx",
       "norm_label": "exportventuresasjson()"
     },
     {
@@ -2540,8 +2540,8 @@
       "source_location": "L29",
       "_origin": "ast",
       "id": "src_lib_idea_export_csvcell",
-      "community": 97,
-      "community_name": "idea-export.ts",
+      "community": 16,
+      "community_name": "page.tsx",
       "norm_label": "csvcell()"
     },
     {
@@ -2551,8 +2551,8 @@
       "source_location": "L33",
       "_origin": "ast",
       "id": "src_lib_idea_export_exportventuresascsv",
-      "community": 97,
-      "community_name": "idea-export.ts",
+      "community": 16,
+      "community_name": "page.tsx",
       "norm_label": "exportventuresascsv()"
     },
     {
@@ -2683,8 +2683,8 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "src_server_ai_budget_caps",
-      "community": 44,
-      "community_name": "gateway.ts",
+      "community": 43,
+      "community_name": "budget.ts",
       "norm_label": "caps"
     },
     {
@@ -2925,8 +2925,8 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "src_server_ai_gateway_runtaskopts",
-      "community": 44,
-      "community_name": "gateway.ts",
+      "community": 43,
+      "community_name": "budget.ts",
       "norm_label": "runtaskopts"
     },
     {
@@ -3101,8 +3101,8 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "src_server_ai_provider_provider",
-      "community": 95,
-      "community_name": "Provider",
+      "community": 3,
+      "community_name": "devDependencies",
       "norm_label": "provider"
     },
     {
@@ -3112,8 +3112,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "src_server_ai_provider_provider_complete",
-      "community": 95,
-      "community_name": "Provider",
+      "community": 3,
+      "community_name": "devDependencies",
       "norm_label": ".complete()"
     },
     {
@@ -3189,8 +3189,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_server_ai_tasks_analyze_competitors",
-      "community": 88,
-      "community_name": "validateAndAdvance.ts",
+      "community": 33,
+      "community_name": "NewIdeaFlow.tsx",
       "norm_label": "analyze-competitors.ts"
     },
     {
@@ -3200,8 +3200,8 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "src_server_ai_tasks_analyze_competitors_analyzecompetitorsinput",
-      "community": 88,
-      "community_name": "validateAndAdvance.ts",
+      "community": 33,
+      "community_name": "NewIdeaFlow.tsx",
       "norm_label": "analyzecompetitorsinput"
     },
     {
@@ -3211,8 +3211,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "src_server_ai_tasks_analyze_competitors_analyzecompetitors",
-      "community": 88,
-      "community_name": "validateAndAdvance.ts",
+      "community": 33,
+      "community_name": "NewIdeaFlow.tsx",
       "norm_label": "analyzecompetitors"
     },
     {
@@ -3222,8 +3222,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_server_ai_tasks_generate_build_spec",
-      "community": 90,
-      "community_name": "domain.ts",
+      "community": 33,
+      "community_name": "NewIdeaFlow.tsx",
       "norm_label": "generate-build-spec.ts"
     },
     {
@@ -3233,8 +3233,8 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "src_server_ai_tasks_generate_build_spec_generatebuildspecinput",
-      "community": 90,
-      "community_name": "domain.ts",
+      "community": 33,
+      "community_name": "NewIdeaFlow.tsx",
       "norm_label": "generatebuildspecinput"
     },
     {
@@ -3244,8 +3244,8 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "src_server_ai_tasks_generate_build_spec_generatebuildspec",
-      "community": 88,
-      "community_name": "validateAndAdvance.ts",
+      "community": 33,
+      "community_name": "NewIdeaFlow.tsx",
       "norm_label": "generatebuildspec"
     },
     {
@@ -3255,8 +3255,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_server_ai_tasks_index",
-      "community": 88,
-      "community_name": "validateAndAdvance.ts",
+      "community": 33,
+      "community_name": "NewIdeaFlow.tsx",
       "norm_label": "tasks/index.ts"
     },
     {
@@ -3266,8 +3266,8 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "src_server_ai_tasks_index_taskdef",
-      "community": 88,
-      "community_name": "validateAndAdvance.ts",
+      "community": 33,
+      "community_name": "NewIdeaFlow.tsx",
       "norm_label": "taskdef"
     },
     {
@@ -3277,8 +3277,8 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "src_server_ai_tasks_index_taskdef_prompt",
-      "community": 88,
-      "community_name": "validateAndAdvance.ts",
+      "community": 33,
+      "community_name": "NewIdeaFlow.tsx",
       "norm_label": ".prompt()"
     },
     {
@@ -3288,8 +3288,8 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "src_server_ai_tasks_index_echocheckschema",
-      "community": 88,
-      "community_name": "validateAndAdvance.ts",
+      "community": 33,
+      "community_name": "NewIdeaFlow.tsx",
       "norm_label": "echocheckschema"
     },
     {
@@ -3299,8 +3299,8 @@
       "source_location": "L26",
       "_origin": "ast",
       "id": "src_server_ai_tasks_index_echocheck",
-      "community": 88,
-      "community_name": "validateAndAdvance.ts",
+      "community": 33,
+      "community_name": "NewIdeaFlow.tsx",
       "norm_label": "echocheck"
     },
     {
@@ -3310,8 +3310,8 @@
       "source_location": "L44",
       "_origin": "ast",
       "id": "src_server_ai_tasks_index_taskname",
-      "community": 88,
-      "community_name": "validateAndAdvance.ts",
+      "community": 33,
+      "community_name": "NewIdeaFlow.tsx",
       "norm_label": "taskname"
     },
     {
@@ -3321,8 +3321,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_server_ai_tasks_plan_venture",
-      "community": 88,
-      "community_name": "validateAndAdvance.ts",
+      "community": 33,
+      "community_name": "NewIdeaFlow.tsx",
       "norm_label": "plan-venture.ts"
     },
     {
@@ -3332,8 +3332,8 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "src_server_ai_tasks_plan_venture_planventureinput",
-      "community": 88,
-      "community_name": "validateAndAdvance.ts",
+      "community": 33,
+      "community_name": "NewIdeaFlow.tsx",
       "norm_label": "planventureinput"
     },
     {
@@ -3343,8 +3343,8 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "src_server_ai_tasks_plan_venture_planventure",
-      "community": 88,
-      "community_name": "validateAndAdvance.ts",
+      "community": 33,
+      "community_name": "NewIdeaFlow.tsx",
       "norm_label": "planventure"
     },
     {
@@ -3354,8 +3354,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_server_ai_tasks_scope_mvp",
-      "community": 90,
-      "community_name": "domain.ts",
+      "community": 33,
+      "community_name": "NewIdeaFlow.tsx",
       "norm_label": "scope-mvp.ts"
     },
     {
@@ -3365,8 +3365,8 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "src_server_ai_tasks_scope_mvp_scopemvpinput",
-      "community": 90,
-      "community_name": "domain.ts",
+      "community": 33,
+      "community_name": "NewIdeaFlow.tsx",
       "norm_label": "scopemvpinput"
     },
     {
@@ -3376,8 +3376,8 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "src_server_ai_tasks_scope_mvp_scopemvp",
-      "community": 88,
-      "community_name": "validateAndAdvance.ts",
+      "community": 33,
+      "community_name": "NewIdeaFlow.tsx",
       "norm_label": "scopemvp"
     },
     {
@@ -3387,8 +3387,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_server_ai_tasks_validate_idea",
-      "community": 88,
-      "community_name": "validateAndAdvance.ts",
+      "community": 33,
+      "community_name": "NewIdeaFlow.tsx",
       "norm_label": "validate-idea.ts"
     },
     {
@@ -3398,8 +3398,8 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "src_server_ai_tasks_validate_idea_validateideainput",
-      "community": 88,
-      "community_name": "validateAndAdvance.ts",
+      "community": 33,
+      "community_name": "NewIdeaFlow.tsx",
       "norm_label": "validateideainput"
     },
     {
@@ -3409,8 +3409,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "src_server_ai_tasks_validate_idea_validateidea",
-      "community": 88,
-      "community_name": "validateAndAdvance.ts",
+      "community": 33,
+      "community_name": "NewIdeaFlow.tsx",
       "norm_label": "validateidea"
     },
     {
@@ -3420,8 +3420,8 @@
       "source_location": "L45",
       "_origin": "ast",
       "id": "src_server_ai_tasks_validate_idea_reconcileverdict",
-      "community": 88,
-      "community_name": "validateAndAdvance.ts",
+      "community": 3,
+      "community_name": "devDependencies",
       "norm_label": "reconcileverdict()"
     },
     {
@@ -3475,8 +3475,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_server_db_repositories_aicalls",
-      "community": 93,
-      "community_name": "aiCalls.ts",
+      "community": 42,
+      "community_name": "writeCollection",
       "norm_label": "aicalls.ts"
     },
     {
@@ -3486,8 +3486,8 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "src_server_db_repositories_aicalls_repoopts",
-      "community": 93,
-      "community_name": "aiCalls.ts",
+      "community": 42,
+      "community_name": "writeCollection",
       "norm_label": "repoopts"
     },
     {
@@ -3497,8 +3497,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "src_server_db_repositories_aicalls_create",
-      "community": 93,
-      "community_name": "aiCalls.ts",
+      "community": 42,
+      "community_name": "writeCollection",
       "norm_label": "create()"
     },
     {
@@ -3508,8 +3508,8 @@
       "source_location": "L28",
       "_origin": "ast",
       "id": "src_server_db_repositories_aicalls_sumsince",
-      "community": 93,
-      "community_name": "aiCalls.ts",
+      "community": 42,
+      "community_name": "writeCollection",
       "norm_label": "sumsince()"
     },
     {
@@ -3519,8 +3519,8 @@
       "source_location": "L37",
       "_origin": "ast",
       "id": "src_server_db_repositories_aicalls_sumbyventure",
-      "community": 93,
-      "community_name": "aiCalls.ts",
+      "community": 42,
+      "community_name": "writeCollection",
       "norm_label": "sumbyventure()"
     },
     {
@@ -3530,8 +3530,8 @@
       "source_location": "L42",
       "_origin": "ast",
       "id": "src_server_db_repositories_aicalls_listall",
-      "community": 93,
-      "community_name": "aiCalls.ts",
+      "community": 42,
+      "community_name": "writeCollection",
       "norm_label": "listall()"
     },
     {
@@ -3541,8 +3541,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_server_db_repositories_artifacts",
-      "community": 92,
-      "community_name": "artifacts.ts",
+      "community": 42,
+      "community_name": "writeCollection",
       "norm_label": "artifacts.ts"
     },
     {
@@ -3552,8 +3552,8 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "src_server_db_repositories_artifacts_repoopts",
-      "community": 92,
-      "community_name": "artifacts.ts",
+      "community": 42,
+      "community_name": "writeCollection",
       "norm_label": "repoopts"
     },
     {
@@ -3563,8 +3563,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "src_server_db_repositories_artifacts_listbyventure",
-      "community": 92,
-      "community_name": "artifacts.ts",
+      "community": 42,
+      "community_name": "writeCollection",
       "norm_label": "listbyventure()"
     },
     {
@@ -3574,8 +3574,8 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "src_server_db_repositories_artifacts_listall",
-      "community": 92,
-      "community_name": "artifacts.ts",
+      "community": 42,
+      "community_name": "writeCollection",
       "norm_label": "listall()"
     },
     {
@@ -3585,8 +3585,8 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "src_server_db_repositories_artifacts_create",
-      "community": 92,
-      "community_name": "artifacts.ts",
+      "community": 42,
+      "community_name": "writeCollection",
       "norm_label": "create()"
     },
     {
@@ -3596,8 +3596,8 @@
       "source_location": "L37",
       "_origin": "ast",
       "id": "src_server_db_repositories_artifacts_latestofkind",
-      "community": 92,
-      "community_name": "artifacts.ts",
+      "community": 42,
+      "community_name": "writeCollection",
       "norm_label": "latestofkind()"
     },
     {
@@ -3607,8 +3607,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_server_db_repositories_buildtasks",
-      "community": 94,
-      "community_name": "buildTasks.ts",
+      "community": 42,
+      "community_name": "writeCollection",
       "norm_label": "buildtasks.ts"
     },
     {
@@ -3618,8 +3618,8 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "src_server_db_repositories_buildtasks_repoopts",
-      "community": 94,
-      "community_name": "buildTasks.ts",
+      "community": 42,
+      "community_name": "writeCollection",
       "norm_label": "repoopts"
     },
     {
@@ -3629,8 +3629,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "src_server_db_repositories_buildtasks_listbyventure",
-      "community": 94,
-      "community_name": "buildTasks.ts",
+      "community": 42,
+      "community_name": "writeCollection",
       "norm_label": "listbyventure()"
     },
     {
@@ -3640,8 +3640,8 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "src_server_db_repositories_buildtasks_createmany",
-      "community": 94,
-      "community_name": "buildTasks.ts",
+      "community": 42,
+      "community_name": "writeCollection",
       "norm_label": "createmany()"
     },
     {
@@ -3651,8 +3651,8 @@
       "source_location": "L39",
       "_origin": "ast",
       "id": "src_server_db_repositories_buildtasks_setdone",
-      "community": 94,
-      "community_name": "buildTasks.ts",
+      "community": 42,
+      "community_name": "writeCollection",
       "norm_label": "setdone()"
     },
     {
@@ -3662,8 +3662,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_server_db_repositories_events",
-      "community": 91,
-      "community_name": "repositories/events.ts",
+      "community": 42,
+      "community_name": "writeCollection",
       "norm_label": "repositories/events.ts"
     },
     {
@@ -3673,8 +3673,8 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "src_server_db_repositories_events_repoopts",
-      "community": 91,
-      "community_name": "repositories/events.ts",
+      "community": 42,
+      "community_name": "writeCollection",
       "norm_label": "repoopts"
     },
     {
@@ -3684,8 +3684,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "src_server_db_repositories_events_list",
-      "community": 91,
-      "community_name": "repositories/events.ts",
+      "community": 42,
+      "community_name": "writeCollection",
       "norm_label": "list()"
     },
     {
@@ -3695,8 +3695,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "src_server_db_repositories_events_create",
-      "community": 91,
-      "community_name": "repositories/events.ts",
+      "community": 42,
+      "community_name": "writeCollection",
       "norm_label": "create()"
     },
     {
@@ -3706,8 +3706,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_server_db_repositories_settings",
-      "community": 98,
-      "community_name": "settings.ts",
+      "community": 43,
+      "community_name": "budget.ts",
       "norm_label": "settings.ts"
     },
     {
@@ -3717,8 +3717,8 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "src_server_db_repositories_settings_repoopts",
-      "community": 98,
-      "community_name": "settings.ts",
+      "community": 43,
+      "community_name": "budget.ts",
       "norm_label": "repoopts"
     },
     {
@@ -3728,8 +3728,8 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "src_server_db_repositories_settings_settingrow",
-      "community": 98,
-      "community_name": "settings.ts",
+      "community": 43,
+      "community_name": "budget.ts",
       "norm_label": "settingrow"
     },
     {
@@ -3739,8 +3739,8 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "src_server_db_repositories_settings_get",
-      "community": 98,
-      "community_name": "settings.ts",
+      "community": 43,
+      "community_name": "budget.ts",
       "norm_label": "get()"
     },
     {
@@ -3750,8 +3750,8 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "src_server_db_repositories_settings_set",
-      "community": 98,
-      "community_name": "settings.ts",
+      "community": 43,
+      "community_name": "budget.ts",
       "norm_label": "set()"
     },
     {
@@ -3761,8 +3761,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_server_db_repositories_ventures",
-      "community": 96,
-      "community_name": "ventures.ts",
+      "community": 3,
+      "community_name": "devDependencies",
       "norm_label": "ventures.ts"
     },
     {
@@ -3772,8 +3772,8 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "src_server_db_repositories_ventures_repoopts",
-      "community": 96,
-      "community_name": "ventures.ts",
+      "community": 3,
+      "community_name": "devDependencies",
       "norm_label": "repoopts"
     },
     {
@@ -3783,8 +3783,8 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "src_server_db_repositories_ventures_list",
-      "community": 96,
-      "community_name": "ventures.ts",
+      "community": 3,
+      "community_name": "devDependencies",
       "norm_label": "list()"
     },
     {
@@ -3794,8 +3794,8 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "src_server_db_repositories_ventures_get",
-      "community": 96,
-      "community_name": "ventures.ts",
+      "community": 3,
+      "community_name": "devDependencies",
       "norm_label": "get()"
     },
     {
@@ -3805,8 +3805,8 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "src_server_db_repositories_ventures_create",
-      "community": 96,
-      "community_name": "ventures.ts",
+      "community": 3,
+      "community_name": "devDependencies",
       "norm_label": "create()"
     },
     {
@@ -3816,8 +3816,8 @@
       "source_location": "L48",
       "_origin": "ast",
       "id": "src_server_db_repositories_ventures_update",
-      "community": 96,
-      "community_name": "ventures.ts",
+      "community": 3,
+      "community_name": "devDependencies",
       "norm_label": "update()"
     },
     {
@@ -3827,8 +3827,8 @@
       "source_location": "L66",
       "_origin": "ast",
       "id": "src_server_db_repositories_ventures_advance",
-      "community": 96,
-      "community_name": "ventures.ts",
+      "community": 3,
+      "community_name": "devDependencies",
       "norm_label": "advance()"
     },
     {
@@ -3838,8 +3838,8 @@
       "source_location": "L91",
       "_origin": "ast",
       "id": "src_server_db_repositories_ventures_remove",
-      "community": 96,
-      "community_name": "ventures.ts",
+      "community": 3,
+      "community_name": "devDependencies",
       "norm_label": "remove()"
     },
     {
@@ -3959,8 +3959,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_server_events",
-      "community": 91,
-      "community_name": "repositories/events.ts",
+      "community": 3,
+      "community_name": "devDependencies",
       "norm_label": "server/events.ts"
     },
     {
@@ -3970,8 +3970,8 @@
       "source_location": "L4",
       "_origin": "ast",
       "id": "src_server_events_recordevent",
-      "community": 89,
-      "community_name": "planAndAdvance.ts",
+      "community": 3,
+      "community_name": "devDependencies",
       "norm_label": "recordevent()"
     },
     {
@@ -4014,8 +4014,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_server_ventures_generatebuildspec",
-      "community": 95,
-      "community_name": "Provider",
+      "community": 33,
+      "community_name": "NewIdeaFlow.tsx",
       "norm_label": "generatebuildspec.ts"
     },
     {
@@ -4025,8 +4025,8 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "src_server_ventures_generatebuildspec_generatebuildspecresult",
-      "community": 95,
-      "community_name": "Provider",
+      "community": 33,
+      "community_name": "NewIdeaFlow.tsx",
       "norm_label": "generatebuildspecresult"
     },
     {
@@ -4036,8 +4036,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "src_server_ventures_generatebuildspec_opts",
-      "community": 95,
-      "community_name": "Provider",
+      "community": 3,
+      "community_name": "devDependencies",
       "norm_label": "opts"
     },
     {
@@ -4058,8 +4058,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_server_ventures_planandadvance",
-      "community": 89,
-      "community_name": "planAndAdvance.ts",
+      "community": 3,
+      "community_name": "devDependencies",
       "norm_label": "planandadvance.ts"
     },
     {
@@ -4069,8 +4069,8 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "src_server_ventures_planandadvance_planandadvanceresult",
-      "community": 89,
-      "community_name": "planAndAdvance.ts",
+      "community": 3,
+      "community_name": "devDependencies",
       "norm_label": "planandadvanceresult"
     },
     {
@@ -4080,8 +4080,8 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "src_server_ventures_planandadvance_opts",
-      "community": 89,
-      "community_name": "planAndAdvance.ts",
+      "community": 3,
+      "community_name": "devDependencies",
       "norm_label": "opts"
     },
     {
@@ -4091,8 +4091,8 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "src_server_ventures_planandadvance_planandadvance",
-      "community": 89,
-      "community_name": "planAndAdvance.ts",
+      "community": 3,
+      "community_name": "devDependencies",
       "norm_label": "planandadvance()"
     },
     {
@@ -4102,8 +4102,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_server_ventures_regenerateartifact",
-      "community": 95,
-      "community_name": "Provider",
+      "community": 33,
+      "community_name": "NewIdeaFlow.tsx",
       "norm_label": "regenerateartifact.ts"
     },
     {
@@ -4113,8 +4113,8 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "src_server_ventures_regenerateartifact_regenerateresult",
-      "community": 95,
-      "community_name": "Provider",
+      "community": 33,
+      "community_name": "NewIdeaFlow.tsx",
       "norm_label": "regenerateresult"
     },
     {
@@ -4124,8 +4124,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "src_server_ventures_regenerateartifact_opts",
-      "community": 95,
-      "community_name": "Provider",
+      "community": 3,
+      "community_name": "devDependencies",
       "norm_label": "opts"
     },
     {
@@ -4146,8 +4146,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_server_ventures_startbuilding",
-      "community": 89,
-      "community_name": "planAndAdvance.ts",
+      "community": 3,
+      "community_name": "devDependencies",
       "norm_label": "startbuilding.ts"
     },
     {
@@ -4157,8 +4157,8 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "src_server_ventures_startbuilding_startbuildingresult",
-      "community": 89,
-      "community_name": "planAndAdvance.ts",
+      "community": 3,
+      "community_name": "devDependencies",
       "norm_label": "startbuildingresult"
     },
     {
@@ -4168,8 +4168,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "src_server_ventures_startbuilding_opts",
-      "community": 89,
-      "community_name": "planAndAdvance.ts",
+      "community": 3,
+      "community_name": "devDependencies",
       "norm_label": "opts"
     },
     {
@@ -4179,8 +4179,8 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "src_server_ventures_startbuilding_startbuilding",
-      "community": 89,
-      "community_name": "planAndAdvance.ts",
+      "community": 3,
+      "community_name": "devDependencies",
       "norm_label": "startbuilding()"
     },
     {
@@ -4190,8 +4190,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_server_ventures_validateandadvance",
-      "community": 88,
-      "community_name": "validateAndAdvance.ts",
+      "community": 3,
+      "community_name": "devDependencies",
       "norm_label": "validateandadvance.ts"
     },
     {
@@ -4201,8 +4201,8 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "src_server_ventures_validateandadvance_validateandadvanceresult",
-      "community": 88,
-      "community_name": "validateAndAdvance.ts",
+      "community": 3,
+      "community_name": "devDependencies",
       "norm_label": "validateandadvanceresult"
     },
     {
@@ -4212,8 +4212,8 @@
       "source_location": "L25",
       "_origin": "ast",
       "id": "src_server_ventures_validateandadvance_opts",
-      "community": 88,
-      "community_name": "validateAndAdvance.ts",
+      "community": 3,
+      "community_name": "devDependencies",
       "norm_label": "opts"
     },
     {
@@ -4223,8 +4223,8 @@
       "source_location": "L35",
       "_origin": "ast",
       "id": "src_server_ventures_validateandadvance_validateandadvance",
-      "community": 89,
-      "community_name": "planAndAdvance.ts",
+      "community": 3,
+      "community_name": "devDependencies",
       "norm_label": "validateandadvance()"
     },
     {
@@ -4344,8 +4344,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_budget_test",
-      "community": 100,
-      "community_name": "budget.test.ts",
+      "community": 42,
+      "community_name": "writeCollection",
       "norm_label": "budget.test.ts"
     },
     {
@@ -4355,8 +4355,8 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "tests_budget_test_call",
-      "community": 100,
-      "community_name": "budget.test.ts",
+      "community": 42,
+      "community_name": "writeCollection",
       "norm_label": "call()"
     },
     {
@@ -4366,8 +4366,8 @@
       "source_location": "L34",
       "_origin": "ast",
       "id": "tests_budget_test_seed",
-      "community": 100,
-      "community_name": "budget.test.ts",
+      "community": 42,
+      "community_name": "writeCollection",
       "norm_label": "seed()"
     },
     {
@@ -4553,8 +4553,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_plan_venture_test",
-      "community": 90,
-      "community_name": "domain.ts",
+      "community": 33,
+      "community_name": "NewIdeaFlow.tsx",
       "norm_label": "plan-venture.test.ts"
     },
     {
@@ -4564,8 +4564,8 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "tests_plan_venture_test_validplan",
-      "community": 90,
-      "community_name": "domain.ts",
+      "community": 33,
+      "community_name": "NewIdeaFlow.tsx",
       "norm_label": "validplan()"
     },
     {
@@ -4575,8 +4575,8 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "tests_plan_venture_test_validmvpscope",
-      "community": 90,
-      "community_name": "domain.ts",
+      "community": 33,
+      "community_name": "NewIdeaFlow.tsx",
       "norm_label": "validmvpscope()"
     },
     {
@@ -4652,8 +4652,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_repositories_test",
-      "community": 91,
-      "community_name": "repositories/events.ts",
+      "community": 42,
+      "community_name": "writeCollection",
       "norm_label": "repositories.test.ts"
     },
     {
@@ -4729,8 +4729,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_validate_idea_test",
-      "community": 88,
-      "community_name": "validateAndAdvance.ts",
+      "community": 3,
+      "community_name": "devDependencies",
       "norm_label": "validate-idea.test.ts"
     },
     {
@@ -4740,8 +4740,8 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "tests_validate_idea_test_verdict",
-      "community": 88,
-      "community_name": "validateAndAdvance.ts",
+      "community": 3,
+      "community_name": "devDependencies",
       "norm_label": "verdict()"
     },
     {
@@ -7295,72 +7295,6 @@
       "community": 83,
       "community_name": "Nucleus now writes the plan, including when to quit",
       "norm_label": "visual (production note \u2014 not part of the post)"
-    },
-    {
-      "label": "2026-07-29-phase-07-lesson.md",
-      "file_type": "document",
-      "source_file": "docs/content/drafts/2026-07-29-phase-07-lesson.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "docs_content_drafts_2026_07_29_phase_07_lesson",
-      "community": 101,
-      "community_name": "The best feature I shipped this week makes zero AI calls",
-      "norm_label": "2026-07-29-phase-07-lesson.md"
-    },
-    {
-      "label": "The best feature I shipped this week makes zero AI calls",
-      "file_type": "document",
-      "source_file": "docs/content/drafts/2026-07-29-phase-07-lesson.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "docs_content_drafts_2026_07_29_phase_07_lesson_the_best_feature_i_shipped_this_week_makes_zero_ai_calls",
-      "community": 101,
-      "community_name": "The best feature I shipped this week makes zero AI calls",
-      "norm_label": "the best feature i shipped this week makes zero ai calls"
-    },
-    {
-      "label": "Visual",
-      "file_type": "document",
-      "source_file": "docs/content/drafts/2026-07-29-phase-07-lesson.md",
-      "source_location": "L32",
-      "_origin": "ast",
-      "id": "docs_content_drafts_2026_07_29_phase_07_lesson_visual",
-      "community": 101,
-      "community_name": "The best feature I shipped this week makes zero AI calls",
-      "norm_label": "visual"
-    },
-    {
-      "label": "2026-07-29-phase-07-ship.md",
-      "file_type": "document",
-      "source_file": "docs/content/drafts/2026-07-29-phase-07-ship.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "docs_content_drafts_2026_07_29_phase_07_ship",
-      "community": 102,
-      "community_name": "Nucleus doesn't write your code. It writes the brief that does.",
-      "norm_label": "2026-07-29-phase-07-ship.md"
-    },
-    {
-      "label": "Nucleus doesn't write your code. It writes the brief that does.",
-      "file_type": "document",
-      "source_file": "docs/content/drafts/2026-07-29-phase-07-ship.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "docs_content_drafts_2026_07_29_phase_07_ship_nucleus_doesn_t_write_your_code_it_writes_the_brief_that_does",
-      "community": 102,
-      "community_name": "Nucleus doesn't write your code. It writes the brief that does.",
-      "norm_label": "nucleus doesn't write your code. it writes the brief that does."
-    },
-    {
-      "label": "Visual",
-      "file_type": "document",
-      "source_file": "docs/content/drafts/2026-07-29-phase-07-ship.md",
-      "source_location": "L34",
-      "_origin": "ast",
-      "id": "docs_content_drafts_2026_07_29_phase_07_ship_visual",
-      "community": 102,
-      "community_name": "Nucleus doesn't write your code. It writes the brief that does.",
-      "norm_label": "visual"
     },
     {
       "label": "lesson-post.md",
@@ -10256,43 +10190,10 @@
       "norm_label": "2026-07-28 \u00b7 planning \u00b7 byok, always"
     },
     {
-      "label": "2026-07-29 \u00b7 Build Stage \u00b7 One milestone equals one task",
-      "file_type": "document",
-      "source_file": "docs/plan/PROGRESS.md",
-      "source_location": "L177",
-      "_origin": "ast",
-      "id": "docs_plan_progress_2026_07_29_build_stage_one_milestone_equals_one_task",
-      "community": 45,
-      "community_name": "Plan of record",
-      "norm_label": "2026-07-29 \u00b7 build stage \u00b7 one milestone equals one task"
-    },
-    {
-      "label": "2026-07-29 \u00b7 Build Stage \u00b7 Agent brief tested before shipping",
-      "file_type": "document",
-      "source_file": "docs/plan/PROGRESS.md",
-      "source_location": "L189",
-      "_origin": "ast",
-      "id": "docs_plan_progress_2026_07_29_build_stage_agent_brief_tested_before_shipping",
-      "community": 45,
-      "community_name": "Plan of record",
-      "norm_label": "2026-07-29 \u00b7 build stage \u00b7 agent brief tested before shipping"
-    },
-    {
-      "label": "2026-07-29 \u00b7 Build Stage \u00b7 Launch gating lives in the route, not a workflow engine",
-      "file_type": "document",
-      "source_file": "docs/plan/PROGRESS.md",
-      "source_location": "L203",
-      "_origin": "ast",
-      "id": "docs_plan_progress_2026_07_29_build_stage_launch_gating_lives_in_the_route_not_a_workflow_engine",
-      "community": 45,
-      "community_name": "Plan of record",
-      "norm_label": "2026-07-29 \u00b7 build stage \u00b7 launch gating lives in the route, not a workflow engine"
-    },
-    {
       "label": "2026-07-28 \u00b7 Planning \u00b7 Mock adapters are permanent",
       "file_type": "document",
       "source_file": "docs/plan/PROGRESS.md",
-      "source_location": "L215",
+      "source_location": "L177",
       "_origin": "ast",
       "id": "docs_plan_progress_2026_07_28_planning_mock_adapters_are_permanent",
       "community": 45,
@@ -10303,7 +10204,7 @@
       "label": "Dependency ledger",
       "file_type": "document",
       "source_file": "docs/plan/PROGRESS.md",
-      "source_location": "L225",
+      "source_location": "L187",
       "_origin": "ast",
       "id": "docs_plan_progress_dependency_ledger",
       "community": 45,
@@ -10314,7 +10215,7 @@
       "label": "Blocked",
       "file_type": "document",
       "source_file": "docs/plan/PROGRESS.md",
-      "source_location": "L241",
+      "source_location": "L203",
       "_origin": "ast",
       "id": "docs_plan_progress_blocked",
       "community": 45,
@@ -10325,7 +10226,7 @@
       "label": "Vision drift checks",
       "file_type": "document",
       "source_file": "docs/plan/PROGRESS.md",
-      "source_location": "L256",
+      "source_location": "L218",
       "_origin": "ast",
       "id": "docs_plan_progress_vision_drift_checks",
       "community": 45,
@@ -10729,21 +10630,10 @@
       "norm_label": "session learning log"
     },
     {
-      "label": "2026-07-29 \u2014 Plan Phase 07: Build Stage",
-      "file_type": "document",
-      "source_file": "docs/workflow/learning.md",
-      "source_location": "L5",
-      "_origin": "ast",
-      "id": "docs_workflow_learning_2026_07_29_plan_phase_07_build_stage",
-      "community": 27,
-      "community_name": "Session Learning Log",
-      "norm_label": "2026-07-29 \u2014 plan phase 07: build stage"
-    },
-    {
       "label": "2026-07-28 \u2014 Plan Phase 06: Planning Stage",
       "file_type": "document",
       "source_file": "docs/workflow/learning.md",
-      "source_location": "L69",
+      "source_location": "L5",
       "_origin": "ast",
       "id": "docs_workflow_learning_2026_07_28_plan_phase_06_planning_stage",
       "community": 27,
@@ -10754,7 +10644,7 @@
       "label": "2026-07-28 \u2014 Plan Phase 05: Budget Console",
       "file_type": "document",
       "source_file": "docs/workflow/learning.md",
-      "source_location": "L140",
+      "source_location": "L76",
       "_origin": "ast",
       "id": "docs_workflow_learning_2026_07_28_plan_phase_05_budget_console",
       "community": 27,
@@ -10765,7 +10655,7 @@
       "label": "2026-07-28 \u2014 Plan Phase 04: Venture Workspace",
       "file_type": "document",
       "source_file": "docs/workflow/learning.md",
-      "source_location": "L211",
+      "source_location": "L147",
       "_origin": "ast",
       "id": "docs_workflow_learning_2026_07_28_plan_phase_04_venture_workspace",
       "community": 27,
@@ -10776,7 +10666,7 @@
       "label": "2026-07-28 \u2014 Plan Phase 03: Real Validation",
       "file_type": "document",
       "source_file": "docs/workflow/learning.md",
-      "source_location": "L278",
+      "source_location": "L214",
       "_origin": "ast",
       "id": "docs_workflow_learning_2026_07_28_plan_phase_03_real_validation",
       "community": 27,
@@ -10787,7 +10677,7 @@
       "label": "2026-07-28 \u2014 Plan Phase 02: AI Gateway",
       "file_type": "document",
       "source_file": "docs/workflow/learning.md",
-      "source_location": "L349",
+      "source_location": "L285",
       "_origin": "ast",
       "id": "docs_workflow_learning_2026_07_28_plan_phase_02_ai_gateway",
       "community": 27,
@@ -10798,7 +10688,7 @@
       "label": "2026-07-28 \u2014 Plan Phase 01: Domain & Storage",
       "file_type": "document",
       "source_file": "docs/workflow/learning.md",
-      "source_location": "L414",
+      "source_location": "L350",
       "_origin": "ast",
       "id": "docs_workflow_learning_2026_07_28_plan_phase_01_domain_storage",
       "community": 27,
@@ -10809,7 +10699,7 @@
       "label": "2026-07-28 \u2014 Plan Phase 00: Ground Truth",
       "file_type": "document",
       "source_file": "docs/workflow/learning.md",
-      "source_location": "L473",
+      "source_location": "L409",
       "_origin": "ast",
       "id": "docs_workflow_learning_2026_07_28_plan_phase_00_ground_truth",
       "community": 27,
@@ -10820,7 +10710,7 @@
       "label": "2026-07-26 \u2014 Phase 1, Day 1: Dashboard Foundation",
       "file_type": "document",
       "source_file": "docs/workflow/learning.md",
-      "source_location": "L522",
+      "source_location": "L458",
       "_origin": "ast",
       "id": "docs_workflow_learning_2026_07_26_phase_1_day_1_dashboard_foundation",
       "community": 27,
@@ -10831,7 +10721,7 @@
       "label": "2026-07-26 \u2014 Phase 1, Day 1: New Idea Flow (mock)",
       "file_type": "document",
       "source_file": "docs/workflow/learning.md",
-      "source_location": "L543",
+      "source_location": "L479",
       "_origin": "ast",
       "id": "docs_workflow_learning_2026_07_26_phase_1_day_1_new_idea_flow_mock",
       "community": 27,
@@ -10842,7 +10732,7 @@
       "label": "2026-07-27 \u2014 Phase 1, Day 2: Continue/Save/Saved Ideas",
       "file_type": "document",
       "source_file": "docs/workflow/learning.md",
-      "source_location": "L554",
+      "source_location": "L490",
       "_origin": "ast",
       "id": "docs_workflow_learning_2026_07_27_phase_1_day_2_continue_save_saved_ideas",
       "community": 27,
@@ -24350,50 +24240,6 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "docs/content/drafts/2026-07-29-phase-07-lesson.md",
-      "source_location": "L1",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "docs_content_drafts_2026_07_29_phase_07_lesson",
-      "target": "docs_content_drafts_2026_07_29_phase_07_lesson_the_best_feature_i_shipped_this_week_makes_zero_ai_calls",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/content/drafts/2026-07-29-phase-07-lesson.md",
-      "source_location": "L32",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "docs_content_drafts_2026_07_29_phase_07_lesson_the_best_feature_i_shipped_this_week_makes_zero_ai_calls",
-      "target": "docs_content_drafts_2026_07_29_phase_07_lesson_visual",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/content/drafts/2026-07-29-phase-07-ship.md",
-      "source_location": "L1",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "docs_content_drafts_2026_07_29_phase_07_ship",
-      "target": "docs_content_drafts_2026_07_29_phase_07_ship_nucleus_doesn_t_write_your_code_it_writes_the_brief_that_does",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/content/drafts/2026-07-29-phase-07-ship.md",
-      "source_location": "L34",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "docs_content_drafts_2026_07_29_phase_07_ship_nucleus_doesn_t_write_your_code_it_writes_the_brief_that_does",
-      "target": "docs_content_drafts_2026_07_29_phase_07_ship_visual",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
       "source_file": "docs/content/templates/lesson-post.md",
       "source_location": "L1",
       "weight": 1.0,
@@ -26870,7 +26716,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/plan/PROGRESS.md",
-      "source_location": "L241",
+      "source_location": "L203",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_plan_progress_execution_state",
@@ -26903,7 +26749,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/plan/PROGRESS.md",
-      "source_location": "L225",
+      "source_location": "L187",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_plan_progress_execution_state",
@@ -26936,7 +26782,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/plan/PROGRESS.md",
-      "source_location": "L256",
+      "source_location": "L218",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_plan_progress_execution_state",
@@ -27057,7 +26903,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/plan/PROGRESS.md",
-      "source_location": "L215",
+      "source_location": "L177",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_plan_progress_decisions_log",
@@ -27073,39 +26919,6 @@
       "_origin": "ast",
       "source": "docs_plan_progress_decisions_log",
       "target": "docs_plan_progress_2026_07_28_planning_venture_copilot_not_codegen",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/plan/PROGRESS.md",
-      "source_location": "L189",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "docs_plan_progress_decisions_log",
-      "target": "docs_plan_progress_2026_07_29_build_stage_agent_brief_tested_before_shipping",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/plan/PROGRESS.md",
-      "source_location": "L203",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "docs_plan_progress_decisions_log",
-      "target": "docs_plan_progress_2026_07_29_build_stage_launch_gating_lives_in_the_route_not_a_workflow_engine",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/plan/PROGRESS.md",
-      "source_location": "L177",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "docs_plan_progress_decisions_log",
-      "target": "docs_plan_progress_2026_07_29_build_stage_one_milestone_equals_one_task",
       "confidence_score": 1.0
     },
     {
@@ -27475,7 +27288,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/workflow/learning.md",
-      "source_location": "L522",
+      "source_location": "L458",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_workflow_learning_session_learning_log",
@@ -27486,7 +27299,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/workflow/learning.md",
-      "source_location": "L543",
+      "source_location": "L479",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_workflow_learning_session_learning_log",
@@ -27497,7 +27310,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/workflow/learning.md",
-      "source_location": "L554",
+      "source_location": "L490",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_workflow_learning_session_learning_log",
@@ -27508,7 +27321,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/workflow/learning.md",
-      "source_location": "L473",
+      "source_location": "L409",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_workflow_learning_session_learning_log",
@@ -27519,7 +27332,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/workflow/learning.md",
-      "source_location": "L414",
+      "source_location": "L350",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_workflow_learning_session_learning_log",
@@ -27530,7 +27343,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/workflow/learning.md",
-      "source_location": "L349",
+      "source_location": "L285",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_workflow_learning_session_learning_log",
@@ -27541,7 +27354,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/workflow/learning.md",
-      "source_location": "L278",
+      "source_location": "L214",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_workflow_learning_session_learning_log",
@@ -27552,7 +27365,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/workflow/learning.md",
-      "source_location": "L211",
+      "source_location": "L147",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_workflow_learning_session_learning_log",
@@ -27563,7 +27376,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/workflow/learning.md",
-      "source_location": "L140",
+      "source_location": "L76",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_workflow_learning_session_learning_log",
@@ -27574,22 +27387,11 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/workflow/learning.md",
-      "source_location": "L69",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "docs_workflow_learning_session_learning_log",
-      "target": "docs_workflow_learning_2026_07_28_plan_phase_06_planning_stage",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/workflow/learning.md",
       "source_location": "L5",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_workflow_learning_session_learning_log",
-      "target": "docs_workflow_learning_2026_07_29_plan_phase_07_build_stage",
+      "target": "docs_workflow_learning_2026_07_28_plan_phase_06_planning_stage",
       "confidence_score": 1.0
     },
     {
