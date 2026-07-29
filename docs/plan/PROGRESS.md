@@ -14,14 +14,14 @@
 
 | # | Phase | Status | Commit | Posts |
 |---|---|---|---|---|
-| 00 | Ground Truth | ✅ done | (pending push) | ship, lesson |
-| 01 | Domain & Storage | ✅ done | (pending push) | ship, lesson |
-| 02 | AI Gateway | ✅ done | (pending push) | ship, lesson |
-| 03 | Real Validation | ✅ done | (pending push) | ship, lesson |
-| 04 | Venture Workspace | ✅ done | (pending push) | ship, lesson |
-| 05 | Budget Console | ✅ done | (pending push) | ship, lesson |
-| 06 | Planning Stage | ✅ done | (pending push) | ship, lesson |
-| 07 | Build Stage | ✅ done | (pending push) | ship, lesson |
+| 00 | Ground Truth | ✅ done | `18b1f98` | ship, lesson |
+| 01 | Domain & Storage | ✅ done | `b4484e4` | ship, lesson |
+| 02 | AI Gateway | ✅ done | `7a0cf38` | ship, lesson |
+| 03 | Real Validation | ✅ done | `3442e4b` | ship, lesson |
+| 04 | Venture Workspace | ✅ done | `8b22f39` | ship, lesson |
+| 05 | Budget Console | ✅ done | `62f4131` | ship, lesson |
+| 06 | Planning Stage | ✅ done | `e9fd86b` | ship, lesson |
+| 07 | Build Stage | ✅ done | `d1e025e` | ship, lesson |
 | 08 | Launch Stage | ⬜ | — | — |
 | 09 | Growth Stage | ⬜ | — | — |
 | 10 | Build-in-Public Engine | ⬜ | — | — |
