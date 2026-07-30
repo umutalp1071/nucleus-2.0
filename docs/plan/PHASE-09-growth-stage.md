@@ -3,6 +3,17 @@
 **Goal:** the launched venture gets a content plan, real posts, and honest
 metrics.
 
+> **Re-shaped by `docs/reviews/2026-07-30-stack-position.md` §8, adopted.**
+> `MetricEntry` (§3 below) is superseded by the `Observation` primitive added
+> in Phase 08.5 — same shape in spirit (venture, date, a value, a note), but
+> its `metric` field is designed to match a `Prediction`'s `metric`, so
+> resolving one is a join, not a human squinting at a chart. The growth
+> view's primary widget is an **open-predictions list with due dates**, not a
+> chart — resolving a prediction is one click and writes back to
+> `Prediction.status`. Steps 1, 2, and 4 (the content calendar, on-demand post
+> generation, and the growth view housing all of this) are unchanged from the
+> original spec below.
+
 **Why now:** the launch page is live and nobody knows. This is the stage that
 makes "we build businesses, not apps" literally true — and it is the stage
 every competitor omits entirely.
@@ -60,17 +71,26 @@ Generated on demand, one at a time. **Do not batch-generate twelve posts** —
 that is 12× the cost for content the user will mostly not use. Generate on
 click. This is a budget decision and it belongs in the post.
 
-### 3. Metrics — manual, honest
+### 3. Metrics — manual, honest, and now attributable
+
+Superseded by the `Observation` primitive (`src/lib/domain.ts`, added in
+Phase 08.5) rather than a new `MetricEntry` type — see the callout at the top
+of this file:
 
 ```ts
-interface MetricEntry {
-  id: string; ventureId: string; date: string;
-  visitors: number | null; signups: number | null;
-  revenue: number | null; note: string | null;
-}
+const ObservationSchema = z.object({
+  id: z.string(), ventureId: z.string(), observedAt: z.string(),
+  metric: z.string(), value: z.number().nullable(), note: z.string().nullable(),
+  source: z.enum(["manual", "deploy", "import"]).default("manual"),
+  createdAt: z.string(),
+});
 ```
 
-Weekly manual entry. No integrations.
+Weekly manual entry. No integrations. The UI work is the same as originally
+specced (a form, a chart) — only the underlying type changed, so an
+`Observation` whose `metric` matches an open `Prediction`'s `metric` can
+resolve it in one click instead of requiring a human to notice the
+connection.
 
 Justification worth stating plainly: for a solo founder with 40 visitors,
 typing a number once a week takes eleven seconds and costs nothing, while
@@ -88,8 +108,10 @@ Chart: signups over time. Read the `dataviz` skill first.
 ### 4. Growth view
 
 In the venture workspace: strategy, channel table, the 12-post calendar with a
-Generate button per row, metrics chart, and the plan's `successMetric` and
-`killCriteria` shown against actual numbers.
+Generate button per row, an **open-predictions list with due dates** (the
+primary widget — each row resolves in one click against a matching
+`Observation`), a metrics chart underneath it, and the plan's `killCriteria`
+shown against actual numbers.
 
 That last element is the product's soul: at the growth stage, Nucleus shows
 you the kill criteria **you wrote at planning time**, next to your real
@@ -118,7 +140,9 @@ npm run verify
 - Calendar has exactly 12 posts; schema rejects 11 or 13
 - Generating a post makes exactly **one** AI call, not twelve (assert the
   count)
-- Metrics entry, persistence, and chart render in both themes
+- Observation entry, persistence, and chart render in both themes
+- Resolving a prediction against a matching Observation sets `Prediction.status`
+  and `resolvedBy` -- not just a UI toggle
 - Kill criteria display against real numbers
 - Browser-verified, screenshots read
 

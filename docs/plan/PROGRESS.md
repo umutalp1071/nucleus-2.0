@@ -6,7 +6,8 @@
 
 ## Current phase
 
-**PHASE 09 — Growth Stage** — not started
+**PHASE 09 — Growth Stage** — not started (re-shaped: see PHASE-09-growth-stage.md's
+callout -- `MetricEntry` is superseded by `Observation`, added in Phase 08.5)
 
 ---
 
@@ -23,10 +24,12 @@
 | 06 | Planning Stage | ✅ done | `e9fd86b` | ship, lesson |
 | 07 | Build Stage | ✅ done | `d1e025e` | ship, lesson |
 | 08 | Launch Stage | ✅ done | `e908317` | ship, lesson |
+| 08.5 | Primitives (Decision/Prediction/Observation) | ✅ done | `pending` | lesson |
 | 09 | Growth Stage | ⬜ | — | — |
 | 10 | Build-in-Public Engine | ⬜ | — | — |
 | 11 | Immune System | ⬜ | — | — |
 | 12 | Ship It | ⬜ | — | — |
+| 13 | Calibration | ⬜ | — | — |
 
 Legend: ⬜ not started · 🟡 in progress · ✅ done · 🚧 blocked
 
@@ -150,6 +153,23 @@ DOM without a schema parse first, and by the template being the only place
 unconditionally, tested with a literal `<script>` payload before anything
 else ships.
 
+### Phase 08.5 — Primitives (from docs/reviews/2026-07-30-stack-position.md)
+Files: src/lib/domain.ts (Decision/Prediction/Observation, AiCall.reserved),
+src/server/db/repositories/{decisions,predictions,observations}.ts (new),
+aiCalls.ts (update()), src/server/ai/{budget,gateway}.ts (reserve/reconcile,
+2x preflight, provenance fields), src/server/predictions/
+extractPredictions.ts (new), src/server/ventures/recordDecision.ts (new),
+{validateAndAdvance,planAndAdvance,generateBuildSpec,generateLandingPage,
+regenerateArtifact}.ts (wired), src/components/venture/artifacts/
+DecisionProvenance.tsx (new), app/ventures/[id]/page.tsx.
+Risk: the reserve-before/reconcile-after change to every gateway call path
+touches the budget guard, the single most safety-critical piece of code in
+the project -- mitigated by walking every existing gateway/budget test by
+hand against the new preflight math before running them, then adding
+dedicated tests for the crash-survival case (§6.2) and the 2x-preflight case
+(§6.1) rather than trusting the existing suite to incidentally cover new
+behavior it was never written to check.
+
 ---
 
 ## Decisions log
@@ -254,6 +274,62 @@ seen by a human. One checkbox is the smallest thing that forces a look before
 publish, matching the phase risk "user deploys something embarrassing."
 Revisit if: never, without a stronger reason than convenience -- this is the
 cheapest possible guard against the phase's stated worst-case.
+
+### 2026-07-30 · Primitives · Budget reserves 2x, not a second preflight
+Chose: `runTask`'s tier-selection loop preflights `estimated * 2`, and the
+gateway reserves a ledger row (at the estimate) before every provider call,
+reconciling it to actual cost after.
+Over: adding a second `preflight()` call specifically before the repair-retry
+completion.
+Because: `docs/reviews/2026-07-30-stack-position.md` §6.1 named both options
+and called the doubled-preflight the simpler one -- one check instead of two,
+and it structurally guarantees the repair path (which was previously
+unguarded entirely) can never push spend past the cap.
+Revisit if: the doubling proves measurably too conservative in practice
+(tasks downgrading tier more often than the repair path actually fires).
+
+### 2026-07-30 · Primitives · Predictions auto-extract only from successMetric
+Chose: `extractPredictions()` (pure function, no AI call) only turns
+`Plan.successMetric` into a tracked `Prediction` -- not `Plan.killCriteria` or
+`MvpScope.riskiestAssumption`, despite the review's §3.1 table listing all
+three as falsifiable claims.
+Over: inventing a `resolveBy` date for the two prose fields so all three
+could be auto-extracted uniformly.
+Because: `successMetric` is the only one of the three with a real
+model-supplied date (`{metric, target, by}`); killCriteria and
+riskiestAssumption are prose with no stated deadline, and fabricating one
+would be exactly the "provenance field that lies" failure mode the review
+flags elsewhere (§6.3). `Prediction.source` keeps a `"user"` variant open for
+turning those into dated predictions manually later.
+Revisit if: a review-window policy exists (BACKLOG.md) that gives those two
+fields a real, non-fabricated date.
+
+### 2026-07-30 · Primitives · promptVersion hashes the function, not the call
+Chose: `promptVersion` is `sha256(task.prompt.toString()).slice(0,12)` --
+a hash of the prompt-generating function's source, computed once per task,
+stable across every venture and every input.
+Over: hashing the fully-rendered, per-call prompt string (the one actually
+sent to the model).
+Because: the entire point of the field is answering "did editing this prompt
+change the output" (review §5.5) -- a hash of the rendered string is unique
+per call regardless of whether the template changed, which answers a
+different (uninteresting) question. Hashing the function source changes only
+when a developer actually edits the prompt.
+Revisit if: never, without a reason stronger than "it was easy to compute
+differently" -- this is the field's whole reason to exist.
+
+### 2026-07-30 · Primitives · Decision backfill happens on read, not a migration script
+Chose: `decisionsRepo.listByVenture()` lazily creates a backfilled Decision
+(`modelId: "unknown"`) for any artifact that doesn't have one yet, the moment
+that venture's decisions are next read.
+Over: a one-time migration command run once across `.nucleus/`.
+Because: it needs no new CLI surface, no "did I remember to run the
+migration" failure mode, and reads are already the natural trigger point (the
+workspace page) -- the review's own phrasing ("backfill... on first read")
+specified this mechanism directly.
+Revisit if: the artifact count per venture grows large enough that the
+missing-decision scan on every read becomes a measurable cost (unlikely --
+the same scan the workspace page already does for the artifact list itself).
 
 ### 2026-07-28 · Planning · Mock adapters are permanent
 Chose: AI provider and deploy target each have a deterministic fake, selected

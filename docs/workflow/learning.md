@@ -2,6 +2,91 @@
 
 ---
 
+## 2026-07-30 — Architectural review implemented: Phase 08.5 (Primitives)
+
+**What we did:**
+Implemented `docs/reviews/2026-07-30-stack-position.md` end to end, following
+its own narrow synthesis (§10/§11) rather than everything it discusses: added
+three primitives to `domain.ts` -- `Decision` (provenance: real model id,
+tier requested/used, downgraded/cached/demo, a prompt-version hash, upstream
+`inputRefs`, and a human verdict), `Prediction` (a falsifiable claim with a
+metric/target/date, extracted from `Plan.successMetric` by a pure function,
+no AI call), and `Observation` (evidence, keyed to match a prediction's
+metric so resolution is a join). Every venture service that creates an
+artifact now also records a `Decision` and, for plans, any `Prediction`s its
+content already contains -- closing the gap the review's §3.1 named directly:
+the model was already being asked exactly the right questions
+(`successMetric`, `killCriteria`, `riskiestAssumption`) and the answers were
+rendered to a card and discarded. Fixed two real budget-guard defects found
+during the review: the schema-repair retry path made a second, completely
+unguarded provider call on top of an already-approved spend (§6.1, fixed by
+preflighting 2x the estimate); and spend was only written to the ledger after
+the provider call returned, so a crash in between silently lost it and
+loosened the effective cap (§6.2, fixed with a reserve-before/reconcile-after
+pattern -- the ledger row exists at the estimate the moment the call is
+attempted, not after it succeeds). Also fixed the `Artifact.model` field,
+which had been storing the task name instead of the actual model id since
+Phase 03. The workspace now renders a provenance line under every artifact:
+model, downgraded/cached badges, cost, how many upstream artifacts fed it,
+and (once a regenerate happens) what the founder said was wrong with the
+previous version.
+
+**Decisions:**
+- **Reserve 2x on preflight, not a second preflight call.** The review named
+  both options and called this one simpler; one check instead of two, and it
+  structurally covers the repair path that was previously unguarded.
+- **`extractPredictions` only auto-extracts `Plan.successMetric`, not
+  `killCriteria` or `riskiestAssumption`.** Those two are prose with no
+  stated date; inventing one would be exactly the "provenance field that
+  lies" failure mode the review itself flags for `Artifact.model`. Left as a
+  BACKLOG trigger for when a review-window policy exists.
+- **`promptVersion` hashes the prompt function's source, not the rendered
+  per-call string.** The rendered string is unique per venture regardless of
+  whether the prompt template changed, which defeats the field's entire
+  purpose (detecting whether an edit to the prompt changed behavior).
+- **Decision backfill happens lazily on read, not via a migration script.**
+  No new CLI surface, no "did I remember to run it" failure mode -- the
+  workspace page reading a venture's artifacts was already the natural
+  trigger point.
+- **Deferred, per the review's own counter-argument:** the eval harness,
+  policy-as-data, and the marketing/positioning reframing all wait for real
+  users, exactly as the review concludes in its §10. Only the three
+  primitives and the two budget fixes were treated as "the deadline already
+  passed if we don't do it now" (provenance cannot be retrofitted onto
+  artifacts that already exist without instrumentation).
+
+**Mistake caught mid-session:** writing `Venture.emailCaptureUrl`/`launchUrl`
+in Phase 08 had already exposed that `ventures.create()` builds its return
+object by hand and only calls `VentureSchema.parse()` for validation,
+discarding the parsed (defaulted) result -- so new schema fields silently
+come back `undefined` instead of their zod default unless the repository's
+`create()` sets them explicitly. The same class of bug nearly recurred here:
+a `deployLandingPage`-style test asserting `toBeNull()` on a fresh backfilled
+Decision's `humanReason` would have caught a similar gap if `decisionsRepo`
+didn't set every field explicitly in `backfill()` and `create()` -- it does,
+but the pattern is now worth naming as a standing risk for every future
+`.default()` field: the schema's default only fires through `.parse()`, never
+through a hand-built object literal that happens to satisfy the input type.
+
+**Next step:** Phase 09 — Growth Stage, re-shaped per the review (see
+`PHASE-09-growth-stage.md`'s callout) to use `Observation` instead of the
+originally-specced `MetricEntry`.
+
+**Quality Score: 92/100**
+- All acceptance criteria from the review's own migration plan (§8) met: the
+  workspace renders the exact provenance sentence the review's Definition of
+  Done specified, verified in a real browser against a venture driven through
+  validate → plan in this session (not against stale fixture data); the
+  crash-survival and 2x-preflight fixes each have a dedicated test that fails
+  without the fix, not just incidental coverage from the existing suite.
+- Docked for: the eval harness and calibration report (§5.5, now Phase 13)
+  remain unbuilt, as the review itself directs -- but that also means the
+  claim "the kill verdict is well-calibrated" is still unverified by anything
+  other than reading the prose, which was the exact gap the review opened
+  with. Correctly deferred, not yet closed.
+
+---
+
 ## 2026-07-30 — Plan Phase 08: Launch Stage
 
 **What we did:**

@@ -6,6 +6,7 @@ import type { Provider, CompletionResult } from "@/server/ai/provider";
 import * as ventures from "@/server/db/repositories/ventures";
 import * as artifacts from "@/server/db/repositories/artifacts";
 import { FIXTURES } from "@/server/ai/fixtures";
+import type { Plan } from "@/lib/domain";
 
 let tmpDir: string;
 let baseDir: string;
@@ -64,6 +65,33 @@ describe("planAndAdvance", () => {
     const saved = await artifacts.listByVenture(venture.id, { baseDir });
     expect(saved.some((a) => a.kind === "plan")).toBe(true);
     expect(saved.some((a) => a.kind === "mvp_scope")).toBe(true);
+  });
+
+  it("extracts a Prediction from Plan.successMetric -- no extra AI call (docs/reviews/2026-07-30-stack-position.md §5.2)", async () => {
+    const { planAndAdvance } = await import("@/server/ventures/planAndAdvance");
+    const decisions = await import("@/server/db/repositories/decisions");
+    const predictions = await import("@/server/db/repositories/predictions");
+
+    const venture = await validatedVenture(baseDir);
+    const provider = stubProvider([planResponse, mvpResponse]);
+
+    const result = await planAndAdvance(venture, { baseDir, provider });
+    expect(result.ok).toBe(true);
+
+    const preds = await predictions.listByVenture(venture.id, { baseDir });
+    expect(preds).toHaveLength(1);
+    expect(preds[0].metric).toBe((FIXTURES["plan-venture"] as Plan).successMetric.metric);
+    expect(preds[0].source).toBe("plan.successMetric");
+    expect(preds[0].status).toBe("open");
+
+    const planDecision = (await decisions.listByVenture(venture.id, { baseDir })).find(
+      (d) => d.task === "plan-venture"
+    )!;
+    expect(preds[0].decisionId).toBe(planDecision.id);
+
+    // The provider was called exactly twice (plan-venture, scope-mvp) --
+    // extraction must not have triggered a third call.
+    expect((provider.complete as ReturnType<typeof vi.fn>).mock.calls.length).toBe(2);
   });
 
   it("keeps the plan artifact and leaves the venture at validated if scope-mvp is blocked", async () => {
@@ -130,6 +158,26 @@ describe("regenerateArtifact", () => {
 
     const promptSeen = (regenProvider.complete as ReturnType<typeof vi.fn>).mock.calls[0][0] as string;
     expect(promptSeen).toContain("the ICP is too broad, narrow it");
+  });
+
+  it("marks the previous plan Decision as regenerated with the feedback reason (docs/reviews/2026-07-30-stack-position.md §5.4)", async () => {
+    const { planAndAdvance } = await import("@/server/ventures/planAndAdvance");
+    const { regenerateArtifact } = await import("@/server/ventures/regenerateArtifact");
+    const decisions = await import("@/server/db/repositories/decisions");
+
+    const venture = await validatedVenture(baseDir);
+    await planAndAdvance(venture, { baseDir, provider: stubProvider([planResponse, mvpResponse]) });
+
+    const firstPlanArtifact = (await artifacts.listByVenture(venture.id, { baseDir })).find((a) => a.kind === "plan")!;
+
+    await regenerateArtifact(venture, "plan", "the wedge is too vague", {
+      baseDir,
+      provider: stubProvider([planResponse]),
+    });
+
+    const firstDecision = await decisions.findByArtifactId(firstPlanArtifact.id, { baseDir });
+    expect(firstDecision?.humanVerdict).toBe("regenerated");
+    expect(firstDecision?.humanReason).toBe("the wedge is too vague");
   });
 
   it("fails readably when regenerating mvp_scope before a plan exists", async () => {

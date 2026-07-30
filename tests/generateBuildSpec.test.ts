@@ -82,6 +82,21 @@ describe("generateBuildSpec", () => {
     expect(saved.filter((a) => a.kind === "build_spec")).toHaveLength(2);
   });
 
+  it("records a Decision with inputRefs pointing at both the plan and MVP scope artifacts", async () => {
+    const { generateBuildSpec } = await import("@/server/ventures/generateBuildSpec");
+    const decisions = await import("@/server/db/repositories/decisions");
+    const venture = await plannedVentureWithArtifacts(baseDir);
+    const planArtifact = (await artifacts.listByVenture(venture.id, { baseDir })).find((a) => a.kind === "plan")!;
+    const mvpArtifact = (await artifacts.listByVenture(venture.id, { baseDir })).find((a) => a.kind === "mvp_scope")!;
+
+    const result = await generateBuildSpec(venture, { baseDir, provider: stubProvider([buildSpecResponse]) });
+    expect(result.ok).toBe(true);
+
+    const decision = (await decisions.listByVenture(venture.id, { baseDir })).find((d) => d.task === "generate-build-spec")!;
+    expect(decision.inputRefs.sort()).toEqual([planArtifact.id, mvpArtifact.id].sort());
+    expect(decision.modelId).not.toBe("generate-build-spec");
+  });
+
   it("fails readably when the plan or MVP scope is missing", async () => {
     const { generateBuildSpec } = await import("@/server/ventures/generateBuildSpec");
     const v = await ventures.create({ title: "Idea", description: "x" }, { baseDir });

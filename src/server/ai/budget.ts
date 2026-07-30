@@ -90,3 +90,41 @@ export async function record(
 ): Promise<void> {
   await aiCallsRepo.create(call, opts);
 }
+
+// Writes the ledger row BEFORE the provider is called, at the estimated
+// cost -- so spend is never lost between "the call happened" and "the
+// response finished," which is the hole in the $50 invariant described in
+// docs/reviews/2026-07-30-stack-position.md §6.2. Call reconcile() after the
+// response returns; if the process dies first, the estimate stands.
+export async function reserve(
+  estimatedUsd: number,
+  call: { task: string; model: string; ventureId: string | null },
+  opts?: { baseDir?: string }
+): Promise<string> {
+  const row = await aiCallsRepo.create(
+    {
+      task: call.task,
+      model: call.model,
+      ventureId: call.ventureId,
+      promptTokens: 0,
+      completionTokens: 0,
+      costUsd: estimatedUsd,
+      cached: false,
+      reserved: true,
+    },
+    opts
+  );
+  return row.id;
+}
+
+export async function reconcile(
+  id: string,
+  actual: { costUsd: number; promptTokens: number; completionTokens: number },
+  opts?: { baseDir?: string }
+): Promise<void> {
+  await aiCallsRepo.update(
+    id,
+    { costUsd: actual.costUsd, promptTokens: actual.promptTokens, completionTokens: actual.completionTokens, reserved: false },
+    opts
+  );
+}

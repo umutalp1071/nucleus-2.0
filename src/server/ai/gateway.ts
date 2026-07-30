@@ -1,3 +1,4 @@
+import crypto from "node:crypto";
 import type { z } from "zod";
 import { TASKS, type TaskName } from "./tasks";
 import { MODELS, TIER_ORDER, estimateCost, actualCost, type Tier } from "./models";
@@ -8,7 +9,21 @@ import { resolveProvider, type Provider } from "./provider";
 import { recordEvent } from "../events";
 
 export type GatewayResult<T> =
-  | { ok: true; data: T; costUsd: number; cached: boolean; demo: boolean; downgraded: boolean }
+  | {
+      ok: true;
+      data: T;
+      costUsd: number;
+      cached: boolean;
+      demo: boolean;
+      downgraded: boolean;
+      // Provenance -- who actually produced this, so an outcome can later be
+      // attributed to a decision. See
+      // docs/reviews/2026-07-30-stack-position.md §5.1.
+      modelId: string;
+      tierRequested: Tier;
+      tierUsed: Tier;
+      promptVersion: string;
+    }
   | {
       ok: false;
       reason: "budget_exceeded" | "invalid_output" | "provider_error";
@@ -40,6 +55,15 @@ function resetHintFor(window: "daily" | "weekly" | "monthly"): string {
 function nextTierDown(tier: Tier): Tier | null {
   const idx = TIER_ORDER.indexOf(tier);
   return idx > 0 ? TIER_ORDER[idx - 1] : null;
+}
+
+// A short, stable id for "which version of this prompt produced this
+// output" -- hashes the task's prompt-generating function itself, not its
+// per-call rendered output, so it only changes when the prompt is actually
+// edited. See docs/reviews/2026-07-30-stack-position.md §5.1.
+function promptVersionOf(taskName: TaskName): string {
+  const source = TASKS[taskName].prompt.toString();
+  return crypto.createHash("sha256").update(source).digest("hex").slice(0, 12);
 }
 
 function safeParseJson<T>(
@@ -80,11 +104,16 @@ export async function runTask<T>(
   const prompt = task.prompt(input as never);
 
   // Resolve tier via the budget guard BEFORE touching the provider or the
-  // cache — a blocked call must never reach either.
+  // cache — a blocked call must never reach either. Preflight checks 2x the
+  // estimate, not 1x: the repair-retry path below makes a second, unguarded
+  // completion call on schema failure, and reserving double headroom up
+  // front is what keeps that retry inside the cap instead of silently
+  // doubling an already-approved spend. See
+  // docs/reviews/2026-07-30-stack-position.md §6.1.
   let tier: Tier = task.tier;
   for (;;) {
     const estimated = estimateCost(tier, prompt.length, task.expectedOutTokens);
-    const decision = await budget.preflight(estimated, budgetOpts);
+    const decision = await budget.preflight(estimated * 2, budgetOpts);
 
     if (decision.decision === "ok") break;
 
@@ -117,6 +146,9 @@ export async function runTask<T>(
 
   const downgraded = tier !== task.tier;
   const modelId = MODELS[tier].id;
+  const tierRequested = task.tier;
+  const promptVersion = promptVersionOf(taskName);
+  const estimated = estimateCost(tier, prompt.length, task.expectedOutTokens);
 
   // Cache is keyed on the RESOLVED tier's model, not the task's preferred
   // tier — a downgraded (cheaper, lower-quality) answer must never be
@@ -124,8 +156,18 @@ export async function runTask<T>(
   const key = cacheKey(taskName, modelId, prompt);
   const hit = await getCached<T>(key, { baseDir: opts?.baseDir });
   if (hit !== null) {
-    return { ok: true, data: hit, costUsd: 0, cached: true, demo: isDemo, downgraded };
+    return { ok: true, data: hit, costUsd: 0, cached: true, demo: isDemo, downgraded, modelId, tierRequested, tierUsed: tier, promptVersion };
   }
+
+  // Reserve BEFORE the provider call, at the estimate — see reconcile()'s
+  // doc comment and docs/reviews/2026-07-30-stack-position.md §6.2. If the
+  // process dies before reconcile runs, the reservation is what's left in
+  // the ledger, not nothing.
+  const reservationId = await budget.reserve(
+    estimated,
+    { task: taskName, model: modelId, ventureId: opts?.ventureId ?? null },
+    { baseDir: opts?.baseDir }
+  );
 
   let completion;
   try {
@@ -133,16 +175,10 @@ export async function runTask<T>(
   } catch {
     return { ok: false, reason: "provider_error", message: MESSAGES.provider_error() };
   }
-  await budget.record(
-    {
-      task: taskName,
-      model: modelId,
-      promptTokens: completion.promptTokens,
-      completionTokens: completion.completionTokens,
-      costUsd: actualCost(tier, completion.promptTokens, completion.completionTokens),
-      cached: false,
-      ventureId: opts?.ventureId ?? null,
-    },
+  const primaryCost = actualCost(tier, completion.promptTokens, completion.completionTokens);
+  await budget.reconcile(
+    reservationId,
+    { costUsd: primaryCost, promptTokens: completion.promptTokens, completionTokens: completion.completionTokens },
     { baseDir: opts?.baseDir }
   );
 
@@ -151,22 +187,22 @@ export async function runTask<T>(
   if (!parsed.success) {
     const repairPrompt = `${prompt}\n\nYour previous response was invalid: ${parsed.error}. Respond again with ONLY valid JSON matching the schema.`;
 
+    const repairReservationId = await budget.reserve(
+      estimated,
+      { task: taskName, model: modelId, ventureId: opts?.ventureId ?? null },
+      { baseDir: opts?.baseDir }
+    );
+
     let repair;
     try {
       repair = await activeProvider.complete(repairPrompt, modelId, taskName);
     } catch {
       return { ok: false, reason: "provider_error", message: MESSAGES.provider_error() };
     }
-    await budget.record(
-      {
-        task: taskName,
-        model: modelId,
-        promptTokens: repair.promptTokens,
-        completionTokens: repair.completionTokens,
-        costUsd: actualCost(tier, repair.promptTokens, repair.completionTokens),
-        cached: false,
-        ventureId: opts?.ventureId ?? null,
-      },
+    const repairCost = actualCost(tier, repair.promptTokens, repair.completionTokens);
+    await budget.reconcile(
+      repairReservationId,
+      { costUsd: repairCost, promptTokens: repair.promptTokens, completionTokens: repair.completionTokens },
       { baseDir: opts?.baseDir }
     );
 
@@ -176,18 +212,31 @@ export async function runTask<T>(
     }
 
     await putCached(key, parsed.data, { baseDir: opts?.baseDir });
-    const cost = actualCost(tier, completion.promptTokens, completion.completionTokens) +
-      actualCost(tier, repair.promptTokens, repair.completionTokens);
-    return { ok: true, data: parsed.data, costUsd: cost, cached: false, demo: isDemo, downgraded };
+    return {
+      ok: true,
+      data: parsed.data,
+      costUsd: primaryCost + repairCost,
+      cached: false,
+      demo: isDemo,
+      downgraded,
+      modelId,
+      tierRequested,
+      tierUsed: tier,
+      promptVersion,
+    };
   }
 
   await putCached(key, parsed.data, { baseDir: opts?.baseDir });
   return {
     ok: true,
     data: parsed.data,
-    costUsd: actualCost(tier, completion.promptTokens, completion.completionTokens),
+    costUsd: primaryCost,
     cached: false,
     demo: isDemo,
     downgraded,
+    modelId,
+    tierRequested,
+    tierUsed: tier,
+    promptVersion,
   };
 }

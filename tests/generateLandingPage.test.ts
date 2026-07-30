@@ -77,6 +77,26 @@ describe("generateLandingPage", () => {
     expect(saved.filter((a) => a.kind === "landing_page")).toHaveLength(2);
   });
 
+  it("marks the previous landing_page Decision as regenerated when called with feedback", async () => {
+    const { generateLandingPage } = await import("@/server/ventures/generateLandingPage");
+    const decisions = await import("@/server/db/repositories/decisions");
+    const venture = await plannedVentureWithPlan(baseDir);
+
+    const first = await generateLandingPage(venture, { baseDir, provider: stubProvider([landingResponse]) });
+    expect(first.ok).toBe(true);
+    if (!first.ok) throw new Error("unreachable");
+
+    await generateLandingPage(venture, {
+      baseDir,
+      provider: stubProvider([landingResponse]),
+      feedback: "make the CTA punchier",
+    });
+
+    const firstDecision = await decisions.findByArtifactId(first.artifact.id, { baseDir });
+    expect(firstDecision?.humanVerdict).toBe("regenerated");
+    expect(firstDecision?.humanReason).toBe("make the CTA punchier");
+  });
+
   it("fails readably when there is no plan yet", async () => {
     const { generateLandingPage } = await import("@/server/ventures/generateLandingPage");
     const v = await ventures.create({ title: "Idea", description: "x" }, { baseDir });

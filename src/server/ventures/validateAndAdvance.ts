@@ -5,6 +5,7 @@ import { reconcileVerdict, type Verdict } from "../ai/tasks/validate-idea";
 import type { Competitors } from "../ai/tasks/analyze-competitors";
 import type { Provider } from "../ai/provider";
 import { recordEvent } from "../events";
+import { recordDecision } from "./recordDecision";
 import type { Venture } from "@/lib/domain";
 
 // Competitor analysis is frontier-tier -- don't spend that on an idea the
@@ -41,16 +42,20 @@ export async function validateAndAdvance(venture: Venture, opts?: Opts): Promise
   if (!verdictResult.ok) return verdictResult;
 
   const verdict = reconcileVerdict(verdictResult.data);
-  await artifacts.create(
+  const validationArtifact = await artifacts.create(
     {
       ventureId: venture.id,
       kind: "validation",
       stage: "captured",
       content: verdict,
-      model: "validate-idea",
+      model: verdictResult.modelId,
       costUsd: verdictResult.costUsd,
       demo: verdictResult.demo,
     },
+    { baseDir: opts?.baseDir }
+  );
+  await recordDecision(
+    { task: "validate-idea", artifact: validationArtifact, inputRefs: [], result: verdictResult },
     { baseDir: opts?.baseDir }
   );
   await recordEvent(
@@ -68,16 +73,20 @@ export async function validateAndAdvance(venture: Venture, opts?: Opts): Promise
     );
     if (competitorsResult.ok) {
       competitors = competitorsResult.data;
-      await artifacts.create(
+      const competitorsArtifact = await artifacts.create(
         {
           ventureId: venture.id,
           kind: "competitors",
           stage: "captured",
           content: competitors,
-          model: "analyze-competitors",
+          model: competitorsResult.modelId,
           costUsd: competitorsResult.costUsd,
           demo: competitorsResult.demo,
         },
+        { baseDir: opts?.baseDir }
+      );
+      await recordDecision(
+        { task: "analyze-competitors", artifact: competitorsArtifact, inputRefs: [], result: competitorsResult },
         { baseDir: opts?.baseDir }
       );
     }

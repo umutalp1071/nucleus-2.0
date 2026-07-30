@@ -1,6 +1,7 @@
 import * as artifactsRepo from "../db/repositories/artifacts";
 import { runTask } from "../ai/gateway";
 import type { Provider } from "../ai/provider";
+import { recordDecision } from "./recordDecision";
 import type { Venture, Plan, MvpScope, BuildSpec, Artifact } from "@/lib/domain";
 
 export type GenerateBuildSpecResult =
@@ -47,10 +48,14 @@ export async function generateBuildSpec(venture: Venture, opts?: Opts): Promise<
       kind: "build_spec",
       stage: venture.stage,
       content: result.data,
-      model: "generate-build-spec",
+      model: result.modelId,
       costUsd: result.costUsd,
       demo: result.demo,
     },
+    repoOpts
+  );
+  await recordDecision(
+    { task: "generate-build-spec", artifact, inputRefs: [planArtifact.id, mvpArtifact.id], result },
     repoOpts
   );
   return { ok: true, artifact };

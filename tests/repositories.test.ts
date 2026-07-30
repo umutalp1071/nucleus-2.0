@@ -119,11 +119,11 @@ describe("aiCalls repository", () => {
     const now = new Date();
     const yesterday = new Date(now.getTime() - 24 * 60 * 60 * 1000);
     await aiCalls.create(
-      { task: "validate-idea", model: "mock", promptTokens: 100, completionTokens: 50, costUsd: 0.01, cached: false, ventureId: null },
+      { task: "validate-idea", model: "mock", promptTokens: 100, completionTokens: 50, costUsd: 0.01, cached: false, ventureId: null, reserved: false },
       opts
     );
     await aiCalls.create(
-      { task: "validate-idea", model: "mock", promptTokens: 100, completionTokens: 50, costUsd: 0.02, cached: false, ventureId: null },
+      { task: "validate-idea", model: "mock", promptTokens: 100, completionTokens: 50, costUsd: 0.02, cached: false, ventureId: null, reserved: false },
       opts
     );
 
@@ -138,11 +138,11 @@ describe("aiCalls repository", () => {
   it("sumByVenture sums only calls attributed to that venture", async () => {
     const venture = await ventures.create({ title: "Idea", description: "" }, opts);
     await aiCalls.create(
-      { task: "validate-idea", model: "mock", promptTokens: 10, completionTokens: 10, costUsd: 0.05, cached: false, ventureId: venture.id },
+      { task: "validate-idea", model: "mock", promptTokens: 10, completionTokens: 10, costUsd: 0.05, cached: false, ventureId: venture.id, reserved: false },
       opts
     );
     await aiCalls.create(
-      { task: "validate-idea", model: "mock", promptTokens: 10, completionTokens: 10, costUsd: 0.07, cached: false, ventureId: null },
+      { task: "validate-idea", model: "mock", promptTokens: 10, completionTokens: 10, costUsd: 0.07, cached: false, ventureId: null, reserved: false },
       opts
     );
     const total = await aiCalls.sumByVenture(venture.id, opts);

@@ -16,6 +16,16 @@ automatic.
 **In:** structured error capture, the mistake DB as data, health checks,
 recovery paths, automated vision-drift check, cost anomaly detection.
 
+> **Extended by `docs/reviews/2026-07-30-stack-position.md` §8, adopted.**
+> "The system notices its own failures" extends from *crashes* to *bad
+> judgment*, now that Phase 08.5's `Decision`/`Prediction` data exists to
+> notice it in: calibration drift (the same idea re-validated returns a
+> meaningfully different score), verdict instability across reruns (three
+> runs of the same idea, score variance — a verdict that swings ±25 points is
+> a random number generator with good prose), and predictions systematically
+> overshooting or undershooting their target. Same machinery (structured
+> incident capture), applied to the model's output rather than the runtime's.
+
 **Out of scope:** external monitoring services. Alerting/paging. APM. Sentry
 (a local-first single-operator app has nowhere to send telemetry, and
 shouldn't).

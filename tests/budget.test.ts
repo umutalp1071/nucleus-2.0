@@ -27,6 +27,7 @@ function call(costUsd: number, createdAt: string): AiCall {
     costUsd,
     cached: false,
     ventureId: null,
+    reserved: false,
     createdAt,
   };
 }
@@ -130,7 +131,7 @@ describe("budget: record", () => {
     const { record, getSpend } = await import("@/server/ai/budget");
     const now = new Date("2026-07-28T18:00:00");
     await record(
-      { task: "validate-idea", model: "mock", promptTokens: 100, completionTokens: 50, costUsd: 0.02, cached: false, ventureId: null },
+      { task: "validate-idea", model: "mock", promptTokens: 100, completionTokens: 50, costUsd: 0.02, cached: false, ventureId: null, reserved: false },
       opts
     );
     const spend = await getSpend({ ...opts, now });
@@ -144,10 +145,46 @@ describe("budget: record", () => {
     const { record, getSpend } = await import("@/server/ai/budget");
     const now = new Date("2026-07-28T18:00:00");
     await record(
-      { task: "validate-idea", model: "mock", promptTokens: 200, completionTokens: 5, costUsd: 0.01, cached: false, ventureId: null },
+      { task: "validate-idea", model: "mock", promptTokens: 200, completionTokens: 5, costUsd: 0.01, cached: false, ventureId: null, reserved: false },
       opts
     );
     const spend = await getSpend({ ...opts, now });
     expect(spend.daily).toBeGreaterThan(0);
+  });
+});
+
+describe("budget: reserve/reconcile", () => {
+  it("a reservation counts toward spend immediately, before reconcile ever runs", async () => {
+    // This is the fix for the hole where spend was only recorded after the
+    // provider call returned -- a crash in between silently lost the ledger
+    // row. See docs/reviews/2026-07-30-stack-position.md §6.2.
+    const { reserve, getSpend } = await import("@/server/ai/budget");
+    const now = new Date("2026-07-28T18:00:00");
+    await reserve(0.05, { task: "validate-idea", model: "mock", ventureId: null }, opts);
+    const spend = await getSpend({ ...opts, now });
+    expect(spend.daily).toBeCloseTo(0.05, 6);
+  });
+
+  it("reconcile updates the same row to the actual cost, not a second row", async () => {
+    const { reserve, reconcile, getSpend } = await import("@/server/ai/budget");
+    const now = new Date("2026-07-28T18:00:00");
+    const id = await reserve(0.05, { task: "validate-idea", model: "mock", ventureId: null }, opts);
+    await reconcile(id, { costUsd: 0.02, promptTokens: 100, completionTokens: 20 }, opts);
+
+    const { readCollection } = await import("@/server/db/store");
+    const rows = await readCollection("ai-calls", opts);
+    expect(rows.length).toBe(1);
+
+    const spend = await getSpend({ ...opts, now });
+    expect(spend.daily).toBeCloseTo(0.02, 6);
+  });
+
+  it("an un-reconciled reservation still counts at the estimate -- simulating a crash", async () => {
+    const { reserve, getSpend } = await import("@/server/ai/budget");
+    const now = new Date("2026-07-28T18:00:00");
+    await reserve(0.05, { task: "validate-idea", model: "mock", ventureId: null }, opts);
+    // No reconcile() call -- as if the process died right here.
+    const spend = await getSpend({ ...opts, now });
+    expect(spend.daily).toBeCloseTo(0.05, 6);
   });
 });

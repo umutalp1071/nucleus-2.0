@@ -200,6 +200,105 @@ describe("gateway: cache", () => {
   });
 });
 
+describe("gateway: provenance", () => {
+  it("returns modelId, tierRequested, tierUsed, and a stable promptVersion", async () => {
+    const { runTask } = await import("@/server/ai/gateway");
+    const provider = stubProvider([{ text: '{"echo":"hi"}', promptTokens: 10, completionTokens: 5 }]);
+
+    const result = await runTask<{ echo: string }>(
+      "echo-check",
+      { message: "hi" },
+      { baseDir, provider, caps: GENEROUS_CAPS }
+    );
+
+    expect(result.ok).toBe(true);
+    if (result.ok) {
+      expect(result.modelId).toBe(MODELS[TASKS["echo-check"].tier].id);
+      expect(result.tierRequested).toBe(TASKS["echo-check"].tier);
+      expect(result.tierUsed).toBe(TASKS["echo-check"].tier);
+      expect(typeof result.promptVersion).toBe("string");
+      expect(result.promptVersion.length).toBeGreaterThan(0);
+    }
+  });
+
+  it("a cache hit still reports provenance fields", async () => {
+    const { runTask } = await import("@/server/ai/gateway");
+    const provider = stubProvider([{ text: '{"echo":"hi"}', promptTokens: 10, completionTokens: 5 }]);
+    await runTask("echo-check", { message: "hi" }, { baseDir, provider, caps: GENEROUS_CAPS });
+
+    const second = await runTask<{ echo: string }>(
+      "echo-check",
+      { message: "hi" },
+      { baseDir, provider, caps: GENEROUS_CAPS }
+    );
+    expect(second.ok).toBe(true);
+    if (second.ok) {
+      expect(second.cached).toBe(true);
+      expect(second.modelId).toBe(MODELS[TASKS["echo-check"].tier].id);
+    }
+  });
+});
+
+describe("gateway: budget defects fixed (docs/reviews/2026-07-30-stack-position.md §6)", () => {
+  it("§6.1: reserves 2x the estimate on preflight, so a repair attempt is always covered", async () => {
+    const { runTask } = await import("@/server/ai/gateway");
+    const provider = stubProvider([{ text: '{"echo":"hi"}', promptTokens: 10, completionTokens: 5 }]);
+
+    // mid-tier estimate for echo-check is ~$0.000119. A cap of $0.00015 fits
+    // one mid-tier call but not two (2x = ~$0.000238) -- under the old,
+    // un-doubled preflight this would have used mid tier. The fixed preflight
+    // must downgrade to cheap instead, since it checks for 2x headroom.
+    const tightCaps = { daily: 0.00015, weekly: 30, monthly: 50 };
+
+    const result = await runTask(
+      "echo-check",
+      { message: "hi" },
+      { baseDir, provider, caps: tightCaps }
+    );
+
+    expect(result.ok).toBe(true);
+    const calls = (provider.complete as ReturnType<typeof vi.fn>).mock.calls;
+    const modelIdUsed = calls[0][1];
+    expect(modelIdUsed).toBe(MODELS.cheap.id);
+  });
+
+  it("§6.2: a reservation survives a provider crash instead of being lost", async () => {
+    const { runTask } = await import("@/server/ai/gateway");
+    const provider = stubProvider([new Error("network died")]);
+
+    const result = await runTask(
+      "echo-check",
+      { message: "hi" },
+      { baseDir, provider, caps: GENEROUS_CAPS }
+    );
+
+    expect(result.ok).toBe(false);
+    if (!result.ok) expect(result.reason).toBe("provider_error");
+
+    const { readCollection } = await import("@/server/db/store");
+    const rows = await readCollection<{ reserved: boolean; costUsd: number }>("ai-calls", { baseDir });
+    expect(rows.length).toBe(1);
+    expect(rows[0].reserved).toBe(true);
+    expect(rows[0].costUsd).toBeGreaterThan(0);
+
+    const { sumSince } = await import("@/server/db/repositories/aiCalls");
+    const total = await sumSince(new Date(0), { baseDir });
+    expect(total).toBeGreaterThan(0);
+  });
+
+  it("§6.2: a successful call reconciles the reservation to the actual cost", async () => {
+    const { runTask } = await import("@/server/ai/gateway");
+    const provider = stubProvider([{ text: '{"echo":"hi"}', promptTokens: 10, completionTokens: 5 }]);
+
+    await runTask("echo-check", { message: "hi" }, { baseDir, provider, caps: GENEROUS_CAPS });
+
+    const { readCollection } = await import("@/server/db/store");
+    const rows = await readCollection<{ reserved: boolean }>("ai-calls", { baseDir });
+    expect(rows.length).toBe(1);
+    expect(rows[0].reserved).toBe(false);
+  });
+});
+
 describe("gateway: fixtures satisfy their schemas", () => {
   it("every registered fixture validates against its task's zod schema", () => {
     for (const [name, task] of Object.entries(TASKS)) {

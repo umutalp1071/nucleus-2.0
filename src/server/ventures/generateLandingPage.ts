@@ -1,6 +1,8 @@
 import * as artifactsRepo from "../db/repositories/artifacts";
+import * as decisionsRepo from "../db/repositories/decisions";
 import { runTask } from "../ai/gateway";
 import type { Provider } from "../ai/provider";
+import { recordDecision } from "./recordDecision";
 import type { Venture, Plan, Landing, Artifact } from "@/lib/domain";
 
 export type GenerateLandingPageResult =
@@ -28,6 +30,13 @@ export async function generateLandingPage(venture: Venture, opts?: Opts): Promis
     };
   }
 
+  // Fetched before the new artifact exists -- this is the version the
+  // founder is unhappy with when `feedback` is set, so its Decision is what
+  // gets annotated below. See docs/reviews/2026-07-30-stack-position.md §5.4.
+  const previousLandingArtifact = opts?.feedback
+    ? await artifactsRepo.latestOfKind(venture.id, "landing_page", repoOpts)
+    : null;
+
   const result = await runTask<Landing>(
     "write-landing-page",
     { idea: venture.description, plan: planArtifact.content as Plan, feedback: opts?.feedback },
@@ -41,11 +50,18 @@ export async function generateLandingPage(venture: Venture, opts?: Opts): Promis
       kind: "landing_page",
       stage: venture.stage,
       content: result.data,
-      model: "write-landing-page",
+      model: result.modelId,
       costUsd: result.costUsd,
       demo: result.demo,
     },
     repoOpts
   );
+  await recordDecision(
+    { task: "write-landing-page", artifact, inputRefs: [planArtifact.id], result },
+    repoOpts
+  );
+  if (previousLandingArtifact) {
+    await decisionsRepo.markHumanFeedback(previousLandingArtifact.id, "regenerated", opts!.feedback!, repoOpts);
+  }
   return { ok: true, artifact };
 }

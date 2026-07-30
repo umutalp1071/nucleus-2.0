@@ -4,6 +4,7 @@ import * as ventures from "@/server/db/repositories/ventures";
 import * as artifactsRepo from "@/server/db/repositories/artifacts";
 import * as aiCallsRepo from "@/server/db/repositories/aiCalls";
 import * as buildTasksRepo from "@/server/db/repositories/buildTasks";
+import * as decisionsRepo from "@/server/db/repositories/decisions";
 import { Card, Badge } from "@/components/dashboard/ui";
 import { StageTimeline } from "@/components/venture/StageTimeline";
 import { VentureActions } from "@/components/venture/VentureActions";
@@ -45,11 +46,13 @@ export default async function VentureWorkspace({ params }: { params: { id: strin
   const venture = await ventures.get(params.id);
   if (!venture) notFound();
 
-  const [artifacts, spend, buildTasks] = await Promise.all([
+  const [artifacts, spend, buildTasks, decisions] = await Promise.all([
     artifactsRepo.listByVenture(venture.id),
     aiCallsRepo.sumByVenture(venture.id),
     buildTasksRepo.listByVenture(venture.id),
+    decisionsRepo.listByVenture(venture.id),
   ]);
+  const decisionByArtifactId = new Map(decisions.map((d) => [d.artifactId, d]));
   const groups = groupByKind(artifacts);
   const mvpScopeGroup = groups.find((g) => g.kind === "mvp_scope");
   const stack = mvpScopeGroup ? (mvpScopeGroup.latest.content as MvpScope).stack : undefined;
@@ -82,7 +85,11 @@ export default async function VentureWorkspace({ params }: { params: { id: strin
         ) : (
           groups.map(({ kind, latest, older }) => (
             <Card key={kind} className="flex flex-col gap-3">
-              <ArtifactRenderer artifact={latest} buildSpecContext={buildSpecContext} />
+              <ArtifactRenderer
+                artifact={latest}
+                buildSpecContext={buildSpecContext}
+                decision={decisionByArtifactId.get(latest.id)}
+              />
               {older.length > 0 && (
                 <details className="text-xs text-muted-foreground">
                   <summary className="cursor-pointer">
@@ -92,7 +99,11 @@ export default async function VentureWorkspace({ params }: { params: { id: strin
                     {older.map((artifact) => (
                       <div key={artifact.id} className="opacity-70">
                         <p className="mb-1">{relativeTime(artifact.createdAt)}</p>
-                        <ArtifactRenderer artifact={artifact} buildSpecContext={buildSpecContext} />
+                        <ArtifactRenderer
+                          artifact={artifact}
+                          buildSpecContext={buildSpecContext}
+                          decision={decisionByArtifactId.get(artifact.id)}
+                        />
                       </div>
                     ))}
                   </div>

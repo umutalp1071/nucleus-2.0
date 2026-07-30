@@ -3,6 +3,7 @@ import * as artifactsRepo from "../db/repositories/artifacts";
 import { runTask } from "../ai/gateway";
 import type { Provider } from "../ai/provider";
 import { recordEvent } from "../events";
+import { recordDecision } from "./recordDecision";
 import type { Venture, Plan, MvpScope, Verdict, Competitors } from "@/lib/domain";
 
 export type PlanAndAdvanceResult =
@@ -35,16 +36,23 @@ export async function planAndAdvance(venture: Venture, opts?: Opts): Promise<Pla
   );
   if (!planResult.ok) return planResult;
 
-  await artifactsRepo.create(
+  const planInputRefs = [validationArtifact?.id, competitorsArtifact?.id].filter(
+    (id): id is string => Boolean(id)
+  );
+  const planArtifactRow = await artifactsRepo.create(
     {
       ventureId: venture.id,
       kind: "plan",
       stage: "validated",
       content: planResult.data,
-      model: "plan-venture",
+      model: planResult.modelId,
       costUsd: planResult.costUsd,
       demo: planResult.demo,
     },
+    { baseDir: opts?.baseDir }
+  );
+  await recordDecision(
+    { task: "plan-venture", artifact: planArtifactRow, inputRefs: planInputRefs, result: planResult },
     { baseDir: opts?.baseDir }
   );
   await recordEvent("venture.planned", `Planned "${venture.title}" -- ${planResult.data.positioning.oneLiner}`, {
@@ -59,16 +67,20 @@ export async function planAndAdvance(venture: Venture, opts?: Opts): Promise<Pla
   );
   if (!mvpResult.ok) return mvpResult;
 
-  await artifactsRepo.create(
+  const mvpArtifactRow = await artifactsRepo.create(
     {
       ventureId: venture.id,
       kind: "mvp_scope",
       stage: "validated",
       content: mvpResult.data,
-      model: "scope-mvp",
+      model: mvpResult.modelId,
       costUsd: mvpResult.costUsd,
       demo: mvpResult.demo,
     },
+    { baseDir: opts?.baseDir }
+  );
+  await recordDecision(
+    { task: "scope-mvp", artifact: mvpArtifactRow, inputRefs: [planArtifactRow.id], result: mvpResult },
     { baseDir: opts?.baseDir }
   );
   await recordEvent(

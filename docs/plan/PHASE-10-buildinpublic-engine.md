@@ -32,12 +32,22 @@ function, no AI — scores recent events for narrative value:
 
 | Signal | Weight |
 |---|---|
-| A stage transition | high |
+| A `Prediction` resolved `missed` | **highest** — see below |
 | A `killed` verdict | **highest** — the most shareable thing the system does |
+| A stage transition | high |
 | Budget guard fired | high — it's a genuinely interesting engineering story |
 | A deploy went live | high |
 | Something failed and recovered | high |
 | Routine CRUD | zero |
+
+> **Extended by `docs/reviews/2026-07-30-stack-position.md` §8, adopted.**
+> Phase 08.5 added `Prediction` and `Observation`; a prediction resolved
+> `missed` is now available as input to this function and ranks alongside a
+> `killed` verdict. "We predicted 50 signups, we got 6, here is what we got
+> wrong" is the most shareable content type that exists — the same insight
+> that already made `killed` a first-class stage, now with real data behind
+> it instead of just a verdict. This scoring table was designed for this
+> signal from day one; it simply had no data to score before Phase 08.5.
 
 Returns the top-N storyworthy events in a window. Pure function → easy to
 test, and it costs nothing to run.

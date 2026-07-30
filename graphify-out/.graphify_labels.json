@@ -93,6 +93,14 @@
   "91": "repositories/events.ts",
   "92": "artifacts.ts",
   "93": "aiCalls.ts",
+  "94": "index.tsx",
+  "95": "tasks/index.ts",
+  "96": "CopyForControl.tsx",
+  "97": "PHASE 13 — CALIBRATION",
+  "98": "Verdict",
+  "99": "Everything my AI generates is replaceable. Almost nothing it remembers is.",
+  "100": "observations.test.ts",
   "101": "The best feature I shipped this week makes zero AI calls",
-  "102": "Nucleus doesn't write your code. It writes the brief that does."
+  "102": "Nucleus doesn't write your code. It writes the brief that does.",
+  "103": "predictions.test.ts"
 }

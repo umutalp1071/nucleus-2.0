@@ -26,6 +26,11 @@ takes ten seconds and protects the plan. Nothing is ever "quickly also done."
 | Idea → multiple venture comparison | Interesting, unproven need | A user runs 5+ ventures at once |
 | Custom domains for launch pages | Vercel handles the subdomain fine | Someone asks |
 | Next.js 14 → 15/16 upgrade | Fixes 2 high-severity `npm audit` advisories (DoS/SSRF-class), but no fix exists on the 14.2.x line and the jump is a breaking change across the whole app — needs its own dedicated verification pass, not a drive-by fix. See `SECURITY.md`. | Scheduled as its own task, ideally before any public-facing deploy |
+| Policy as data (tier assignments, `minTier`, retry count, `COMPETITOR_ANALYSIS_MIN_SCORE`, cap defaults, moved out of hardcoded TypeScript into a versioned record) | Structural difference between "an app" and "a governed runtime," but not urgent -- see `docs/reviews/2026-07-30-stack-position.md` §5.6 | A policy value needs changing without a deploy |
+| Decision graph as a queryable API (`inputRefs` lineage exposed beyond the workspace UI) | No second consumer yet | A second consumer of lineage exists |
+| Extracting the governance kernel (chokepoint + budget + Decision/Prediction/Observation) as a standalone library | No demand signal | 10+ users, and one of them asks to run their own loop through it |
+| Multi-loop / non-venture domains for the Decision/Prediction/Observation primitives | The venture loop itself is unproven at scale | The venture loop has resolved 50+ predictions |
+| Auto-extracting `Plan.killCriteria` / `MvpScope.riskiestAssumption` as tracked Predictions | Both are prose with no stated date -- inventing a `resolveBy` would fabricate data the model never gave, the exact failure mode rejected in §6.3 of the review below | A review-window policy (see the policy-as-data row above) gives these fields a real date to extract |
 
 ---
 
@@ -44,6 +49,8 @@ Recorded so nobody re-proposes them.
 | Sentry / external error tracking | Local-first single-operator app. Nowhere to send telemetry, and it shouldn't. |
 | Batch-generating all 12 content drafts | 12× cost for content mostly unused. Generate on click. |
 | An AI call to expand milestones into tasks | The plan already has the content. Paying a model to reformat your own data is the waste the budget guard exists to prevent. |
+| Repositioning as "AI governance infrastructure" | Infrastructure with no application on top of it, and a more crowded, better-capitalized fight than "venture copilot" (LangSmith, Braintrust, Arize, W&B). Lesson #1 in a nicer suit. See `docs/reviews/2026-07-30-stack-position.md` §2.3/§9. |
+| "Moving down the stack" toward models/compute | Lower layers are less defensible, not more -- foundation models are the most capital-intensive, fastest-commoditizing layer that exists. See `docs/reviews/2026-07-30-stack-position.md` §2.1. |
 
 ---
 

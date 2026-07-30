@@ -1,7 +1,9 @@
 import * as artifactsRepo from "../db/repositories/artifacts";
+import * as decisionsRepo from "../db/repositories/decisions";
 import { runTask } from "../ai/gateway";
 import type { Provider } from "../ai/provider";
 import { generateLandingPage } from "./generateLandingPage";
+import { recordDecision } from "./recordDecision";
 import type { Venture, Plan, MvpScope, Verdict, Competitors, Artifact } from "@/lib/domain";
 
 export type RegenerateResult =
@@ -30,9 +32,10 @@ export async function regenerateArtifact(
   }
 
   if (kind === "plan") {
-    const [validationArtifact, competitorsArtifact] = await Promise.all([
+    const [validationArtifact, competitorsArtifact, previousPlanArtifact] = await Promise.all([
       artifactsRepo.latestOfKind(venture.id, "validation", repoOpts),
       artifactsRepo.latestOfKind(venture.id, "competitors", repoOpts),
+      artifactsRepo.latestOfKind(venture.id, "plan", repoOpts),
     ]);
 
     const result = await runTask<Plan>(
@@ -47,23 +50,33 @@ export async function regenerateArtifact(
     );
     if (!result.ok) return result;
 
+    const inputRefs = [validationArtifact?.id, competitorsArtifact?.id].filter(
+      (id): id is string => Boolean(id)
+    );
     const artifact = await artifactsRepo.create(
       {
         ventureId: venture.id,
         kind: "plan",
         stage: venture.stage,
         content: result.data,
-        model: "plan-venture",
+        model: result.modelId,
         costUsd: result.costUsd,
         demo: result.demo,
       },
       repoOpts
     );
+    await recordDecision({ task: "plan-venture", artifact, inputRefs, result }, repoOpts);
+    if (previousPlanArtifact) {
+      await decisionsRepo.markHumanFeedback(previousPlanArtifact.id, "regenerated", feedback, repoOpts);
+    }
     return { ok: true, artifact };
   }
 
   // kind === "mvp_scope"
-  const planArtifact = await artifactsRepo.latestOfKind(venture.id, "plan", repoOpts);
+  const [planArtifact, previousMvpArtifact] = await Promise.all([
+    artifactsRepo.latestOfKind(venture.id, "plan", repoOpts),
+    artifactsRepo.latestOfKind(venture.id, "mvp_scope", repoOpts),
+  ]);
   if (!planArtifact) {
     return {
       ok: false,
@@ -85,11 +98,15 @@ export async function regenerateArtifact(
       kind: "mvp_scope",
       stage: venture.stage,
       content: result.data,
-      model: "scope-mvp",
+      model: result.modelId,
       costUsd: result.costUsd,
       demo: result.demo,
     },
     repoOpts
   );
+  await recordDecision({ task: "scope-mvp", artifact, inputRefs: [planArtifact.id], result }, repoOpts);
+  if (previousMvpArtifact) {
+    await decisionsRepo.markHumanFeedback(previousMvpArtifact.id, "regenerated", feedback, repoOpts);
+  }
   return { ok: true, artifact };
 }

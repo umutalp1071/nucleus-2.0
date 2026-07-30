@@ -80,9 +80,75 @@ export const AiCallSchema = z.object({
   costUsd: z.number(),
   cached: z.boolean(),
   ventureId: z.string().nullable(),
+  // True from the moment budget headroom is reserved, before the provider
+  // call returns; flipped false once the real cost is reconciled in. A row
+  // stuck `true` means the process died mid-call -- the estimate it holds is
+  // the honest fallback rather than a silently lost ledger entry. See
+  // docs/reviews/2026-07-30-stack-position.md §6.2.
+  reserved: z.boolean().default(false),
   createdAt: z.string(),
 });
 export type AiCall = z.infer<typeof AiCallSchema>;
+
+// Provenance for every AI-produced judgment -- which model, which prompt
+// version, which upstream artifacts fed it, and whether the human who saw it
+// accepted, edited, rejected, or regenerated it. `inputRefs` is the lineage
+// edge that turns a flat artifact list into a decision graph. See
+// docs/reviews/2026-07-30-stack-position.md §5.1.
+export const DecisionSchema = z.object({
+  id: z.string(),
+  ventureId: z.string(),
+  task: z.string(),
+  artifactId: z.string(),
+  promptVersion: z.string(),
+  inputRefs: z.array(z.string()).default([]),
+  modelId: z.string(),
+  tierRequested: z.string(),
+  tierUsed: z.string(),
+  downgraded: z.boolean(),
+  cached: z.boolean(),
+  demo: z.boolean(),
+  costUsd: z.number(),
+  humanVerdict: z.enum(["pending", "accepted", "edited", "rejected", "regenerated"]).default("pending"),
+  humanReason: z.string().nullable().default(null),
+  createdAt: z.string(),
+});
+export type Decision = z.infer<typeof DecisionSchema>;
+
+// A falsifiable claim extracted from what the model already emits (a plan's
+// successMetric has metric/target/date already) -- never a new AI call. See
+// docs/reviews/2026-07-30-stack-position.md §5.2.
+export const PredictionSchema = z.object({
+  id: z.string(),
+  ventureId: z.string(),
+  decisionId: z.string(),
+  claim: z.string(),
+  metric: z.string(),
+  target: z.number().nullable(),
+  resolveBy: z.string(),
+  source: z.enum(["plan.successMetric", "plan.killCriteria", "mvp.riskiestAssumption", "user"]),
+  status: z.enum(["open", "hit", "missed", "void"]).default("open"),
+  resolvedAt: z.string().nullable().default(null),
+  resolvedBy: z.string().nullable().default(null),
+  createdAt: z.string(),
+});
+export type Prediction = z.infer<typeof PredictionSchema>;
+
+// Evidence. Carries a `metric` name that matches a Prediction's metric, so
+// resolution is a join rather than a human squinting at a chart. Replaces
+// Phase 09's originally-specced MetricEntry. See
+// docs/reviews/2026-07-30-stack-position.md §5.3.
+export const ObservationSchema = z.object({
+  id: z.string(),
+  ventureId: z.string(),
+  observedAt: z.string(),
+  metric: z.string(),
+  value: z.number().nullable(),
+  note: z.string().nullable(),
+  source: z.enum(["manual", "deploy", "import"]).default("manual"),
+  createdAt: z.string(),
+});
+export type Observation = z.infer<typeof ObservationSchema>;
 
 // AI task output shapes. Defined here (client-safe) rather than in
 // src/server/ai/tasks/, so the venture-result UI can import the type without

@@ -1,4 +1,4 @@
-import type { Artifact, Verdict, Competitors, Plan, MvpScope, BuildSpec, Landing } from "@/lib/domain";
+import type { Artifact, Decision, Verdict, Competitors, Plan, MvpScope, BuildSpec, Landing } from "@/lib/domain";
 import type { BuildSpecContext } from "@/lib/build-spec-export";
 import { ValidationArtifact } from "./ValidationArtifact";
 import { CompetitorsArtifact } from "./CompetitorsArtifact";
@@ -7,6 +7,7 @@ import { MvpScopeArtifact } from "./MvpScopeArtifact";
 import { BuildSpecArtifact } from "./BuildSpecArtifact";
 import { LandingArtifact } from "./LandingArtifact";
 import { RegenerateControl } from "./RegenerateControl";
+import { DecisionProvenance } from "./DecisionProvenance";
 
 const REGENERATABLE = new Set<Artifact["kind"]>(["plan", "mvp_scope", "landing_page"]);
 
@@ -16,9 +17,11 @@ const REGENERATABLE = new Set<Artifact["kind"]>(["plan", "mvp_scope", "landing_p
 export function ArtifactRenderer({
   artifact,
   buildSpecContext,
+  decision,
 }: {
   artifact: Artifact;
   buildSpecContext?: BuildSpecContext;
+  decision?: Decision | null;
 }) {
   return (
     <div className="flex flex-col gap-2">
@@ -30,6 +33,7 @@ export function ArtifactRenderer({
           kind={artifact.kind as "plan" | "mvp_scope" | "landing_page"}
         />
       )}
+      <DecisionProvenance decision={decision ?? null} />
     </div>
   );
 }

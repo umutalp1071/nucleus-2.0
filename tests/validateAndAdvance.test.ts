@@ -128,3 +128,60 @@ describe("validateAndAdvance: competitor analysis gating", () => {
     expect(stillCaptured?.stage).toBe("captured");
   });
 });
+
+describe("validateAndAdvance: Decision provenance (docs/reviews/2026-07-30-stack-position.md §5.1/§6.3)", () => {
+  it("records a Decision with the real model id, not the task name, for both artifacts", async () => {
+    const { validateAndAdvance } = await import("@/server/ventures/validateAndAdvance");
+    const artifacts = await import("@/server/db/repositories/artifacts");
+    const decisions = await import("@/server/db/repositories/decisions");
+    const { MODELS } = await import("@/server/ai/models");
+    const { TASKS } = await import("@/server/ai/tasks");
+
+    const venture = await ventures.create({ title: "Decent idea", description: "a decent idea" }, { baseDir });
+    const provider = stubProvider([verdictResponse(55, "refine"), competitorsResponse]);
+
+    const result = await validateAndAdvance(venture, { baseDir, provider });
+    expect(result.ok).toBe(true);
+
+    const savedArtifacts = await artifacts.listByVenture(venture.id, { baseDir });
+    const validationArtifact = savedArtifacts.find((a) => a.kind === "validation")!;
+    const competitorsArtifact = savedArtifacts.find((a) => a.kind === "competitors")!;
+
+    // §6.3: Artifact.model must be the real model id, never the task name.
+    expect(validationArtifact.model).toBe(MODELS[TASKS["validate-idea"].tier].id);
+    expect(validationArtifact.model).not.toBe("validate-idea");
+
+    const allDecisions = await decisions.listByVenture(venture.id, { baseDir });
+    const validationDecision = allDecisions.find((d) => d.artifactId === validationArtifact.id)!;
+    const competitorsDecision = allDecisions.find((d) => d.artifactId === competitorsArtifact.id)!;
+
+    expect(validationDecision.task).toBe("validate-idea");
+    expect(validationDecision.modelId).toBe(MODELS[TASKS["validate-idea"].tier].id);
+    expect(validationDecision.humanVerdict).toBe("pending");
+    expect(validationDecision.inputRefs).toEqual([]);
+
+    // The competitor analysis was fed by the idea alone, not the verdict
+    // artifact's content -- an honest lineage edge, not an invented one.
+    expect(competitorsDecision.inputRefs).toEqual([]);
+  });
+
+  it("backfills a Decision for an artifact created before this phase existed", async () => {
+    const artifacts = await import("@/server/db/repositories/artifacts");
+    const decisions = await import("@/server/db/repositories/decisions");
+
+    const venture = await ventures.create({ title: "Old venture", description: "x" }, { baseDir });
+    const artifact = await artifacts.create(
+      { ventureId: venture.id, kind: "validation", stage: "captured", content: {}, model: "validate-idea", costUsd: 0.02, demo: true },
+      { baseDir }
+    );
+
+    const list = await decisions.listByVenture(venture.id, { baseDir });
+
+    expect(list).toHaveLength(1);
+    expect(list[0].artifactId).toBe(artifact.id);
+    expect(list[0].modelId).toBe("unknown");
+    expect(list[0].task).toBe("validate-idea"); // recovered from the old (mislabeled) Artifact.model
+    expect(list[0].costUsd).toBe(0.02);
+    expect(list[0].demo).toBe(true);
+  });
+});
