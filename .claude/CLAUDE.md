@@ -49,5 +49,9 @@ deliberate scope decision, not a gap. See `docs/plan/00-ANSWER.md` §2.
 - Never add an npm dependency without a Dependency Ledger row in
   `docs/plan/PROGRESS.md`.
 - Never run `next build` while `next dev` is running against the same `.next`.
-- A phase is not complete without its two Peerlist drafts in
-  `docs/content/drafts/`.
+- A phase is not complete without a Peerlist draft in `docs/content/drafts/`.
+  Default to **one** post (ship or lesson, whichever angle is stronger for
+  that phase) — write both only when the phase clearly earns both. Content
+  is a queue, not a diary: see PEERLIST-PLAYBOOK.md's "Content is a queue,
+  not a diary" section. Publishing cadence is decoupled from dev cadence on
+  purpose — never let post volume imply the dev pace was slower than it was.

@@ -1,7 +1,5 @@
 # I don't let the AI write HTML
 
-**Publish date:** 2026-08-14
-
 The landing page feature could have been one prompt: "write me a landing page." I didn't build it that way, and the reason is the whole lesson.
 
 **What I hit:** Nucleus needed to generate a real, publishable landing page from a venture's plan -- headline, benefits, FAQ, a CTA, the works.

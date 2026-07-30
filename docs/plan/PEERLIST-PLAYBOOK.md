@@ -1,6 +1,7 @@
 # PEERLIST BUILD-IN-PUBLIC PLAYBOOK
 
-Every phase ships two posts. They are a Definition-of-Done gate, not a bonus.
+Every phase ships at least one post. They are a Definition-of-Done gate, not
+a bonus — see "one by default, two when earned" below for how many.
 
 The goal is not "posting about the project." The goal is: **a developer
 scrolling Peerlist stops, reads to the end, and remembers the author's name.**
@@ -25,14 +26,36 @@ not for the changelog.
 
 ---
 
-## The two posts per phase
+## Content is a queue, not a diary
+
+An AI agent can finish several phases in one real day. Publishing one post a
+day cannot keep up with that indefinitely — the backlog would grow without
+bound, and by the time the product is finished the founder would still be
+publishing about phases from weeks earlier. That defeats the actual goal
+(build an audience *while* building), so two things change on purpose:
+
+1. **Posts never claim same-day immediacy.** No "today," "yesterday," "this
+   week." A post is a numbered field-note in an ongoing build log, read at
+   whatever pace the founder publishes it — never a diary entry whose truth
+   depends on publish date matching commit date.
+2. **Publishing cadence is independent of dev cadence.** The founder publishes
+   roughly one a day, oldest-unpublished-first, and skips or doubles up
+   without consequence — there is no schedule to fall behind on. Volume is
+   controlled at the writing end (see below), not by rationing publish dates.
+3. **Free reach lever:** the same text, unedited, also goes to X and LinkedIn.
+   Zero extra writing, more audience — always mention this when handing off a
+   post.
+
+---
+
+## The posts per phase: one by default, two when earned
 
 ### Post A — SHIP: "here's what now works"
 
 File: `docs/content/drafts/YYYY-MM-DD-phase-NN-ship.md`
 
-Concrete, visual, demoable. What can a person *do* today that they couldn't
-yesterday.
+Concrete, visual, demoable. What can a person *do* now that they couldn't
+before.
 
 ### Post B — LESSON: "here's a problem I hit and how I solved it"
 
@@ -42,9 +65,17 @@ The engineering decision. This is the one that earns respect and follows.
 Developers don't follow ship logs; they follow people who think clearly in
 public.
 
-The founder supplies screenshots and hits publish. Everything else is written
-— including the shot list and the date. Never leave either for a later
-session; a post without both is not done.
+**Default to writing one of these per phase** — whichever angle is genuinely
+stronger for what that phase produced. Write both only when the phase clearly
+earns it: a real visible/demoable capability *and* a real decision worth
+arguing. Plumbing-heavy phases (schema, infra, a gateway) usually earn only
+the Lesson; visually rich phases usually earn only the Ship. This is the
+lever that keeps the content queue from outgrowing what one person can
+publish — cut here, not by rationing publish dates.
+
+The founder supplies screenshots and hits publish. Everything else is
+written — including the shot list. Never leave it for a later session; a
+post without one is not done.
 
 ---
 
@@ -82,25 +113,23 @@ post without a visual because the original screen no longer exists.
 
 ---
 
-## Publish date (required on every post)
+## No scheduled dates — order is the only signal
 
-Every post gets a `**Publish date:** YYYY-MM-DD` line directly under the
-title, one post per calendar day, in the order the posts were written
-(ship/lesson pairs stay adjacent, SHIP before LESSON for a given phase
-unless the phase file's assigned angles say otherwise).
+Posts do **not** carry a `**Publish date:**` line. A specific future calendar
+date is a promise the queue can't keep once dev outpaces publishing, and
+maintaining it is unnecessary bookkeeping for something the founder controls
+anyway (see "Content is a queue, not a diary").
 
-To assign it:
+Ordering comes from the filename alone: `YYYY-MM-DD-phase-NN-{ship,lesson}.md`,
+where the date is simply *when the post was written* (a record, like a git
+commit date — never a scheduling promise). The founder publishes
+oldest-unpublished-first. A post is marked published by appending `PAYLAŞTIM`
+on its own line at the end of the file — never delete or renumber a published
+post, it's a historical record.
 
-1. Scan `docs/content/drafts/*.md` for existing `**Publish date:**` lines and
-   take the latest one found.
-2. If none exist yet, or every existing post is already marked as published
-   (a `PAYLAŞTIM` line under it, or otherwise confirmed sent), start from
-   tomorrow relative to the current session date.
-3. Otherwise the new pair continues immediately after the latest assigned
-   date — one date per post, no gaps, no doubling up on a single day.
-4. Never assign a date to, or move the date on, a post that already has
-   `PAYLAŞTIM` underneath it — that means it has already been published and
-   is a historical record, not a draft.
+(Drafts written before this rule changed may still carry a `**Publish
+date:**` line with a far-future date — it's vestigial. Ignore it; publish in
+filename order same as everything else.)
 
 ---
 
@@ -159,8 +188,6 @@ another builder what happened. No "excited to announce," no "🚀," no
 ```markdown
 # [Concrete capability, not a phase number]
 
-**Publish date:** YYYY-MM-DD
-
 [One sentence: what a person can now do. No preamble.]
 
 **Where it stands:** [current state of the system in 2-3 sentences —
@@ -199,8 +226,6 @@ recording steps, or the full image prompt.]
 
 ```markdown
 # [The insight as a claim, e.g. "A budget you check after the call isn't a budget"]
-
-**Publish date:** YYYY-MM-DD
 
 [Open on the tension. 2 sentences. No "while building X" throat-clearing.]
 
@@ -248,16 +273,20 @@ recording steps, or the full image prompt.]
       next)?
 - [ ] Has a `## Visual` section naming exactly what to capture (screenshot /
       recording / terminal / AI-image), with a full prompt if AI-image?
-- [ ] Has a `**Publish date:**` line under the title, one day after the
-      previous unpublished post, unless this post already has `PAYLAŞTIM`?
+- [ ] Zero "today"/"this week"/other language claiming same-day immediacy?
+- [ ] If this phase produced two posts, does each genuinely earn its place
+      (a real demo *and* a real decision), not just default habit?
 
 ---
 
 ## Angles already assigned per phase
 
-Each `PHASE-NN` file ends with its two angles pre-chosen. Use them — they were
-selected so the series has narrative arc rather than 26 disconnected updates.
-The arc across all phases is:
+Each `PHASE-NN` file ends with its two angles pre-chosen — a SHIP angle and a
+LESSON angle. Treat them as a menu, not a mandate: pick whichever one is
+genuinely stronger for what that phase produced (see "one by default, two
+when earned" above), rather than always writing both. They were selected so
+the series has a narrative arc rather than 26 disconnected updates. The arc
+across all phases is:
 
 > *"One person, an AI, and a $50/month cap tried to build a venture studio.
 > Here is every decision, including the wrong ones."*

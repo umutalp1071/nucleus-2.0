@@ -1,6 +1,6 @@
 ---
 name: nucleus-phase
-description: "Execute one phase of the Nucleus 2.0 implementation plan end to end — read the phase spec, implement with TDD, verify in a real browser, write both Peerlist posts, update state, commit and push. Use whenever asked to work on Nucleus, continue development, execute a phase, or when the user types /nucleus-phase."
+description: "Execute one phase of the Nucleus 2.0 implementation plan end to end — read the phase spec, implement with TDD, verify in a real browser, write the Peerlist post(s), update state, commit and push. Use whenever asked to work on Nucleus, continue development, execute a phase, or when the user types /nucleus-phase."
 ---
 
 # Execute a Nucleus 2.0 phase
@@ -30,13 +30,15 @@ seems to contradict them — in which case the documents win.
 2. For each step in the phase:
      write the failing test  →  implement the minimum  →  npm run verify
 3. UI touched? Run the run-dashboard skill. LOOK at the screenshots.
-4. Write both Peerlist posts (docs/plan/PEERLIST-PLAYBOOK.md, angles are
-   pre-assigned at the bottom of the phase file). Each post gets, per the
-   playbook: a `**Publish date:**` line under the title (scan
-   docs/content/drafts/*.md for the latest assigned date and continue one
-   day per post from there; skip posts already marked `PAYLAŞTIM`), and a
-   `## Visual` section at the end naming the exact screenshot, recording, or
-   AI-image prompt to accompany it.
+4. Write the Peerlist post(s) (docs/plan/PEERLIST-PLAYBOOK.md, angles are
+   pre-assigned at the bottom of the phase file as a menu, not a mandate).
+   Default to **one** post — whichever angle is genuinely stronger for this
+   phase; write both only when the phase clearly earns both (a real
+   demoable capability *and* a real decision worth arguing). No
+   `**Publish date:**` line and no "today"/"this week" language — content is
+   a queue the founder publishes at their own pace, not a diary. Every post
+   still gets a `## Visual` section at the end naming the exact screenshot,
+   recording, or AI-image prompt to accompany it.
 5. Update PROGRESS.md — status, decisions, dependency ledger
 6. Append to docs/workflow/learning.md in PROTOCOL.md format, honest Quality Score
 7. git commit + push (push is pre-approved by project rule)
@@ -54,9 +56,10 @@ seems to contradict them — in which case the documents win.
   it. Do not weaken that test.
 - **No new dependency** without a Dependency Ledger row in `PROGRESS.md`
   naming what you rejected.
-- **Both posts, or the phase isn't done.** Marketing runs in parallel or this
-  project fails the way 1.0 did. A post without a `**Publish date:**` line
-  and a `## Visual` section is not done either — see PEERLIST-PLAYBOOK.md.
+- **A post, or the phase isn't done.** Marketing runs in parallel or this
+  project fails the way 1.0 did. Default to one strong post; two only when
+  earned. A post without a `## Visual` section is not done — see
+  PEERLIST-PLAYBOOK.md.
 - **Never stall on the founder.** Blocked means: write a `BLOCKED` entry with
   the exact question, then start the next unblocked phase.
 - **No network in tests.** Every external dependency has a deterministic fake.
@@ -79,7 +82,7 @@ Phase NN — [name] ✅
 Shipped:   [3 bullets]
 Verified:  [the commands you ran + what the screenshots showed]
 Decisions: [anything non-obvious, already in PROGRESS.md]
-Posts:     [the two draft filenames, each with its assigned publish date]
+Posts:     [the draft filename(s) written this phase]
 Next:      Phase NN+1 — [name]
 ```
 
