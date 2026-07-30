@@ -22,7 +22,7 @@
 | 05 | Budget Console | ✅ done | `62f4131` | ship, lesson |
 | 06 | Planning Stage | ✅ done | `e9fd86b` | ship, lesson |
 | 07 | Build Stage | ✅ done | `d1e025e` | ship, lesson |
-| 08 | Launch Stage | ✅ done | `pending` | ship, lesson |
+| 08 | Launch Stage | ✅ done | `e908317` | ship, lesson |
 | 09 | Growth Stage | ⬜ | — | — |
 | 10 | Build-in-Public Engine | ⬜ | — | — |
 | 11 | Immune System | ⬜ | — | — |
