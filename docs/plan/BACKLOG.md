@@ -25,6 +25,7 @@ takes ten seconds and protects the plan. Nothing is ever "quickly also done."
 | White-label / enterprise | Same | Same, plus revenue |
 | Idea → multiple venture comparison | Interesting, unproven need | A user runs 5+ ventures at once |
 | Custom domains for launch pages | Vercel handles the subdomain fine | Someone asks |
+| Next.js 14 → 15/16 upgrade | Fixes 2 high-severity `npm audit` advisories (DoS/SSRF-class), but no fix exists on the 14.2.x line and the jump is a breaking change across the whole app — needs its own dedicated verification pass, not a drive-by fix. See `SECURITY.md`. | Scheduled as its own task, ideally before any public-facing deploy |
 
 ---
 
