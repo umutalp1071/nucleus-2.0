@@ -64,6 +64,20 @@ export async function writeCollection<T>(name: string, rows: T[], opts?: StoreOp
   fs.renameSync(tmp, file);
 }
 
+// The only sanctioned way to write a non-JSON file under the data dir (e.g.
+// the mock deploy target's generated HTML) -- store.ts stays the sole
+// importer of node:fs, enforced by tests/boundaries.test.ts.
+export async function writeRawFile(relPath: string, content: string, opts?: StoreOpts): Promise<string> {
+  const dir = resolveDir(opts);
+  // Absolute even when NUCLEUS_DATA_DIR is the default relative ".nucleus" --
+  // callers turn this into a file:// URL, which is meaningless as a relative
+  // path.
+  const file = path.resolve(dir, relPath);
+  ensureDir(path.dirname(file));
+  fs.writeFileSync(file, content, "utf8");
+  return file;
+}
+
 // For the Settings "Your data" panel -- printing the on-disk path and backup
 // count is the most concrete possible expression of "under your own control."
 export async function dataDirInfo(opts?: StoreOpts): Promise<{ dir: string; backupCount: number }> {

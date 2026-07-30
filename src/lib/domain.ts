@@ -23,6 +23,13 @@ export const VentureSchema = z.object({
   // ventures saved before this field existed still parse. See
   // docs/plan/PHASE-07-build-stage.md.
   buildUrl: z.string().nullable().default(null),
+  // Where the landing page form posts captured emails -- a Formspree-style
+  // URL the user supplies. Absent means the CTA falls back to a mailto link;
+  // never a dead button. See docs/plan/PHASE-08-launch-stage.md.
+  emailCaptureUrl: z.string().nullable().default(null),
+  // The live landing page URL from the deploy adapter (mock or Vercel).
+  // Redeploying overwrites it -- never a history, just the current live URL.
+  launchUrl: z.string().nullable().default(null),
   createdAt: z.string(),
   updatedAt: z.string(),
 });
@@ -203,3 +210,19 @@ export const BuildSpecSchema = z.object({
   firstCommit: z.string(),
 });
 export type BuildSpec = z.infer<typeof BuildSpecSchema>;
+
+// The model writes copy, never HTML -- a hand-built template renders it.
+// Length caps are load-bearing: an unbounded headline field returns a
+// paragraph. See docs/plan/PHASE-08-launch-stage.md.
+export const LandingSchema = z.object({
+  headline: z.string().max(70),
+  subhead: z.string().max(160),
+  problem: z.string(),
+  solution: z.string(),
+  benefits: z.array(z.object({ title: z.string().max(40), body: z.string() })).length(3),
+  socialProofPlaceholder: z.string(),
+  cta: z.object({ label: z.string().max(25), subtext: z.string() }),
+  faq: z.array(z.object({ q: z.string(), a: z.string() })).min(3).max(5),
+  seo: z.object({ title: z.string().max(60), description: z.string().max(155) }),
+});
+export type Landing = z.infer<typeof LandingSchema>;

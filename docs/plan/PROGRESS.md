@@ -6,7 +6,7 @@
 
 ## Current phase
 
-**PHASE 08 — Launch Stage** — not started
+**PHASE 09 — Growth Stage** — not started
 
 ---
 
@@ -22,7 +22,7 @@
 | 05 | Budget Console | ✅ done | `62f4131` | ship, lesson |
 | 06 | Planning Stage | ✅ done | `e9fd86b` | ship, lesson |
 | 07 | Build Stage | ✅ done | `d1e025e` | ship, lesson |
-| 08 | Launch Stage | ⬜ | — | — |
+| 08 | Launch Stage | ✅ done | `pending` | ship, lesson |
 | 09 | Growth Stage | ⬜ | — | — |
 | 10 | Build-in-Public Engine | ⬜ | — | — |
 | 11 | Immune System | ⬜ | — | — |
@@ -134,6 +134,22 @@ vs. a plain grouping label on BuildTask) — mitigated by keeping the mapping
 1 milestone -> 1 task literally (no invented sub-tasks, no AI), so the data
 transformation stays honest to what "no AI call" means.
 
+### Phase 08 — Launch Stage
+Files: src/lib/domain.ts (LandingSchema, Venture.launchUrl/emailCaptureUrl),
+src/server/ai/tasks/write-landing-page.ts, src/server/launch/template.ts (new),
+src/server/deploy/{index,mock,vercel}.ts (new), src/server/db/store.ts
+(raw-file write for the mock deploy target), src/server/ventures/
+{generateLandingPage,deployLandingPage}.ts (new), regenerateArtifact.ts
+(extended for landing_page), src/app/api/ventures/[id]/{landing-page,deploy,
+preview}/route.ts (new), src/components/venture/artifacts/LandingArtifact.tsx
+(new), LaunchPanel.tsx (new).
+Risk: the model returning raw HTML instead of structured copy is the whole
+phase's central risk — mitigated by never sending the model's output to the
+DOM without a schema parse first, and by the template being the only place
+`dangerouslySetInnerHTML`-equivalent string interpolation happens, escaped
+unconditionally, tested with a literal `<script>` payload before anything
+else ships.
+
 ---
 
 ## Decisions log
@@ -211,6 +227,33 @@ must never be silently marked launched -- and one conditional in one route is
 the smallest thing that enforces that.
 Revisit if: more stage transitions need similar gating (extract a shared
 helper only then, not preemptively).
+
+### 2026-07-30 · Launch Stage · Copy is structured, HTML is templated
+Chose: `write-landing-page` returns a schema-validated copy object (headline,
+subhead, 3 benefits, FAQ, SEO fields, all length-capped); a hand-written
+`renderLandingPage` template is the only code that ever emits HTML, with
+every interpolated value escaped unconditionally.
+Over: asking the model for a full HTML page directly.
+Because: raw HTML from a model is unvalidatable -- zod can check a JSON
+shape, not that markup is safe, accessible, or well-formed -- and the venture
+description feeding the prompt is user input, so an unescaped model output is
+a live XSS hole. The template guarantees one `h1`, zero external requests,
+and full escaping every time, rather than depending on the model remembering
+to be safe.
+Revisit if: users repeatedly ask for visual variety across pages -- template
+variants belong in BACKLOG.md, not a relaxed escaping rule.
+
+### 2026-07-30 · Launch Stage · Publish is gated behind a review checkbox
+Chose: the "Publish" button in `LaunchPanel` stays disabled until the founder
+checks "I've reviewed the preview above."
+Over: enabling it as soon as landing copy exists, or auto-deploying right
+after generation.
+Because: deploying is a one-way door -- once live (especially on Vercel) the
+page is a public artifact -- and model output has, at that point, never been
+seen by a human. One checkbox is the smallest thing that forces a look before
+publish, matching the phase risk "user deploys something embarrassing."
+Revisit if: never, without a stronger reason than convenience -- this is the
+cheapest possible guard against the phase's stated worst-case.
 
 ### 2026-07-28 · Planning · Mock adapters are permanent
 Chose: AI provider and deploy target each have a deterministic fake, selected

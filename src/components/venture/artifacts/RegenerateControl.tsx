@@ -11,7 +11,7 @@ export function RegenerateControl({
   kind,
 }: {
   ventureId: string;
-  kind: "plan" | "mvp_scope";
+  kind: "plan" | "mvp_scope" | "landing_page";
 }) {
   const router = useRouter();
   const [open, setOpen] = useState(false);

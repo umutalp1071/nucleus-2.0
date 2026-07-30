@@ -1,6 +1,7 @@
 import * as artifactsRepo from "../db/repositories/artifacts";
 import { runTask } from "../ai/gateway";
 import type { Provider } from "../ai/provider";
+import { generateLandingPage } from "./generateLandingPage";
 import type { Venture, Plan, MvpScope, Verdict, Competitors, Artifact } from "@/lib/domain";
 
 export type RegenerateResult =
@@ -18,11 +19,15 @@ interface Opts {
 // call, not a special path. See docs/plan/PHASE-06-planning-stage.md.
 export async function regenerateArtifact(
   venture: Venture,
-  kind: "plan" | "mvp_scope",
+  kind: "plan" | "mvp_scope" | "landing_page",
   feedback: string,
   opts?: Opts
 ): Promise<RegenerateResult> {
   const repoOpts = { baseDir: opts?.baseDir };
+
+  if (kind === "landing_page") {
+    return generateLandingPage(venture, { baseDir: opts?.baseDir, provider: opts?.provider, feedback });
+  }
 
   if (kind === "plan") {
     const [validationArtifact, competitorsArtifact] = await Promise.all([

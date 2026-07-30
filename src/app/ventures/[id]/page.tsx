@@ -8,10 +8,11 @@ import { Card, Badge } from "@/components/dashboard/ui";
 import { StageTimeline } from "@/components/venture/StageTimeline";
 import { VentureActions } from "@/components/venture/VentureActions";
 import { BuildStagePanel } from "@/components/venture/BuildStagePanel";
+import { LaunchPanel } from "@/components/venture/LaunchPanel";
 import { ArtifactRenderer } from "@/components/venture/artifacts";
 import { stageLabel, stageTone } from "@/lib/stages";
 import { formatUsd, relativeTime } from "@/lib/format";
-import type { Artifact, ArtifactKind, MvpScope } from "@/lib/domain";
+import type { Artifact, ArtifactKind, MvpScope, Plan } from "@/lib/domain";
 
 export const dynamic = "force-dynamic";
 
@@ -53,6 +54,8 @@ export default async function VentureWorkspace({ params }: { params: { id: strin
   const mvpScopeGroup = groups.find((g) => g.kind === "mvp_scope");
   const stack = mvpScopeGroup ? (mvpScopeGroup.latest.content as MvpScope).stack : undefined;
   const buildSpecContext = { ventureTitle: venture.title, stack };
+  const planGroup = groups.find((g) => g.kind === "plan");
+  const firstTenUsers = planGroup ? (planGroup.latest.content as Plan).firstTenUsers : null;
 
   return (
     <div className="min-h-screen">
@@ -105,6 +108,15 @@ export default async function VentureWorkspace({ params }: { params: { id: strin
           tasks={buildTasks}
           buildUrl={venture.buildUrl ?? null}
           hasBuildSpec={groups.some((g) => g.kind === "build_spec")}
+        />
+
+        <LaunchPanel
+          ventureId={venture.id}
+          stage={venture.stage}
+          hasLandingPage={groups.some((g) => g.kind === "landing_page")}
+          emailCaptureUrl={venture.emailCaptureUrl ?? null}
+          launchUrl={venture.launchUrl ?? null}
+          firstTenUsers={firstTenUsers}
         />
 
         <Card className="flex flex-col gap-3">

@@ -1,13 +1,14 @@
-import type { Artifact, Verdict, Competitors, Plan, MvpScope, BuildSpec } from "@/lib/domain";
+import type { Artifact, Verdict, Competitors, Plan, MvpScope, BuildSpec, Landing } from "@/lib/domain";
 import type { BuildSpecContext } from "@/lib/build-spec-export";
 import { ValidationArtifact } from "./ValidationArtifact";
 import { CompetitorsArtifact } from "./CompetitorsArtifact";
 import { PlanArtifact } from "./PlanArtifact";
 import { MvpScopeArtifact } from "./MvpScopeArtifact";
 import { BuildSpecArtifact } from "./BuildSpecArtifact";
+import { LandingArtifact } from "./LandingArtifact";
 import { RegenerateControl } from "./RegenerateControl";
 
-const REGENERATABLE = new Set<Artifact["kind"]>(["plan", "mvp_scope"]);
+const REGENERATABLE = new Set<Artifact["kind"]>(["plan", "mvp_scope", "landing_page"]);
 
 // Adding a new artifact kind means adding one file and one case here --
 // never editing the renderers that already exist. `buildSpecContext` is only
@@ -24,7 +25,10 @@ export function ArtifactRenderer({
       {artifact.demo && <DemoMarker />}
       <ArtifactBody artifact={artifact} buildSpecContext={buildSpecContext} />
       {REGENERATABLE.has(artifact.kind) && (
-        <RegenerateControl ventureId={artifact.ventureId} kind={artifact.kind as "plan" | "mvp_scope"} />
+        <RegenerateControl
+          ventureId={artifact.ventureId}
+          kind={artifact.kind as "plan" | "mvp_scope" | "landing_page"}
+        />
       )}
     </div>
   );
@@ -57,6 +61,8 @@ function ArtifactBody({
       return <PlanArtifact plan={artifact.content as Plan} />;
     case "mvp_scope":
       return <MvpScopeArtifact scope={artifact.content as MvpScope} />;
+    case "landing_page":
+      return <LandingArtifact landing={artifact.content as Landing} />;
     case "build_spec":
       return (
         <BuildSpecArtifact

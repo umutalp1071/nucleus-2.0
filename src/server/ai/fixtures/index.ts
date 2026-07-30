@@ -143,4 +143,28 @@ export const FIXTURES: Record<string, unknown> = {
     ],
     firstCommit: "Set up the data model (User, Item) and a single capture form that writes an Item.",
   },
+
+  "write-landing-page": {
+    headline: "Stop filing things by hand. Let them file themselves.",
+    subhead: "A single capture flow that organizes what you save automatically, so nothing gets lost in a spreadsheet again.",
+    problem: "Anything worth saving today ends up scattered across notes apps, bookmarks, and screenshots, and manually filing it is the first thing to get skipped.",
+    solution: "Capture one item in under 10 seconds and it sorts itself into the right place automatically -- no tags, no folders, no manual filing step.",
+    benefits: [
+      { title: "10-second capture", body: "One field, one button. Nothing to configure before you save your first item." },
+      { title: "Auto-organized", body: "Every item is grouped by what it shares with your existing items -- no manual tagging, ever." },
+      { title: "Built for individuals", body: "Priced and designed for one person's workflow, not a team's admin overhead." },
+    ],
+    socialProofPlaceholder: "Add 2-3 logos or quotes from early users once the first cohort is onboarded.",
+    cta: { label: "Get early access", subtext: "No credit card. Takes 10 seconds to try." },
+    faq: [
+      { q: "How is this different from a spreadsheet?", a: "A spreadsheet requires you to manually organize every row. This organizes new items for you the moment you save them." },
+      { q: "Do I need to tag or categorize anything?", a: "No -- the organization happens automatically based on your existing items, not manual rules you have to maintain." },
+      { q: "Is my data private?", a: "Yes. Your captured items are visible only to you." },
+      { q: "What does it cost?", a: "Pricing is being finalized during early access -- join now to lock in the early rate." },
+    ],
+    seo: {
+      title: "Capture and auto-organize -- stop filing things by hand",
+      description: "A single capture flow that organizes what you save automatically. No tags, no folders, no manual filing. Join early access.",
+    },
+  },
 };

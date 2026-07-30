@@ -31,6 +31,8 @@ export async function create(
     stage: "captured",
     verdictScore: null,
     buildUrl: null,
+    emailCaptureUrl: null,
+    launchUrl: null,
     createdAt: now,
     updatedAt: now,
   };
@@ -47,7 +49,14 @@ export async function create(
 
 export async function update(
   id: string,
-  patch: { title?: string; description?: string; verdictScore?: number | null; buildUrl?: string | null },
+  patch: {
+    title?: string;
+    description?: string;
+    verdictScore?: number | null;
+    buildUrl?: string | null;
+    emailCaptureUrl?: string | null;
+    launchUrl?: string | null;
+  },
   opts?: RepoOpts
 ): Promise<Venture> {
   const rows = await readCollection<Venture>(COLLECTION, opts);

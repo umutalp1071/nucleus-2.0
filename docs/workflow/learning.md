@@ -2,6 +2,72 @@
 
 ---
 
+## 2026-07-30 — Plan Phase 08: Launch Stage
+
+**What we did:**
+Added the Launch stage: a `write-landing-page` task returns schema-validated
+copy only (headline, subhead, exactly 3 benefits, FAQ, CTA, SEO fields, all
+length-capped) -- never HTML. A hand-written `renderLandingPage` template is
+the sole place that emits markup, escaping every interpolated value
+unconditionally. A `DeployTarget` adapter mirrors the AI provider's mock/real
+pattern: `mock` writes `.nucleus/deploys/<id>/index.html` and returns a
+`file://` URL with zero accounts; `makeVercelTarget` posts the inline file to
+`/v13/deployments` and activates the moment `VERCEL_TOKEN` is set. The
+workspace gained a `LaunchPanel`: generate/regenerate copy, an iframe preview
+served fresh on every request from `/api/ventures/[id]/preview`, an email
+capture URL field (falls back to a `mailto:` CTA when unset), a launch
+checklist nudge (CTA set, SEO present, first-10-users pulled from the plan),
+and a Publish button gated behind an explicit "I've reviewed this" checkbox.
+`Venture` gained `emailCaptureUrl` and `launchUrl`; `regenerateArtifact` now
+also handles `landing_page` feedback loops, reusing the existing control.
+
+**Decisions:**
+- **The model writes copy, a template writes HTML -- no exceptions.** The
+  phase's central risk is XSS and unvalidatable markup from letting a model
+  emit HTML directly; a zod schema can check a JSON shape but not that
+  markup is safe, so the template stays the only HTML author, tested with a
+  literal `<script>` payload in both the headline and the venture title.
+- **Publish stays disabled until a review checkbox is checked.** Deploying is
+  a one-way door once live; gating it behind one boolean is the cheapest
+  guard against "user deploys something embarrassing" (the phase's own risk
+  table), cheaper than any richer approval flow this project doesn't need.
+- **Deploy failures leave the venture untouched.** `deployLandingPage`
+  catches the target's throw and returns a readable message without writing
+  `launchUrl` -- a half-launched venture is worse than an unlaunched one.
+
+**Bug caught by a test, not a review:** `writeRawFile`'s mock deploy target
+returned `path.join(dir, relPath)` as the "absolute" path to turn into a
+`file://` URL. With the default `NUCLEUS_DATA_DIR` of `.nucleus` (a relative
+path), that produced `file:///.nucleus/deploys/...` -- a URL that resolves
+against the filesystem root, not the actual project directory. Caught by the
+browser verification step (the returned link, opened for real, pointed at
+nothing) rather than by reading the code, which looked correct at a glance.
+Fixed with `path.resolve` instead of `path.join`, plus a regression test that
+passes a relative `baseDir` and asserts the returned url is absolute.
+
+**Also caught:** `ventures.create()` builds the venture object by hand and
+only calls `VentureSchema.parse()` for validation, discarding the parsed
+(defaulted) result -- the same pattern that already required `buildUrl: null`
+to be listed explicitly in Phase 07. Adding `emailCaptureUrl` and `launchUrl`
+to the schema alone left both `undefined` on newly created ventures until a
+`deployLandingPage` test asserted `toBeNull()` and got `undefined` instead.
+
+**Next step:** Phase 09 — Growth Stage.
+
+**Quality Score: 90/100**
+- All acceptance criteria met: escaping, one-`h1`, zero-external-request, and
+  meta-description checks are real assertions against rendered output, not
+  code-reading; the deploy failure path is tested to leave the venture
+  unchanged; the relative-path bug was caught by actually opening the
+  resulting link in a real browser rather than trusting the implementation.
+- Docked for: the Vercel adapter's exact request/response shape (project
+  `name`, `files[].encoding`, response `url` field) is a best-effort read of
+  the public API with no live account to confirm against -- isolated to one
+  function per the phase's own risk table, but genuinely unverified against
+  a real Vercel deployment this session.
+
+---
+
 ## 2026-07-29 — Plan Phase 07: Build Stage
 
 **What we did:**

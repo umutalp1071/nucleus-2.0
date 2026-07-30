@@ -11,6 +11,7 @@ const PatchVentureSchema = z.object({
   title: z.string().min(1).max(200).optional(),
   description: z.string().min(1).optional(),
   buildUrl: z.string().max(500).nullable().optional(),
+  emailCaptureUrl: z.string().max(500).nullable().optional(),
 });
 
 export async function GET(_request: NextRequest, { params }: { params: { id: string } }) {
