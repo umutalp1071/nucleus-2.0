@@ -24,7 +24,7 @@ callout -- `MetricEntry` is superseded by `Observation`, added in Phase 08.5)
 | 06 | Planning Stage | ✅ done | `e9fd86b` | ship, lesson |
 | 07 | Build Stage | ✅ done | `d1e025e` | ship, lesson |
 | 08 | Launch Stage | ✅ done | `e908317` | ship, lesson |
-| 08.5 | Primitives (Decision/Prediction/Observation) | ✅ done | `pending` | lesson |
+| 08.5 | Primitives (Decision/Prediction/Observation) | ✅ done | `8b24c2b` | lesson |
 | 09 | Growth Stage | ⬜ | — | — |
 | 10 | Build-in-Public Engine | ⬜ | — | — |
 | 11 | Immune System | ⬜ | — | — |
