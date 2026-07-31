@@ -6,7 +6,12 @@
 
 ## Current phase
 
-**PHASE 13 — Calibration** — 🟡 in progress (harness built, awaiting a real run)
+**PHASE 13 — Calibration** — ✅ done (harness built, real baseline run, regression check
+passed). Numbers are real and unflattering: calibration undefined (nothing
+scored 70+ across 34 ideas x 3 runs), false kill rate 87-88%. Stability is
+good (mean std dev 1.5). See `docs/eval/calibration-report.md`. What (if
+anything) to do about the false-kill-rate finding is a founder decision, not
+made in this session — see "Founder decisions pending" below.
 
 **Execution order changed 2026-07-31: 13 → 11 → 12.** Phase numbers are
 stable (they're referenced across the plan); only the order of execution
@@ -34,7 +39,7 @@ for distribution.
 | 08.5 | Primitives (Decision/Prediction/Observation) | ✅ done | `8b24c2b` | lesson |
 | 09 | Growth Stage | ✅ done | `8a447d4` | ship |
 | 10 | Build-in-Public Engine | ✅ done | `5c17c63` | ship, lesson |
-| 13 | Calibration *(moved ahead of 11)* | 🟡 | — | — |
+| 13 | Calibration *(moved ahead of 11)* | ✅ done | — | — |
 | 11 | Immune System | ⬜ | — | — |
 | 12 | Ship It | ⬜ | — | — |
 
@@ -239,6 +244,44 @@ model, and that number would have gone into a public report. Fixed with
 no metric, and the way to catch that class of bug is to ask "what would this
 number look like if the thing it measures were completely broken?" before
 trusting it.
+
+**First real-provider run (2026-07-31) surfaced two more defects, neither
+catchable by the mock-fixture suite because both only manifest against a
+real model:** (1) `provider.ts` never sent `max_tokens`, so OpenRouter
+pre-checked affordability against the model's full context window and
+rejected calls the account could easily afford at the task's actual
+~900-token expected output — fixed by capping `max_tokens` at 2x
+`expectedOutTokens` per task. (2) `gateway.ts`'s `safeParseJson` did a raw
+`JSON.parse` with no handling for a ` ```json ` code fence; claude-haiku-4.5
+wraps "ONLY valid JSON" responses in one anyway — fixed by stripping a
+fence before parsing. Both fixed and covered by new gateway tests before the
+baseline run. Lesson: a harness that only ever runs against its own mock is
+only proven against its own mock — running it for real found real bugs in
+minutes.
+
+**Baseline (34 ideas x 3 runs, $0.36, `anthropic/claude-haiku-4.5`):**
+calibration undefined (nothing scored 70+ across 102 calls), kill precision
+54%, false kill rate 87% (88% excluding high-contamination ideas), mean
+score std dev 1.5, max 4.7, 2/34 band flips. Stability is good — the harness
+is trustworthy — but `validate-idea` is currently far closer to "kill
+everything" than a discriminating judge. Full report:
+`docs/eval/calibration-report.md`.
+
+**Regression check:** removing the "be genuinely critical" instruction from
+`whyNot` (prompt only, schema unchanged) and re-running at `EVAL_RUNS=1`
+moved false kill rate from 87% to 100% and flipped the only two `refine`
+verdicts in the baseline (s06, s12) to `kill`. The harness detects prompt
+regressions. Edit reverted; `npm run verify` re-passed (225 tests) with a
+clean `git diff` on `validate-idea.ts`.
+
+**Founder decision pending, not made in this session:** the false-kill-rate
+number is bad. Per this phase's own stated philosophy (§Risks in
+`PHASE-13-calibration.md`), publishing it as-is is the point — no competitor
+publishes any falsifiable accuracy claim at all — and it has been committed
+to `docs/eval/calibration-report.md`. Whether to retune `validate-idea.ts`'s
+prompt, and how to talk about this number publicly, is a call for the
+founder to make deliberately, not an engineering fix to slip into the same
+session that measured it.
 
 ---
 

@@ -172,13 +172,19 @@ npm run eval          # not `npx tsx` — see §2
 - [x] Stability cannot silently report a fake 0 — cache bypass, plus a
       regression test asserting `stdDev([50,50,50]) === 0` is distinguishable
       from a single-run `null`
-- [ ] **Founder action:** run `npm run eval` with a key configured. Harness
-      reports calibration, kill precision, false kill rate and stability
-- [ ] **Founder action:** a deliberately bad prompt edit (e.g. removing the
+- [x] **Founder action:** run `npm run eval` with a key configured. Harness
+      reports calibration, kill precision, false kill rate and stability —
+      **done 2026-07-31**, 34 ideas x 3 runs, $0.36, against
+      `anthropic/claude-haiku-4.5`
+- [x] **Founder action:** a deliberately bad prompt edit (e.g. removing the
       `whyNot` requirement from `validate-idea.ts`) measurably degrades at
       least one number, proving the harness detects regressions. Do this
-      *after* the clean baseline run, and revert the edit
-- [ ] Calibration report exists at `docs/eval/calibration-report.md` and
+      *after* the clean baseline run, and revert the edit — **done
+      2026-07-31**: dropping the "be genuinely critical" instruction moved
+      false kill rate from 87% to 100% and flipped the only two `refine`
+      verdicts in the baseline (s06, s12) to `kill`. Edit reverted, verified
+      clean against git diff, `npm run verify` re-passed (225 tests).
+- [x] Calibration report exists at `docs/eval/calibration-report.md` and
       states real numbers, not placeholders
 
 ---
