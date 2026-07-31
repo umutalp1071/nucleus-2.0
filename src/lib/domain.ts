@@ -42,6 +42,8 @@ export const ArtifactKindSchema = z.enum([
   "mvp_scope",
   "landing_page",
   "content_calendar",
+  "content_post",
+  "weekly_review",
   "build_spec",
 ]);
 export type ArtifactKind = z.infer<typeof ArtifactKindSchema>;
@@ -292,3 +294,46 @@ export const LandingSchema = z.object({
   seo: z.object({ title: z.string().max(60), description: z.string().max(155) }),
 });
 export type Landing = z.infer<typeof LandingSchema>;
+
+// A 4-week distribution plan. `channels` must be drawn from the plan's ICP
+// `where` field -- enforced in the prompt and re-checked in
+// generateContentCalendar.ts, since a static schema can't see the call's
+// input. `hook` is the actual opening line, not a topic label -- see
+// docs/plan/PHASE-09-growth-stage.md.
+export const CalendarSchema = z.object({
+  strategy: z.string(),
+  channels: z
+    .array(z.object({ channel: z.string(), why: z.string(), cadence: z.string() }))
+    .min(2)
+    .max(4),
+  posts: z
+    .array(
+      z.object({
+        day: z.number().min(1).max(28),
+        channel: z.string(),
+        angle: z.string(),
+        hook: z.string(),
+        type: z.enum(["story", "teardown", "result", "question", "build-log"]),
+      })
+    )
+    .length(12),
+});
+export type Calendar = z.infer<typeof CalendarSchema>;
+export type CalendarPost = Calendar["posts"][number];
+
+// One calendar row expanded into a finished, ready-to-publish draft. Only the
+// draft text comes from the model -- day/channel/hook/etc. are copied over
+// from the calendar entry server-side, not re-generated. See
+// docs/plan/PHASE-09-growth-stage.md.
+export const PostDraftSchema = z.object({ draft: z.string() });
+export type PostDraft = z.infer<typeof PostDraftSchema>;
+
+// Tier "cheap" -- summarizes data it's given, no reasoning depth needed.
+// Manual trigger only, no cron. See docs/plan/PHASE-09-growth-stage.md.
+export const WeeklyReviewSchema = z.object({
+  whatMoved: z.string(),
+  whatDidnt: z.string(),
+  recommendedAction: z.string(),
+  killCriteriaCheck: z.string(),
+});
+export type WeeklyReview = z.infer<typeof WeeklyReviewSchema>;

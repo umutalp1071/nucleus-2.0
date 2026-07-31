@@ -61,4 +61,15 @@ describe("predictions repository", () => {
     const list = await predictions.listByVenture("v1", opts);
     expect(list).toHaveLength(1);
   });
+
+  it("get returns the prediction by id, or null when missing", async () => {
+    const predictions = await import("@/server/db/repositories/predictions");
+    const created = await predictions.create(
+      { ventureId: "v1", decisionId: "d1", claim: "c", metric: "m", target: 1, resolveBy: "2026-09-01", source: "plan.successMetric" as const, status: "open" as const, resolvedAt: null, resolvedBy: null },
+      opts
+    );
+
+    expect((await predictions.get(created.id, opts))?.id).toBe(created.id);
+    expect(await predictions.get("missing", opts)).toBeNull();
+  });
 });

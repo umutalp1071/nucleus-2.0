@@ -320,8 +320,8 @@
     "semantic_hash": ""
   },
   "src/app/ventures/[id]/page.tsx": {
-    "mtime": 1785480453.1818378,
-    "ast_hash": "9659d5bcfe45ec64e43f7637dc2be4f5",
+    "mtime": 1785447079.5845697,
+    "ast_hash": "6829c9147b91621202aa89a516f0aee7",
     "semantic_hash": ""
   },
   "src/components/dashboard/ThemeToggle.tsx": {
@@ -390,8 +390,8 @@
     "semantic_hash": ""
   },
   "src/components/venture/artifacts/index.tsx": {
-    "mtime": 1785480351.3276033,
-    "ast_hash": "36f2ee0beb47033f150159004509dbc9",
+    "mtime": 1785446982.4839928,
+    "ast_hash": "6c0a7120c048d56a4f16382764cfec93",
     "semantic_hash": ""
   },
   "src/lib/budgetStatus.ts": {
@@ -405,8 +405,8 @@
     "semantic_hash": ""
   },
   "src/lib/domain.ts": {
-    "mtime": 1785479987.8179982,
-    "ast_hash": "5bc4a6246a08079fe40e111c0e7b052e",
+    "mtime": 1785435799.2211692,
+    "ast_hash": "5931f7a0c5467e7e78d330b3889c8967",
     "semantic_hash": ""
   },
   "src/lib/format.ts": {
@@ -430,8 +430,8 @@
     "semantic_hash": ""
   },
   "src/server/ai/fixtures/index.ts": {
-    "mtime": 1785480065.2956793,
-    "ast_hash": "d4f11f6055f291b1e104bfa9a057a0c9",
+    "mtime": 1785400908.7431624,
+    "ast_hash": "8ea6dc8a0840dbd56d922748deb41a84",
     "semantic_hash": ""
   },
   "src/server/ai/gateway.ts": {
@@ -460,8 +460,8 @@
     "semantic_hash": ""
   },
   "src/server/ai/tasks/index.ts": {
-    "mtime": 1785480037.9916034,
-    "ast_hash": "e46ffa3119012bd6eeca4ceae56a5dd4",
+    "mtime": 1785400896.2545698,
+    "ast_hash": "e968400f4eb048454397f5e8a70d2b67",
     "semantic_hash": ""
   },
   "src/server/ai/tasks/plan-venture.ts": {
@@ -825,8 +825,8 @@
     "semantic_hash": ""
   },
   "docs/plan/PROGRESS.md": {
-    "mtime": 1785479970.1555617,
-    "ast_hash": "63df1fedfd0e2ccaddb95f97b279b2eb",
+    "mtime": 1785448008.322366,
+    "ast_hash": "bf2912674d55d2232191ddab32673fdd",
     "semantic_hash": ""
   },
   "docs/plan/README.md": {
@@ -945,13 +945,13 @@
     "semantic_hash": ""
   },
   "src/server/db/repositories/observations.ts": {
-    "mtime": 1785480086.1713405,
-    "ast_hash": "9ea984ea7d8cf4bbe9d248d73efc2a40",
+    "mtime": 1785435852.9083393,
+    "ast_hash": "d7a969d238e945f8fa3205319fd19a81",
     "semantic_hash": ""
   },
   "src/server/db/repositories/predictions.ts": {
-    "mtime": 1785480080.772472,
-    "ast_hash": "b3c2f9013a81449505b5e0dabe0a5622",
+    "mtime": 1785435841.10974,
+    "ast_hash": "db20a7c3b3916386e62c628b1daacfc9",
     "semantic_hash": ""
   },
   "src/server/predictions/extractPredictions.ts": {
@@ -970,13 +970,13 @@
     "semantic_hash": ""
   },
   "tests/observations.test.ts": {
-    "mtime": 1785480095.407313,
-    "ast_hash": "7a03d6b55df38c438f93086068d96f8a",
+    "mtime": 1785446247.0250087,
+    "ast_hash": "f088b70fdf17c7e1b34d7cb0abd566e4",
     "semantic_hash": ""
   },
   "tests/predictions.test.ts": {
-    "mtime": 1785480101.2951589,
-    "ast_hash": "56b89363304bc45d9e46ef6353716dfe",
+    "mtime": 1785446478.5273988,
+    "ast_hash": "84c033dd52d1a3f6efc0535ea3764c15",
     "semantic_hash": ""
   },
   "docs/content/drafts/2026-07-30-phase-08.5-lesson.md": {
@@ -992,96 +992,6 @@
   "docs/reviews/2026-07-30-stack-position.md": {
     "mtime": 1785431523.4490125,
     "ast_hash": "b14a3cc7c7abcc6aa5787f2b8d6a9659",
-    "semantic_hash": ""
-  },
-  "src/app/api/ventures/[id]/content-calendar/route.ts": {
-    "mtime": 1785480289.8045948,
-    "ast_hash": "6851c098fefb7ab0323eb3f39c242098",
-    "semantic_hash": ""
-  },
-  "src/app/api/ventures/[id]/observations/route.ts": {
-    "mtime": 1785480312.8712318,
-    "ast_hash": "20026d103a3cf2b72c31fe1c64005224",
-    "semantic_hash": ""
-  },
-  "src/app/api/ventures/[id]/posts/route.ts": {
-    "mtime": 1785480297.3539898,
-    "ast_hash": "f58445f470e07df9cac6bff4cc5fe320",
-    "semantic_hash": ""
-  },
-  "src/app/api/ventures/[id]/predictions/[predictionId]/resolve/route.ts": {
-    "mtime": 1785480320.7067134,
-    "ast_hash": "db3321151776d14dfaaabb07f5c1b16c",
-    "semantic_hash": ""
-  },
-  "src/app/api/ventures/[id]/weekly-review/route.ts": {
-    "mtime": 1785480304.2562141,
-    "ast_hash": "3d693a37cd73cb86d89bbf3b7814afff",
-    "semantic_hash": ""
-  },
-  "src/components/venture/GrowthPanel.tsx": {
-    "mtime": 1785480490.592384,
-    "ast_hash": "35dbd3495f83eb47edeccabe6431ddde",
-    "semantic_hash": ""
-  },
-  "src/components/venture/artifacts/ContentCalendarArtifact.tsx": {
-    "mtime": 1785480336.1668303,
-    "ast_hash": "1eb1388ef90a87623f77e8f144ca565e",
-    "semantic_hash": ""
-  },
-  "src/server/ai/tasks/weekly-review.ts": {
-    "mtime": 1785480027.3851225,
-    "ast_hash": "e04688401fafa204c5c815afaaadfd9f",
-    "semantic_hash": ""
-  },
-  "src/server/ai/tasks/write-content-calendar.ts": {
-    "mtime": 1785479997.7335658,
-    "ast_hash": "df83dd046495e6548c27f095e668e5da",
-    "semantic_hash": ""
-  },
-  "src/server/ai/tasks/write-post.ts": {
-    "mtime": 1785480010.976413,
-    "ast_hash": "8c4c47241741396dd0e82ce01201fd24",
-    "semantic_hash": ""
-  },
-  "src/server/ventures/generateContentCalendar.ts": {
-    "mtime": 1785480190.1720245,
-    "ast_hash": "b3255b264ed4c5caa1c02f318cbc2536",
-    "semantic_hash": ""
-  },
-  "src/server/ventures/generatePost.ts": {
-    "mtime": 1785480137.808231,
-    "ast_hash": "02dad0a49b373d4ac759b069de2ac8c2",
-    "semantic_hash": ""
-  },
-  "src/server/ventures/resolvePrediction.ts": {
-    "mtime": 1785480160.7919674,
-    "ast_hash": "c9c64abbb94a587f3b0bae3034c80a74",
-    "semantic_hash": ""
-  },
-  "src/server/ventures/runWeeklyReview.ts": {
-    "mtime": 1785480150.7062635,
-    "ast_hash": "ba1bdd73e07698fa11b4d7d7f1fa8e0a",
-    "semantic_hash": ""
-  },
-  "tests/generateContentCalendar.test.ts": {
-    "mtime": 1785480179.1160507,
-    "ast_hash": "09b57622c2e4a4de0802f13165e0f377",
-    "semantic_hash": ""
-  },
-  "tests/generatePost.test.ts": {
-    "mtime": 1785480204.4376652,
-    "ast_hash": "dbe09e9bc43e22f9e95a7887a7b4a1e2",
-    "semantic_hash": ""
-  },
-  "tests/resolvePrediction.test.ts": {
-    "mtime": 1785480219.1228082,
-    "ast_hash": "001150af89468ef0f7687f37e7be6a1b",
-    "semantic_hash": ""
-  },
-  "tests/runWeeklyReview.test.ts": {
-    "mtime": 1785480230.6712828,
-    "ast_hash": "2ba49374713991d455f687fd876d6f46",
     "semantic_hash": ""
   }
 }

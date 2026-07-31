@@ -1,4 +1,4 @@
-import type { Artifact, Decision, Verdict, Competitors, Plan, MvpScope, BuildSpec, Landing } from "@/lib/domain";
+import type { Artifact, Decision, Verdict, Competitors, Plan, MvpScope, BuildSpec, Landing, Calendar } from "@/lib/domain";
 import type { BuildSpecContext } from "@/lib/build-spec-export";
 import { ValidationArtifact } from "./ValidationArtifact";
 import { CompetitorsArtifact } from "./CompetitorsArtifact";
@@ -6,6 +6,7 @@ import { PlanArtifact } from "./PlanArtifact";
 import { MvpScopeArtifact } from "./MvpScopeArtifact";
 import { BuildSpecArtifact } from "./BuildSpecArtifact";
 import { LandingArtifact } from "./LandingArtifact";
+import { ContentCalendarArtifact } from "./ContentCalendarArtifact";
 import { RegenerateControl } from "./RegenerateControl";
 import { DecisionProvenance } from "./DecisionProvenance";
 
@@ -74,6 +75,8 @@ function ArtifactBody({
           ctx={buildSpecContext ?? { ventureTitle: "" }}
         />
       );
+    case "content_calendar":
+      return <ContentCalendarArtifact calendar={artifact.content as Calendar} />;
     default:
       return <UnknownArtifact artifact={artifact} />;
   }

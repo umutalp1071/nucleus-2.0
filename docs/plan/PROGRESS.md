@@ -6,8 +6,7 @@
 
 ## Current phase
 
-**PHASE 09 — Growth Stage** — not started (re-shaped: see PHASE-09-growth-stage.md's
-callout -- `MetricEntry` is superseded by `Observation`, added in Phase 08.5)
+**PHASE 10 — Build-in-Public Engine** — not started
 
 ---
 
@@ -25,7 +24,7 @@ callout -- `MetricEntry` is superseded by `Observation`, added in Phase 08.5)
 | 07 | Build Stage | ✅ done | `d1e025e` | ship, lesson |
 | 08 | Launch Stage | ✅ done | `e908317` | ship, lesson |
 | 08.5 | Primitives (Decision/Prediction/Observation) | ✅ done | `8b24c2b` | lesson |
-| 09 | Growth Stage | ⬜ | — | — |
+| 09 | Growth Stage | ✅ done | `PENDING` | ship |
 | 10 | Build-in-Public Engine | ⬜ | — | — |
 | 11 | Immune System | ⬜ | — | — |
 | 12 | Ship It | ⬜ | — | — |
@@ -169,6 +168,23 @@ hand against the new preflight math before running them, then adding
 dedicated tests for the crash-survival case (§6.2) and the 2x-preflight case
 (§6.1) rather than trusting the existing suite to incidentally cover new
 behavior it was never written to check.
+
+### Phase 09 — Growth Stage
+Files: src/lib/domain.ts (Calendar/PostDraft/WeeklyReview schemas, ArtifactKind
+additions), src/server/ai/tasks/{write-content-calendar,write-post,
+weekly-review}.ts + fixtures, src/server/db/repositories/{predictions,
+observations}.ts (get()), src/server/ventures/{generateContentCalendar,
+generatePost,runWeeklyReview,resolvePrediction}.ts (new), src/app/api/
+ventures/[id]/{content-calendar,posts,observations,weekly-review,
+predictions/[predictionId]/resolve}/route.ts (new), src/components/venture/
+artifacts/ContentCalendarArtifact.tsx (new), GrowthPanel.tsx (new),
+app/ventures/[id]/page.tsx.
+Risk: the channel-subset check (calendar channels must come from the plan's
+ICP `where`) can't live in the static zod schema, since the schema doesn't
+see the call's input -- mitigated by validating it as a post-hoc check in
+generateContentCalendar.ts against the actual plan.icp.where list, same
+place the "missing_prerequisite" check already lives, and testing with a
+fixture that deliberately diverges.
 
 ---
 
@@ -330,6 +346,52 @@ specified this mechanism directly.
 Revisit if: the artifact count per venture grows large enough that the
 missing-decision scan on every read becomes a measurable cost (unlikely --
 the same scan the workspace page already does for the artifact list itself).
+
+### 2026-07-31 · Growth Stage · Channel drift is caught after the call, not in the schema
+Chose: `generateContentCalendar.ts` checks every `channels[].channel` and
+`posts[].channel` the model returns against the plan's actual
+`plan.icp.where` list, after `runTask` succeeds, treating a mismatch as
+`invalid_output`.
+Over: trying to express the constraint inside `CalendarSchema` itself.
+Because: a `TaskDef.schema` is defined once, statically, with no access to
+the specific call's input -- there's no zod construct that can check "this
+field's value must be a member of that other, per-call array." The
+application-level check is the only place that actually sees both.
+Revisit if: zod ever supports schema factories keyed on call-time context, in
+which case this could move into the schema and gain a friendlier error
+message.
+
+### 2026-07-31 · Growth Stage · Prediction resolution is a value/target comparison, not a UI toggle
+Chose: `resolvePrediction()` computes `hit` when the matched Observation's
+`value >= Prediction.target`, `missed` when it's lower, and `void` when
+either side has no number (a note-only entry, or a target-less prediction) --
+never a human picking the verdict from a dropdown.
+Over: letting the founder mark a prediction hit/missed by hand after looking
+at the numbers.
+Because: the whole point of a falsifiable claim is that resolving it isn't a
+judgment call -- see docs/reviews/2026-07-30-stack-position.md §5.2. A human
+choosing the verdict re-introduces exactly the self-serving fudging the
+Prediction/Observation split was built to remove.
+Revisit if: a metric genuinely needs a non-numeric resolution rule (e.g.
+"shipped" as a boolean) -- add a resolution strategy per metric type then,
+not a manual override.
+
+### 2026-07-31 · Growth Stage · content_post and weekly_review skip the generic artifact list
+Chose: unlike `content_calendar`, the `content_post` and `weekly_review`
+artifact kinds are registered in `ArtifactKindSchema` but never added to
+`KIND_ORDER` in the venture workspace page -- they're only ever rendered
+through `GrowthPanel`, never through the generic `ArtifactRenderer` grouping.
+Over: giving every kind, including up to 12 near-duplicate posts and each
+weekly review run, its own card in the main artifact list, matching the "one
+file, one case" comment in `artifacts/index.tsx` literally.
+Because: `BuildStagePanel` and `LaunchPanel` already establish the precedent
+that a stage's *actions* live in a dedicated panel while the generic list
+stays for informational artifacts -- 12 posts and a growing pile of weekly
+reviews would drown the plan/mvp_scope/landing_page cards a founder actually
+needs to re-read.
+Revisit if: a founder wants to browse old post drafts or past weekly reviews
+outside the Growth panel -- add a collapsed history section there, not to
+the main list.
 
 ### 2026-07-28 · Planning · Mock adapters are permanent
 Chose: AI provider and deploy target each have a deterministic fake, selected

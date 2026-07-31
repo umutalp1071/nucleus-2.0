@@ -5,15 +5,18 @@ import * as artifactsRepo from "@/server/db/repositories/artifacts";
 import * as aiCallsRepo from "@/server/db/repositories/aiCalls";
 import * as buildTasksRepo from "@/server/db/repositories/buildTasks";
 import * as decisionsRepo from "@/server/db/repositories/decisions";
+import * as predictionsRepo from "@/server/db/repositories/predictions";
+import * as observationsRepo from "@/server/db/repositories/observations";
 import { Card, Badge } from "@/components/dashboard/ui";
 import { StageTimeline } from "@/components/venture/StageTimeline";
 import { VentureActions } from "@/components/venture/VentureActions";
 import { BuildStagePanel } from "@/components/venture/BuildStagePanel";
 import { LaunchPanel } from "@/components/venture/LaunchPanel";
+import { GrowthPanel } from "@/components/venture/GrowthPanel";
 import { ArtifactRenderer } from "@/components/venture/artifacts";
 import { stageLabel, stageTone } from "@/lib/stages";
 import { formatUsd, relativeTime } from "@/lib/format";
-import type { Artifact, ArtifactKind, MvpScope, Plan } from "@/lib/domain";
+import type { Artifact, ArtifactKind, MvpScope, Plan, Calendar, WeeklyReview } from "@/lib/domain";
 
 export const dynamic = "force-dynamic";
 
@@ -46,11 +49,13 @@ export default async function VentureWorkspace({ params }: { params: { id: strin
   const venture = await ventures.get(params.id);
   if (!venture) notFound();
 
-  const [artifacts, spend, buildTasks, decisions] = await Promise.all([
+  const [artifacts, spend, buildTasks, decisions, predictions, observations] = await Promise.all([
     artifactsRepo.listByVenture(venture.id),
     aiCallsRepo.sumByVenture(venture.id),
     buildTasksRepo.listByVenture(venture.id),
     decisionsRepo.listByVenture(venture.id),
+    predictionsRepo.listByVenture(venture.id),
+    observationsRepo.listByVenture(venture.id),
   ]);
   const decisionByArtifactId = new Map(decisions.map((d) => [d.artifactId, d]));
   const groups = groupByKind(artifacts);
@@ -59,6 +64,17 @@ export default async function VentureWorkspace({ params }: { params: { id: strin
   const buildSpecContext = { ventureTitle: venture.title, stack };
   const planGroup = groups.find((g) => g.kind === "plan");
   const firstTenUsers = planGroup ? (planGroup.latest.content as Plan).firstTenUsers : null;
+  const killCriteria = planGroup ? (planGroup.latest.content as Plan).killCriteria : null;
+
+  const calendarGroup = groups.find((g) => g.kind === "content_calendar");
+  const calendar = calendarGroup ? (calendarGroup.latest.content as Calendar) : null;
+  const seenDays = new Set<number>();
+  const posts = artifacts
+    .filter((a) => a.kind === "content_post") // already newest-first
+    .map((a) => a.content as Calendar["posts"][number] & { draft: string })
+    .filter((p) => (seenDays.has(p.day) ? false : (seenDays.add(p.day), true)));
+  const weeklyReviewArtifact = artifacts.find((a) => a.kind === "weekly_review");
+  const weeklyReview = weeklyReviewArtifact ? (weeklyReviewArtifact.content as WeeklyReview) : null;
 
   return (
     <div className="min-h-screen">
@@ -128,6 +144,17 @@ export default async function VentureWorkspace({ params }: { params: { id: strin
           emailCaptureUrl={venture.emailCaptureUrl ?? null}
           launchUrl={venture.launchUrl ?? null}
           firstTenUsers={firstTenUsers}
+        />
+
+        <GrowthPanel
+          ventureId={venture.id}
+          stage={venture.stage}
+          calendar={calendar}
+          posts={posts}
+          predictions={predictions}
+          observations={observations}
+          killCriteria={killCriteria}
+          weeklyReview={weeklyReview}
         />
 
         <Card className="flex flex-col gap-3">

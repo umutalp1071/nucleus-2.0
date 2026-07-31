@@ -19,6 +19,11 @@ export async function create(input: Omit<Prediction, "id" | "createdAt">, opts?:
   return prediction;
 }
 
+export async function get(id: string, opts?: RepoOpts): Promise<Prediction | null> {
+  const rows = await readCollection<Prediction>(COLLECTION, opts);
+  return rows.find((p) => p.id === id) ?? null;
+}
+
 export async function listByVenture(ventureId: string, opts?: RepoOpts): Promise<Prediction[]> {
   const rows = await readCollection<Prediction>(COLLECTION, opts);
   return rows

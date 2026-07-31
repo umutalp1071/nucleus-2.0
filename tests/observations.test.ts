@@ -40,4 +40,15 @@ describe("observations repository", () => {
     const list = await observations.listByVenture("v1", opts);
     expect(list).toHaveLength(1);
   });
+
+  it("get returns the observation by id, or null when missing", async () => {
+    const observations = await import("@/server/db/repositories/observations");
+    const created = await observations.create(
+      { ventureId: "v1", observedAt: "2026-08-01", metric: "m", value: 1, note: null, source: "manual" },
+      opts
+    );
+
+    expect((await observations.get(created.id, opts))?.id).toBe(created.id);
+    expect(await observations.get("missing", opts)).toBeNull();
+  });
 });

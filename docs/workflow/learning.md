@@ -2,6 +2,75 @@
 
 ---
 
+## 2026-07-31 — Phase 09: Growth Stage
+
+**What we did:**
+Implemented the growth loop: `write-content-calendar` (tier `mid`, 12 posts
+across 2-4 channels drawn only from the plan's ICP `where`) and `write-post`
+(tier `mid`, one calendar row expanded into a finished draft, generated on
+click -- never all 12 up front). Wired the `Prediction`/`Observation`
+primitives from Phase 08.5 into an actual UI: an open-predictions list with
+due dates, a manual weekly entry form, a tiny hand-rolled SVG chart per
+metric (same pattern as `Sparkline.tsx`), and a kill-criteria panel showing
+the founder's own planning-time stopping condition next to real numbers. A
+`weekly-review` task (tier `cheap`) summarizes the last 7 days of
+Observations/events against that kill criteria on manual trigger, no cron.
+`content_calendar` got a proper `ArtifactRenderer` case; `content_post` and
+`weekly_review` were registered as artifact kinds but deliberately kept out
+of the main workspace's `KIND_ORDER` list, rendered only through the new
+`GrowthPanel` -- otherwise 12 near-duplicate post cards and a growing pile of
+weekly reviews would drown the plan/mvp_scope/landing_page cards a founder
+actually re-reads.
+
+**Decisions:**
+- **Channel-subset validation happens after `runTask` returns, not inside
+  `CalendarSchema`.** A `TaskDef.schema` is static and has no access to the
+  specific call's input, so "every channel must come from this particular
+  plan's ICP `where`" can't be expressed as a zod constraint -- it's an
+  application-level check in `generateContentCalendar.ts`, treated as
+  `invalid_output` on failure.
+- **Prediction resolution is `value >= target` math, not a human choosing
+  hit/missed from a dropdown.** The entire point of the Prediction/Observation
+  split (review §5.2) is removing the founder's ability to fudge their own
+  verdict after seeing the numbers.
+- **`content_post`/`weekly_review` skip the generic artifact list.** Follows
+  the precedent `BuildStagePanel`/`LaunchPanel` already set: a stage's
+  actions live in a dedicated panel, the generic list stays for artifacts a
+  founder re-reads, not for a growing pile of generated drafts.
+
+**Mistake caught in browser verification, not by any automated test:** the
+first version of the "Resolve" button on an open prediction read
+`observationsByPrediction[predictionId]` from React state to decide which
+Observation to resolve against -- but the `<select>` showing a sensible
+default (`matches[0].id`) via a fallback in its `value` prop never actually
+wrote that default into state, since `onChange` only fires when the user
+touches the dropdown. Clicking "Resolve" without first reopening the
+single-option dropdown silently no-opped. Caught only because the Playwright
+smoke script clicked Resolve immediately after adding a matching Observation
+-- the exact interaction a real founder with one data point would also take.
+Fixed by passing the resolved id as an explicit argument from the click
+handler (which has access to the same `matches` array the render already
+computed) instead of trusting state that a plain click never populates. No
+test in the suite would have caught this -- `resolvePrediction()` itself was
+correct; the bug was entirely in how the client read its own UI state.
+Worth a standing rule: any button whose only apparent purpose is "confirm
+this visible default" needs its handler to receive that default directly,
+not re-derive it from state that only `onChange` populates.
+
+**Next step:** Phase 10 — Build-in-Public Engine.
+
+**Quality Score: 89/100**
+- Every acceptance criterion in the phase file is met and has a test that
+  fails without the fix: channel-subset rejection, the 12-post schema bound,
+  one-AI-call-per-post, and the hit/missed/void resolution math.
+- Docked for: the Resolve-button bug above shipped past `npm run verify`
+  clean and was only caught by browser verification -- a reminder that
+  "state written only by `onChange`, read by a sibling `onClick`" is a class
+  of bug the type checker cannot see, worth watching for in future panels
+  with a similar select-then-act shape.
+
+---
+
 ## 2026-07-30 — Architectural review implemented: Phase 08.5 (Primitives)
 
 **What we did:**

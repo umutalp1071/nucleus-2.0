@@ -19,6 +19,11 @@ export async function create(input: Omit<Observation, "id" | "createdAt">, opts?
   return observation;
 }
 
+export async function get(id: string, opts?: RepoOpts): Promise<Observation | null> {
+  const rows = await readCollection<Observation>(COLLECTION, opts);
+  return rows.find((o) => o.id === id) ?? null;
+}
+
 export async function listByVenture(ventureId: string, opts?: RepoOpts): Promise<Observation[]> {
   const rows = await readCollection<Observation>(COLLECTION, opts);
   return rows

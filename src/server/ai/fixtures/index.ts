@@ -167,4 +167,38 @@ export const FIXTURES: Record<string, unknown> = {
       description: "A single capture flow that organizes what you save automatically. No tags, no folders, no manual filing. Join early access.",
     },
   },
+
+  "write-content-calendar": {
+    strategy: "Show, don't pitch -- every post demonstrates the capture-to-organized loop in public, on the exact channels where this ICP already hangs out, so credibility is earned before any ask.",
+    channels: [
+      { channel: "r/productivity", why: "Highest concentration of people actively frustrated with manual filing systems.", cadence: "2x/week" },
+      { channel: "the Indie Hackers forum", why: "Founders here reward build-in-public honesty over polish.", cadence: "1x/week" },
+      { channel: "a niche Discord for this exact workflow", why: "Smallest, most qualified audience -- direct feedback loop.", cadence: "1x/week" },
+    ],
+    posts: [
+      { day: 1, channel: "the Indie Hackers forum", angle: "Why I'm building this", hook: "I've filed the same screenshot into 4 different folders this month. So I stopped.", type: "story" },
+      { day: 3, channel: "r/productivity", angle: "Teardown of manual filing habits", hook: "I tracked every time I manually organized something for a week. It was worse than I thought.", type: "teardown" },
+      { day: 5, channel: "a niche Discord for this exact workflow", angle: "Early build update", hook: "Capture-to-organized is live end to end as of today. Rough edges everywhere, but it works.", type: "build-log" },
+      { day: 7, channel: "r/productivity", angle: "Ask the audience", hook: "What's the one thing you always mean to file and never do?", type: "question" },
+      { day: 9, channel: "the Indie Hackers forum", angle: "First real result", hook: "First user hit inbox zero on captured items without touching a single tag.", type: "result" },
+      { day: 11, channel: "a niche Discord for this exact workflow", angle: "Design decision explained", hook: "I killed the folders feature before launch. Here's why.", type: "story" },
+      { day: 13, channel: "r/productivity", angle: "Before/after", hook: "Same 20 items, two ways: manually filed vs. auto-organized. Screenshots inside.", type: "teardown" },
+      { day: 15, channel: "the Indie Hackers forum", angle: "Build update", hook: "Auto-organization accuracy is now good enough that I stopped manually correcting it.", type: "build-log" },
+      { day: 17, channel: "a niche Discord for this exact workflow", angle: "Ask for beta testers", hook: "Looking for 5 people who hoard screenshots to break this before anyone else does.", type: "question" },
+      { day: 20, channel: "r/productivity", angle: "Retention result", hook: "5 of the first 10 users came back on day 2 without a reminder. Small number, real signal.", type: "result" },
+      { day: 23, channel: "the Indie Hackers forum", angle: "What I'd do differently", hook: "If I started over, I'd cut the mobile app idea from day one instead of week three.", type: "story" },
+      { day: 26, channel: "a niche Discord for this exact workflow", angle: "Launch announcement", hook: "It's live. No folders, no tags -- you'll see what I mean in ten seconds.", type: "result" },
+    ],
+  },
+
+  "write-post": {
+    draft: "I've filed the same screenshot into 4 different folders this month. So I stopped.\n\nEvery \"organization system\" I've tried puts the filing work on me, right when I'm least willing to do it -- the moment I'm trying to save something and move on.\n\nSo the tool I'm building does the filing itself. You save one thing in under 10 seconds, and it lands in the right place automatically, based on what you've already saved.\n\nStill rough. But the core loop works, and that's the only part that matters right now.",
+  },
+
+  "weekly-review": {
+    whatMoved: "Signups grew from 8 to 14 this week, and the r/productivity post drove the majority of the new visits.",
+    whatDidnt: "The Indie Hackers post got almost no engagement -- the build-log angle didn't land there this week.",
+    recommendedAction: "Double down on r/productivity with a teardown-style post next week; hold off on another Indie Hackers post until there's a sharper result to share.",
+    killCriteriaCheck: "Kill criteria was fewer than 5 of the first 25 signups returning in week 2 -- currently 6 of 14 have returned, so this is still on track, not a kill signal yet.",
+  },
 };

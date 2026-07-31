@@ -6,6 +6,9 @@ import { planVenture } from "./plan-venture";
 import { scopeMvp } from "./scope-mvp";
 import { generateBuildSpec } from "./generate-build-spec";
 import { writeLandingPage } from "./write-landing-page";
+import { writeContentCalendar } from "./write-content-calendar";
+import { writePost } from "./write-post";
+import { weeklyReview } from "./weekly-review";
 
 export interface TaskDef<I = unknown, O = unknown> {
   name: string;
@@ -41,6 +44,9 @@ export const TASKS = {
   "scope-mvp": scopeMvp,
   "generate-build-spec": generateBuildSpec,
   "write-landing-page": writeLandingPage,
+  "write-content-calendar": writeContentCalendar,
+  "write-post": writePost,
+  "weekly-review": weeklyReview,
 } as const satisfies Record<string, TaskDef>;
 
 export type TaskName = keyof typeof TASKS;
