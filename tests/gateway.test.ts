@@ -198,6 +198,31 @@ describe("gateway: cache", () => {
     // Only the first call should have reached the provider.
     expect((provider.complete as ReturnType<typeof vi.fn>).mock.calls.length).toBe(1);
   });
+
+  it("bypassCache forces every call to hit the provider, uncached", async () => {
+    const { runTask } = await import("@/server/ai/gateway");
+    const provider = stubProvider([
+      { text: '{"echo":"first"}', promptTokens: 10, completionTokens: 5 },
+      { text: '{"echo":"second"}', promptTokens: 10, completionTokens: 5 },
+    ]);
+
+    const first = await runTask<{ echo: string }>(
+      "echo-check",
+      { message: "hi" },
+      { baseDir, provider, caps: GENEROUS_CAPS, bypassCache: true }
+    );
+    const second = await runTask<{ echo: string }>(
+      "echo-check",
+      { message: "hi" },
+      { baseDir, provider, caps: GENEROUS_CAPS, bypassCache: true }
+    );
+
+    expect(first.ok).toBe(true);
+    expect(second.ok).toBe(true);
+    if (first.ok) expect(first.cached).toBe(false);
+    if (second.ok) expect(second.cached).toBe(false);
+    expect((provider.complete as ReturnType<typeof vi.fn>).mock.calls.length).toBe(2);
+  });
 });
 
 describe("gateway: provenance", () => {

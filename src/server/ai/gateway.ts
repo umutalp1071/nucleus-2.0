@@ -35,6 +35,20 @@ interface RunTaskOpts {
   baseDir?: string;
   provider?: Provider;
   caps?: Caps;
+  // Skip the read AND the write of the response cache for this call.
+  //
+  // Exists for exactly one caller: the calibration harness in tests/eval/,
+  // which measures verdict *stability* by running the same idea several
+  // times. With the cache on, runs 2..n are served from run 1's entry, so
+  // variance is always exactly 0 -- the harness would report perfect
+  // stability no matter how unstable the model actually is. A metric that
+  // cannot fail is worse than no metric.
+  //
+  // Deliberately does NOT weaken the budget guard: preflight already runs
+  // above the cache lookup, so a bypassed call is metered exactly like any
+  // other. It also skips putCached, which keeps ~75 eval entries out of the
+  // founder's working cache.
+  bypassCache?: boolean;
 }
 
 // User-facing messages never contain a model name, token count, or provider
@@ -154,7 +168,7 @@ export async function runTask<T>(
   // tier — a downgraded (cheaper, lower-quality) answer must never be
   // returned later under a preferred-tier lookup once budget recovers.
   const key = cacheKey(taskName, modelId, prompt);
-  const hit = await getCached<T>(key, { baseDir: opts?.baseDir });
+  const hit = opts?.bypassCache ? null : await getCached<T>(key, { baseDir: opts?.baseDir });
   if (hit !== null) {
     return { ok: true, data: hit, costUsd: 0, cached: true, demo: isDemo, downgraded, modelId, tierRequested, tierUsed: tier, promptVersion };
   }
@@ -211,7 +225,7 @@ export async function runTask<T>(
       return { ok: false, reason: "invalid_output", message: MESSAGES.invalid_output() };
     }
 
-    await putCached(key, parsed.data, { baseDir: opts?.baseDir });
+    if (!opts?.bypassCache) await putCached(key, parsed.data, { baseDir: opts?.baseDir });
     return {
       ok: true,
       data: parsed.data,
@@ -226,7 +240,7 @@ export async function runTask<T>(
     };
   }
 
-  await putCached(key, parsed.data, { baseDir: opts?.baseDir });
+  if (!opts?.bypassCache) await putCached(key, parsed.data, { baseDir: opts?.baseDir });
   return {
     ok: true,
     data: parsed.data,

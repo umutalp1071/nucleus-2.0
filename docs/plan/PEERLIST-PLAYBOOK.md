@@ -1,14 +1,72 @@
 # PEERLIST BUILD-IN-PUBLIC PLAYBOOK
 
-Every phase ships at least one post. They are a Definition-of-Done gate, not
-a bonus — see "one by default, two when earned" below for how many.
+> **Status: the per-phase gate is FROZEN as of 2026-07-31.** The craft rules
+> below still stand and should be followed by anything that does get written.
+> What is suspended is the *requirement* to produce a post per phase. Read
+> "Why this gate is frozen" immediately below before writing any new post.
 
 The goal is not "posting about the project." The goal is: **a developer
 scrolling Peerlist stops, reads to the end, and remembers the author's name.**
 
 ---
 
-## Why this is a hard requirement
+## Why this gate is frozen
+
+The count, on the day this was written: **24 drafts written, 4 published.**
+The four published are Phase 00. Writing was never the bottleneck — a
+six-post backlog per published post is not an output problem, it is an
+inventory problem, and the gate was making it worse on every phase.
+
+Three specific defects, in increasing order of how much they matter.
+
+**1. It is an open loop.** `PHASE-10` puts engagement analytics explicitly
+out of scope, so the system emits posts and never observes what happened to
+them. This is precisely the defect `docs/reviews/2026-07-30-stack-position.md`
+§3 diagnosed in the product — *"produces judgment, never observes outcomes,
+adapts to nothing"* — and Phase 08.5 was inserted to fix it. The fix was
+applied to ventures and not to the content subsystem, where it was worse: the
+venture loop is at least bounded by the $50 cap, and the content loop is
+bounded by nothing except founder hours.
+
+**2. It ties content volume to a variable no reader cares about.** Making a
+post a Definition-of-Done item means the only thing the content stream can
+express is *how fast the code is going*. Nobody outside the project holds a
+position in that variable.
+
+**3. It builds the wrong credibility.** Posts about the gateway architecture
+compound into "this person is a careful TypeScript engineer." That is a real
+asset, and it is not the asset that makes a stranger trust a `kill` verdict
+about their own business. The account being funded is not the account that
+can be spent.
+
+The uncomfortable part: this playbook is *good*, and that is why it lasted.
+It converted an unbounded, rejection-heavy, uncontrollable activity into a
+bounded, checklist-shaped one — word count, one code block, a pre-publish
+checklist. It made marketing pass `npm run verify`. It achieved that by
+removing the only part that could not be made deterministic, which is the
+other person.
+
+### What replaces it
+
+Phase 13 (calibration), pulled ahead of Phase 11. A published number about
+whether the product's central claim is true — see
+`docs/eval/calibration-report.md` once `npm run eval` has been run. One
+artifact that can be wrong in public beats twenty that cannot.
+
+### What to do with the existing backlog
+
+Publish it, oldest-first, unchanged. It is already written; the marginal cost
+is zero and the marginal value is not. Do not write more to extend it.
+
+### When to write a new post
+
+When there is a **resolved prediction, a published number, or a specific
+public claim that could have gone the other way** — not when a phase closes.
+Everything below still governs *how* to write it.
+
+---
+
+## Why this was a hard requirement (historical — see the freeze above)
 
 Nucleus 1.0 died invisible. Lessons #2, #3, #4, #11, #12 all diagnose the same
 cause: the product was excellent and nobody knew. The correction is not "post

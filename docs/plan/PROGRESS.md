@@ -6,7 +6,15 @@
 
 ## Current phase
 
-**PHASE 11 — Immune System** — not started
+**PHASE 13 — Calibration** — 🟡 in progress (harness built, awaiting a real run)
+
+**Execution order changed 2026-07-31: 13 → 11 → 12.** Phase numbers are
+stable (they're referenced across the plan); only the order of execution
+moved. Calibration now runs *before* Immune System and Ship It. Reasoning is
+in the header of `PHASE-13-calibration.md` — short version: the harness is
+the only check on the product's central claim, and Phase 12 ships that claim.
+Verifying it after shipping it is the wrong order regardless of what it does
+for distribution.
 
 ---
 
@@ -26,11 +34,14 @@
 | 08.5 | Primitives (Decision/Prediction/Observation) | ✅ done | `8b24c2b` | lesson |
 | 09 | Growth Stage | ✅ done | `8a447d4` | ship |
 | 10 | Build-in-Public Engine | ✅ done | `5c17c63` | ship, lesson |
+| 13 | Calibration *(moved ahead of 11)* | 🟡 | — | — |
 | 11 | Immune System | ⬜ | — | — |
 | 12 | Ship It | ⬜ | — | — |
-| 13 | Calibration | ⬜ | — | — |
 
 Legend: ⬜ not started · 🟡 in progress · ✅ done · 🚧 blocked
+
+Rows are in **execution order**, which is no longer numeric order. See
+"Current phase" above.
 
 ---
 
@@ -207,6 +218,27 @@ filename), and the reject step deleted the real `2026-07-31-phase-09-ship.md`
 specific draft's filename. No code bug; a testing-methodology lesson about
 `/content` specifically, where "newest" isn't the same as "the one I just
 generated" once real content already exists.
+
+### Phase 13 — Calibration *(pulled ahead of 11)*
+Files: tests/eval/ideas.json (34 historical ideas), tests/eval/score.ts (pure
+metrics), tests/eval/score.test.ts, tests/eval/run.eval.ts (the runner),
+vitest.eval.config.ts, package.json (`eval` script), src/server/ai/gateway.ts
+(`RunTaskOpts.bypassCache`), docs/plan/PEERLIST-PLAYBOOK.md (gate frozen),
+.claude/CLAUDE.md (gate rule replaced).
+Risk considered most likely beforehand: the eval set would be contaminated —
+the model recognising Airbnb and scoring its memory of the outcome rather
+than the pitch. Not fixable, so it is measured: a `contamination` field, and
+every number reported twice, once over all 34 and once over the 19 non-`high`
+entries. Realized risk, caught while building rather than after publishing: a
+different and worse one — the response cache would have silently faked the
+stability number. `cacheKey` is `sha256(task:model:prompt)`, so runs 2..n of
+an identical idea come back from run 1 and variance is always exactly 0. The
+harness would have reported perfect stability for an arbitrarily unstable
+model, and that number would have gone into a public report. Fixed with
+`bypassCache`; the lesson is that a metric which *cannot* fail is worse than
+no metric, and the way to catch that class of bug is to ask "what would this
+number look like if the thing it measures were completely broken?" before
+trusting it.
 
 ---
 

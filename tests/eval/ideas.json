@@ -1,0 +1,261 @@
+{
+  "_readme": [
+    "Historical startup ideas with known outcomes, used by tests/eval/run.eval.ts",
+    "to measure whether validate-idea's judgment is any good.",
+    "",
+    "Each idea is written as it would have been PITCHED AT THE TIME -- present",
+    "tense, no hindsight, no outcome words. An entry that leaks its own answer",
+    "('the company that went on to...') measures nothing.",
+    "",
+    "contamination: how likely a frontier model is to recognise the specific",
+    "company from the description alone. The famous cases are unavoidably",
+    "'high' -- a model that recognises Airbnb is scoring its memory of the",
+    "outcome, not the idea. The harness therefore reports every number twice:",
+    "once over the whole set, once over the low+medium subset only. The second",
+    "number is the honest one. See docs/eval/calibration-report.md.",
+    "",
+    "actualOutcome 'unknown' = genuinely contested, counted in NEITHER",
+    "numerator nor denominator. Kept in the set because the interesting output",
+    "for these is the reasoning, not the score."
+  ],
+  "ideas": [
+    {
+      "id": "s01",
+      "idea": "A website where people rent out an air mattress in their spare room to strangers attending a nearby conference. Hosts set their own price; we take a cut of each booking.",
+      "actualOutcome": "succeeded",
+      "contamination": "high",
+      "note": "Canonical false negative. Sounds unsafe and tiny. A naive skeptic kills it."
+    },
+    {
+      "id": "s02",
+      "idea": "A folder on your computer that automatically syncs to the cloud and to your other computers. No manual upload step.",
+      "actualOutcome": "succeeded",
+      "contamination": "high",
+      "note": "Canonical false negative. 'You can do this with rsync and an FTP account' was the actual top comment."
+    },
+    {
+      "id": "s03",
+      "idea": "Seven lines of code that let a developer accept credit card payments without talking to a bank, filling in a merchant application, or waiting two weeks for approval.",
+      "actualOutcome": "succeeded",
+      "contamination": "high",
+      "note": "Entering a market with entrenched incumbents and a regulatory moat. Wedge is developer experience."
+    },
+    {
+      "id": "s04",
+      "idea": "A website where you watch other people play video games, live, and chat with them while they do it.",
+      "actualOutcome": "succeeded",
+      "contamination": "high",
+      "note": "Sounds like a hobby, not a market. Tests whether the model can price an audience it doesn't belong to."
+    },
+    {
+      "id": "s05",
+      "idea": "A chat app for work teams, organised into channels. Replaces internal email. Free tier, paid per seat above a message-history limit.",
+      "actualOutcome": "succeeded",
+      "contamination": "high",
+      "note": "IRC, HipChat, Campfire already exist. Tests 'crowded market' reflex."
+    },
+    {
+      "id": "s06",
+      "idea": "A professional design tool that runs entirely in a browser tab, with multiple designers editing the same file at the same time.",
+      "actualOutcome": "succeeded",
+      "contamination": "high",
+      "note": "Attacking a dominant desktop incumbent on a technically hard axis."
+    },
+    {
+      "id": "s07",
+      "idea": "Drag-and-drop design software for people who are not designers, with thousands of pre-made templates for social posts and presentations.",
+      "actualOutcome": "succeeded",
+      "contamination": "medium",
+      "note": "Non-consumption wedge. Competitors serve professionals; this serves everyone else."
+    },
+    {
+      "id": "s08",
+      "idea": "A hosted storefront so anyone can sell products online without a developer. Monthly subscription plus payment fees.",
+      "actualOutcome": "succeeded",
+      "contamination": "medium",
+      "note": "Marketplaces already own the demand side. Tests whether 'own your own store' reads as a real wedge."
+    },
+    {
+      "id": "s09",
+      "idea": "Video meetings that just work — one click to join, no plugin, no account required for guests, free for calls under forty minutes.",
+      "actualOutcome": "succeeded",
+      "contamination": "high",
+      "note": "Extremely crowded, incumbents were free and bundled. Won on reliability alone."
+    },
+    {
+      "id": "s10",
+      "idea": "A platform that lets a writer charge readers a monthly fee for an email newsletter. We handle payments and hosting and take a percentage.",
+      "actualOutcome": "succeeded",
+      "contamination": "medium",
+      "note": "'Email is a solved problem' reflex. The wedge is payments, not email."
+    },
+    {
+      "id": "s11",
+      "idea": "Always-on voice chat rooms for groups of friends playing games together, with persistent text channels alongside.",
+      "actualOutcome": "succeeded",
+      "contamination": "medium",
+      "note": "Incumbent voice software was widely hated but entrenched and free."
+    },
+    {
+      "id": "s12",
+      "idea": "A single app that is a notes app, a wiki, a task board and a database, where users assemble their own tools from blocks.",
+      "actualOutcome": "succeeded",
+      "contamination": "medium",
+      "note": "'Does everything, therefore nothing' is a legitimate criticism that happened to be wrong here."
+    },
+    {
+      "id": "f01",
+      "idea": "A four-hundred-dollar countertop press that squeezes juice from proprietary single-serve produce packs sold by subscription. The press connects to wifi to verify each pack is fresh.",
+      "actualOutcome": "failed",
+      "contamination": "high",
+      "note": "The packs can be squeezed by hand. Hardware adds no value over the consumable."
+    },
+    {
+      "id": "f02",
+      "idea": "A subscription streaming service showing premium scripted shows in ten-minute episodes, designed to be watched only on a phone during commutes.",
+      "actualOutcome": "failed",
+      "contamination": "high",
+      "note": "Nearly two billion raised. Tests whether funding is mistaken for validation."
+    },
+    {
+      "id": "f03",
+      "idea": "A self-balancing two-wheeled electric transporter that people stand on. We expect cities to redesign around it.",
+      "actualOutcome": "failed",
+      "contamination": "high",
+      "note": "Real technology, real hype, no adoption. Failure is behavioural, not technical."
+    },
+    {
+      "id": "f04",
+      "idea": "Consumer eyeglasses with a built-in camera and heads-up display, worn all day in public.",
+      "actualOutcome": "failed",
+      "contamination": "high",
+      "note": "Social rejection, not capability. Tests whether the model weighs social risk at all."
+    },
+    {
+      "id": "f05",
+      "idea": "Online grocery delivery across the country, with our own automated warehouses and delivery fleet, built out ahead of demand.",
+      "actualOutcome": "failed",
+      "contamination": "high",
+      "note": "The idea was right and the timing and capital structure were fatal. Tests timing sensitivity."
+    },
+    {
+      "id": "f06",
+      "idea": "An online store for pet supplies, shipping heavy low-margin goods like litter and dog food nationwide, with heavy brand advertising to build awareness fast.",
+      "actualOutcome": "failed",
+      "contamination": "high",
+      "note": "Unit economics negative per order at every volume."
+    },
+    {
+      "id": "f07",
+      "idea": "A photo sharing app with no privacy settings at all — every photo you take is visible to anyone physically near you.",
+      "actualOutcome": "failed",
+      "contamination": "medium",
+      "note": "Forty-one million raised pre-launch. The premise is the defect."
+    },
+    {
+      "id": "f08",
+      "idea": "A social network exclusively for dogs, where owners create a profile for each pet and the pets follow each other.",
+      "actualOutcome": "failed",
+      "contamination": "low",
+      "note": "Generic dud. Should be an easy kill; if the model scores this above 40 the whole set is suspect."
+    },
+    {
+      "id": "f09",
+      "idea": "A blockchain-based loyalty points system for independent coffee shops, so customers can earn points at one cafe and spend them at another.",
+      "actualOutcome": "failed",
+      "contamination": "low",
+      "note": "Technology in search of a problem; a shared spreadsheet solves it. Easy kill."
+    },
+    {
+      "id": "f10",
+      "idea": "A smart refrigerator with interior cameras that recognises what you are running low on and automatically reorders it from a grocery partner.",
+      "actualOutcome": "failed",
+      "contamination": "low",
+      "note": "Repeatedly attempted, never adopted. Hardware cost vs. a thirty-second task."
+    },
+    {
+      "id": "f11",
+      "idea": "A microblogging platform identical to the dominant one but with better moderation and no advertising, funded by user donations.",
+      "actualOutcome": "failed",
+      "contamination": "low",
+      "note": "No distribution wedge against a network effect. Easy kill."
+    },
+    {
+      "id": "f12",
+      "idea": "An on-demand service that sends a valet to park your car anywhere in the city for a flat fee, cheaper than a parking garage.",
+      "actualOutcome": "failed",
+      "contamination": "low",
+      "note": "Labour cost per transaction exceeds price. Several funded attempts, all dead."
+    },
+    {
+      "id": "s13",
+      "idea": "Accounting software for very small businesses, sold as a low monthly subscription in the browser instead of a several-hundred-dollar desktop licence, with bank feeds imported automatically.",
+      "actualOutcome": "succeeded",
+      "contamination": "low",
+      "note": "Several independent winners. Business-model wedge against an entrenched desktop incumbent."
+    },
+    {
+      "id": "s14",
+      "idea": "A tool that queues social media posts across a person's accounts and publishes them on a schedule, free for a few posts a week and a monthly fee above that.",
+      "actualOutcome": "succeeded",
+      "contamination": "low",
+      "note": "Boring, obviously copyable, no moat on paper. Multiple durable businesses exist anyway."
+    },
+    {
+      "id": "s15",
+      "idea": "A password manager that stores encrypted credentials, generates strong passwords and fills them in automatically, sold per family per year.",
+      "actualOutcome": "succeeded",
+      "contamination": "low",
+      "note": "Browsers give a version away free. Tests whether 'the platform bundles this' is treated as automatically fatal."
+    },
+    {
+      "id": "f13",
+      "idea": "An app that collects your laundry from your door, washes it, and returns it the next day for a flat fee per bag, in one city to start.",
+      "actualOutcome": "failed",
+      "contamination": "low",
+      "note": "Many funded attempts, near-total mortality. Logistics cost per order exceeds willingness to pay."
+    },
+    {
+      "id": "f14",
+      "idea": "A hyperlocal news site covering a single neighbourhood, written by one reporter, funded by advertising from businesses on that street.",
+      "actualOutcome": "failed",
+      "contamination": "low",
+      "note": "Audience ceiling is smaller than the cost of one salary. Repeatedly attempted."
+    },
+    {
+      "id": "f15",
+      "idea": "A mobile app that pays users a few cents in credit for each advertisement they watch, monetised by charging advertisers more than we pay out.",
+      "actualOutcome": "failed",
+      "contamination": "low",
+      "note": "Attracts exactly the users advertisers value least. Adversarial-selection dud, should be an easy kill."
+    },
+    {
+      "id": "u01",
+      "idea": "An invite-only audio-only social app where anyone can drop into a live room and listen to or join a conversation. No recording, nothing persists.",
+      "actualOutcome": "unknown",
+      "contamination": "high",
+      "note": "Explosive growth then near-total collapse. Any single label is a lie; excluded from scoring."
+    },
+    {
+      "id": "u02",
+      "idea": "A two-thousand-dollar stationary exercise bike with a screen, sold with a monthly subscription to live instructor-led classes.",
+      "actualOutcome": "unknown",
+      "contamination": "high",
+      "note": "Enormous success followed by a severe correction. Genuinely contested."
+    },
+    {
+      "id": "u03",
+      "idea": "A meal-kit subscription that ships pre-portioned ingredients and recipe cards weekly, so people cook at home without planning or shopping.",
+      "actualOutcome": "unknown",
+      "contamination": "medium",
+      "note": "Category is real and large; nearly every individual entrant struggled on retention and CAC."
+    },
+    {
+      "id": "u04",
+      "idea": "A browser extension that reads the page you are on and answers questions about it using a language model, free with a paid tier for heavy users.",
+      "actualOutcome": "unknown",
+      "contamination": "low",
+      "note": "Contemporary, unresolved. Included as a live control: this one the founder can resolve later with a real Prediction."
+    }
+  ]
+}

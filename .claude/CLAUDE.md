@@ -49,9 +49,10 @@ deliberate scope decision, not a gap. See `docs/plan/00-ANSWER.md` §2.
 - Never add an npm dependency without a Dependency Ledger row in
   `docs/plan/PROGRESS.md`.
 - Never run `next build` while `next dev` is running against the same `.next`.
-- A phase is not complete without a Peerlist draft in `docs/content/drafts/`.
-  Default to **one** post (ship or lesson, whichever angle is stronger for
-  that phase) — write both only when the phase clearly earns both. Content
-  is a queue, not a diary: see PEERLIST-PLAYBOOK.md's "Content is a queue,
-  not a diary" section. Publishing cadence is decoupled from dev cadence on
-  purpose — never let post volume imply the dev pace was slower than it was.
+- **The per-phase content gate is frozen** (2026-07-31). A phase is complete
+  when its acceptance criteria pass; it does **not** require a new Peerlist
+  draft. `docs/content/drafts/` holds 20 unpublished posts already — the
+  bottleneck was never writing. Publish that backlog oldest-first; write new
+  posts only when there is something to say that the backlog doesn't already
+  say. Reasoning in `docs/plan/PEERLIST-PLAYBOOK.md` §"Why this gate is
+  frozen". Do not reinstate the gate without reading it.
