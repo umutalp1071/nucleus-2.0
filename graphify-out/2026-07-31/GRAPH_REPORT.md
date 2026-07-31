@@ -1,16 +1,16 @@
-# Graph Report - nucleus-2.0  (2026-07-30)
+# Graph Report - nucleus-2.0  (2026-07-31)
 
 ## Corpus Check
-- 198 files · ~99,717 words
+- 233 files · ~113,169 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1209 nodes · 1788 edges · 104 communities (72 shown, 32 thin omitted)
-- Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
+- 1354 nodes · 2132 edges · 139 communities (98 shown, 41 thin omitted)
+- Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 1 edges (avg confidence: 0.5)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `b8638fca`
+- Built from commit: `4b3c1926`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -112,35 +112,66 @@
 - Everything my AI generates is replaceable. Almost nothing it remembers is.
 - The best feature I shipped this week makes zero AI calls
 - Nucleus doesn't write your code. It writes the brief that does.
+- predictions.ts
+- recordDecision.ts
+- domain.ts
+- ventures.ts
+- Plan of record
+- aiCalls.ts
+- buildTasks.ts
+- store.ts
+- artifacts.ts
+- observations.ts
+- repositories/events.ts
+- generateBuildSpec.ts
+- generatePost.ts
+- decisions.ts
+- cache.ts
+- runWeeklyReview.ts
+- EXECUTION STATE
+- [id]/route.ts
+- CompletionResult
+- 3. The five engineering decisions that matter
+- provider.ts
+- idea-export.ts
+- voice-samples/route.ts
+- generateBuildSpec.test.ts
+- generateContentCalendar.test.ts
+- generateLandingPage.test.ts
+- generatePost.test.ts
+- validateAndAdvance.test.ts
+- My AI venture studio now does the part everyone skips: distribution
+- [filename]/route.ts
+- regenerateArtifact.test.ts
 
 ## God Nodes (most connected - your core abstractions)
 1. `writeCollection()` - 37 edges
-2. `runTask()` - 20 edges
-3. `Provider` - 20 edges
-4. `Plan` - 19 edges
-5. `readCollection()` - 16 edges
-6. `compilerOptions` - 15 edges
-7. `MvpScope` - 14 edges
-8. `formatUsd()` - 14 edges
-9. `recordEvent()` - 14 edges
-10. `Decisions log` - 14 edges
+2. `Provider` - 32 edges
+3. `runTask()` - 24 edges
+4. `Plan` - 23 edges
+5. `recordDecision()` - 18 edges
+6. `Decisions log` - 17 edges
+7. `Artifact` - 16 edges
+8. `FIXTURES` - 16 edges
+9. `readCollection()` - 16 edges
+10. `Venture` - 15 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `seed()` --calls--> `writeCollection()`  [EXTRACTED]
   tests/budget.test.ts → src/server/db/store.ts
-- `WriteLandingPageInput` --references--> `Plan`  [EXTRACTED]
-  src/server/ai/tasks/write-landing-page.ts → src/lib/domain.ts
-- `GET()` --calls--> `getSpend()`  [EXTRACTED]
-  src/app/api/budget/route.ts → src/server/ai/budget.ts
-- `POST()` --calls--> `writeCollection()`  [EXTRACTED]
-  src/app/api/settings/delete-all/route.ts → src/server/db/store.ts
-- `GET()` --calls--> `dataDirInfo()`  [EXTRACTED]
-  src/app/api/settings/route.ts → src/server/db/store.ts
+- `WriteContentCalendarInput` --references--> `Plan`  [EXTRACTED]
+  src/server/ai/tasks/write-content-calendar.ts → src/lib/domain.ts
+- `listAll()` --calls--> `readCollection()`  [EXTRACTED]
+  src/server/db/repositories/aiCalls.ts → src/server/db/store.ts
+- `setDone()` --calls--> `writeCollection()`  [EXTRACTED]
+  src/server/db/repositories/buildTasks.ts → src/server/db/store.ts
+- `markHumanFeedback()` --calls--> `writeCollection()`  [EXTRACTED]
+  src/server/db/repositories/decisions.ts → src/server/db/store.ts
 
 ## Import Cycles
 - None detected.
 
-## Communities (104 total, 32 thin omitted)
+## Communities (139 total, 41 thin omitted)
 
 ### Community 0 - "ABSOLUTE RULES"
 Cohesion: 0.07
@@ -155,8 +186,8 @@ Cohesion: 0.12
 Nodes (16): 1. Vision Alignment, 2. User Value, 3. AI-Native Principle, 4. Complexity Check, 5. Scope Check, Alignment Score, EVALUATION CRITERIA, FINAL QUESTION (+8 more)
 
 ### Community 3 - "devDependencies"
-Cohesion: 0.07
-Nodes (23): ArtifactSchema, FIXTURES, CompletionResult, mock, Provider, ResolveOpts, create(), latestOfKind() (+15 more)
+Cohesion: 0.17
+Nodes (5): FIXTURES, mvpResponse, planResponse, reviewResponse, { runTaskSpy }
 
 ### Community 4 - "package.json"
 Cohesion: 0.05
@@ -191,8 +222,8 @@ Cohesion: 0.05
 Nodes (38): 0. Verdict, up front, 10. The counter-argument, stated fairly, 11. One-paragraph answer, 1. Where Nucleus actually sits — measured, not assumed, 2.1 Lower layers are less defensible, not more, 2.2 The "commoditized application layer" claim is half true, 2.3 Generalizing before you have a user is the failure mode you already survived, 2. Why "move down the stack" is the wrong heuristic (+30 more)
 
 ### Community 16 - "page.tsx"
-Cohesion: 0.05
-Nodes (55): createVenture(), DEFAULT_CAPS, Home(), migrateLegacyIdeas(), Spend, titleFromIdea(), ZERO_SPEND, Breakdown (+47 more)
+Cohesion: 0.20
+Nodes (12): groupByKind(), KIND_ORDER, VentureWorkspace(), Card(), ProgressBar(), BuildStagePanel(), groupByMilestone(), LaunchPanel() (+4 more)
 
 ### Community 18 - "feature.md"
 Cohesion: 0.09
@@ -223,8 +254,8 @@ Cohesion: 0.50
 Nodes (3): For --cluster-only, For --update (incremental re-extraction), graphify reference: incremental update and cluster-only
 
 ### Community 27 - "Session Learning Log"
-Cohesion: 0.13
-Nodes (14): 2026-07-26 — Phase 1, Day 1: Dashboard Foundation, 2026-07-26 — Phase 1, Day 1: New Idea Flow (mock), 2026-07-27 — Phase 1, Day 2: Continue/Save/Saved Ideas, 2026-07-28 — Plan Phase 00: Ground Truth, 2026-07-28 — Plan Phase 01: Domain & Storage, 2026-07-28 — Plan Phase 02: AI Gateway, 2026-07-28 — Plan Phase 03: Real Validation, 2026-07-28 — Plan Phase 04: Venture Workspace (+6 more)
+Cohesion: 0.12
+Nodes (15): 2026-07-26 — Phase 1, Day 1: Dashboard Foundation, 2026-07-26 — Phase 1, Day 1: New Idea Flow (mock), 2026-07-27 — Phase 1, Day 2: Continue/Save/Saved Ideas, 2026-07-28 — Plan Phase 00: Ground Truth, 2026-07-28 — Plan Phase 01: Domain & Storage, 2026-07-28 — Plan Phase 02: AI Gateway, 2026-07-28 — Plan Phase 03: Real Validation, 2026-07-28 — Plan Phase 04: Venture Workspace (+7 more)
 
 ### Community 29 - ".claude/CLAUDE.md"
 Cohesion: 0.33
@@ -235,8 +266,8 @@ Cohesion: 0.08
 Nodes (23): APRIL-JUNE 2027, CRITICAL CHECKPOINTS, DAILY RITUAL (Every Day), Daily / Weekly / Monthly Roadmap, DECEMBER 2026, JANUARY-MARCH 2027, LAST UPDATE, MONTHLY RITUAL (Every Month) (+15 more)
 
 ### Community 33 - "NewIdeaFlow.tsx"
-Cohesion: 0.15
-Nodes (16): Artifact, ArtifactKindSchema, MvpScope, MvpScopeSchema, Plan, PlanSchema, GatewayResult, GenerateBuildSpecInput (+8 more)
+Cohesion: 0.17
+Nodes (10): BuildSpecSchema, MvpScope, MvpScopeSchema, Plan, PlanSchema, generateBuildSpec, GenerateBuildSpecInput, scopeMvp (+2 more)
 
 ### Community 34 - "Automated Content Generation System"
 Cohesion: 0.29
@@ -247,8 +278,12 @@ Cohesion: 0.33
 Nodes (5): Next Step, Nucleus 2.0 — Day 2: Ideas That Stick, Problem & Solution, Screenshot / Demo, What Was Built
 
 ### Community 36 - "Nucleus 2.0 — Day {{DAY_NUMBER}}: {{TITLE}}"
-Cohesion: 0.33
-Nodes (5): Next Step, Nucleus 2.0 — Day {{DAY_NUMBER}}: {{TITLE}}, Problem & Solution, Technical Detail (Optional), What Was Built
+Cohesion: 0.13
+Nodes (16): BodySchema, approveDraft(), DraftFile, editDraft(), getVoiceSamples(), listDrafts(), listVoiceSources(), loadVoiceAndRejections() (+8 more)
+
+### Community 38 - "lesson-post.md"
+Cohesion: 0.15
+Nodes (19): BodySchema, POST(), statusFor(), buildNarrative(), defaultVisual(), extractPhaseCompletions(), firstLearningEntry(), generateBuildInPublicPost() (+11 more)
 
 ### Community 39 - "Run the Nucleus 2.0 dashboard"
 Cohesion: 0.29
@@ -259,20 +294,20 @@ Cohesion: 0.33
 Nodes (5): Context, Feature: Idea Export (JSON + CSV), Goal, JSON Export, Requirements
 
 ### Community 42 - "writeCollection"
-Cohesion: 0.05
-Nodes (48): ALL_COLLECTIONS, POST(), BodySchema, AiCall, AiCallSchema, BuildTaskSchema, DecisionSchema, NucleusEvent (+40 more)
+Cohesion: 0.18
+Nodes (14): createVenture(), DEFAULT_CAPS, Home(), migrateLegacyIdeas(), Spend, titleFromIdea(), ZERO_SPEND, BudgetCard() (+6 more)
 
 ### Community 43 - "budget.ts"
 Cohesion: 0.13
-Nodes (19): GET(), GET(), CapsSchema, GET(), PATCH(), PatchSchema, BudgetOpts, DEFAULT_CAPS (+11 more)
+Nodes (19): GET(), CapsSchema, GET(), PATCH(), PatchSchema, BudgetOpts, Caps, DEFAULT_CAPS (+11 more)
 
 ### Community 44 - "gateway.ts"
-Cohesion: 0.13
-Nodes (26): POST(), BodySchema, POST(), Caps, CacheEntry, cacheKey(), CacheOpts, clearCache() (+18 more)
+Cohesion: 0.14
+Nodes (24): POST(), BodySchema, POST(), CacheEntry, cacheKey(), CacheOpts, clearCache(), getCached() (+16 more)
 
 ### Community 45 - "Plan of record"
 Cohesion: 0.06
-Nodes (31): 2026-07-28 · Planning · BYOK, always, 2026-07-28 · Planning · JSON files, not Supabase, 2026-07-28 · Planning · Mock adapters are permanent, 2026-07-28 · Planning · Venture copilot, not codegen, 2026-07-29 · Build Stage · Agent brief tested before shipping, 2026-07-29 · Build Stage · Launch gating lives in the route, not a workflow engine, 2026-07-29 · Build Stage · One milestone equals one task, 2026-07-30 · Launch Stage · Copy is structured, HTML is templated (+23 more)
+Nodes (35): 2026-07-28 · Planning · BYOK, always, 2026-07-28 · Planning · JSON files, not Supabase, 2026-07-28 · Planning · Mock adapters are permanent, 2026-07-28 · Planning · Venture copilot, not codegen, 2026-07-29 · Build Stage · Agent brief tested before shipping, 2026-07-29 · Build Stage · Launch gating lives in the route, not a workflow engine, 2026-07-29 · Build Stage · One milestone equals one task, 2026-07-30 · Launch Stage · Copy is structured, HTML is templated (+27 more)
 
 ### Community 46 - "THE ANSWER"
 Cohesion: 0.25
@@ -355,40 +390,40 @@ Cohesion: 0.33
 Nodes (3): contents, files, SRC_DIR
 
 ### Community 66 - "BACKLOG"
-Cohesion: 0.22
+Cohesion: 0.40
 Nodes (4): BACKLOG, Deferred with a known trigger, From the original docs, Rejected outright, with reasoning
 
 ### Community 67 - "regenerate/route.ts"
-Cohesion: 0.14
-Nodes (15): POST(), statusFor(), GET(), config, schema, DeployTarget, makeVercelTarget(), mock (+7 more)
+Cohesion: 0.13
+Nodes (17): POST(), statusFor(), GET(), Landing, config, schema, DeployTarget, makeVercelTarget() (+9 more)
 
 ### Community 68 - "[id]/route.ts"
-Cohesion: 0.11
-Nodes (11): Modal(), NewIdeaCard(), Failure, failureCopy, NewIdeaFlow(), Step, CompetitorsArtifact(), recommendationBadge (+3 more)
+Cohesion: 0.13
+Nodes (9): Modal(), Failure, failureCopy, Step, CompetitorsArtifact(), recommendationBadge, recommendationLabel, severityColor (+1 more)
 
 ### Community 69 - "build-spec/route.ts"
 Cohesion: 0.22
 Nodes (9): How it works, License, Nucleus 2.0, Project status & development, Quickstart, Security, What Nucleus is — and isn't, What works today (+1 more)
 
 ### Community 88 - "validateAndAdvance.ts"
-Cohesion: 0.33
-Nodes (6): 3.1 One chokepoint for all AI traffic, 3.2 The budget is a pre-flight guard, not a report, 3.3 Every AI output is schema-validated at the boundary, 3.4 The event log is the source of truth for everything narrative, 3.5 Local-first storage, adapters at the edges, 3. The five engineering decisions that matter
+Cohesion: 0.26
+Nodes (9): POST(), statusFor(), BodySchema, POST(), statusFor(), generateLandingPage(), GenerateLandingPageResult, regenerateArtifact() (+1 more)
 
 ### Community 89 - "planAndAdvance.ts"
-Cohesion: 0.07
-Nodes (33): BodySchema, POST(), statusFor(), POST(), statusFor(), POST(), statusFor(), BodySchema (+25 more)
+Cohesion: 0.20
+Nodes (14): BodySchema, POST(), statusFor(), BuildTask, StageSchema, Venture, recordEvent(), planAndAdvance() (+6 more)
 
 ### Community 90 - "domain.ts"
 Cohesion: 0.33
 Nodes (5): Known dependency advisories, Reporting a vulnerability, Security, Security model, Supported versions
 
 ### Community 94 - "index.tsx"
-Cohesion: 0.13
-Nodes (11): BuildSpecArtifact(), DecisionProvenance(), ArtifactRenderer(), REGENERATABLE, LandingArtifact(), MvpScopeArtifact(), PlanArtifact(), RegenerateControl() (+3 more)
+Cohesion: 0.16
+Nodes (9): BuildSpecArtifact(), ContentCalendarArtifact(), ArtifactRenderer(), REGENERATABLE, LandingArtifact(), MvpScopeArtifact(), PlanArtifact(), RegenerateControl() (+1 more)
 
 ### Community 95 - "tasks/index.ts"
-Cohesion: 0.14
-Nodes (14): BuildSpecSchema, CompetitorsSchema, LandingSchema, analyzeCompetitors, AnalyzeCompetitorsInput, generateBuildSpec, echoCheck, echoCheckSchema (+6 more)
+Cohesion: 0.10
+Nodes (28): ArtifactKindSchema, BuildInPublicPost, BuildInPublicPostSchema, CalendarSchema, Competitors, CompetitorsSchema, LandingSchema, PostDraft (+20 more)
 
 ### Community 96 - "CopyForControl.tsx"
 Cohesion: 0.29
@@ -399,25 +434,109 @@ Cohesion: 0.20
 Nodes (9): 1. The eval set — `tests/eval/ideas.json`, 2. The harness — `tests/eval/run.ts`, 3. The report, Acceptance, Peerlist posts, PHASE 13 — CALIBRATION, Risks, Scope (+1 more)
 
 ### Community 98 - "Verdict"
+Cohesion: 0.19
+Nodes (7): Breakdown, SettingsData, SpendBreakdownSection(), Point, Sparkline(), DecisionProvenance(), formatUsd()
+
+### Community 104 - "predictions.ts"
+Cohesion: 0.32
+Nodes (6): PredictionSchema, create(), listByVenture(), listOpen(), RepoOpts, resolve()
+
+### Community 105 - "recordDecision.ts"
+Cohesion: 0.17
+Nodes (15): POST(), statusFor(), POST(), statusFor(), Artifact, GatewayResult, ExtractedPrediction, extractPredictions() (+7 more)
+
+### Community 106 - "domain.ts"
+Cohesion: 0.21
+Nodes (9): GrowthPanel(), PostRecord, CalendarPost, Observation, WeeklyReview, WeeklyReviewSchema, weeklyReview, WeeklyReviewInput (+1 more)
+
+### Community 107 - "ventures.ts"
+Cohesion: 0.17
+Nodes (8): CreateVentureSchema, POST(), VentureSchema, advance(), create(), remove(), RepoOpts, update()
+
+### Community 108 - "Plan of record"
+Cohesion: 0.35
+Nodes (8): Stage, assertTransition(), canTransition(), LABELS, nextStage(), STAGE_ORDER, TONES, TRANSITIONS
+
+### Community 109 - "aiCalls.ts"
+Cohesion: 0.20
+Nodes (7): AiCall, AiCallSchema, create(), listAll(), RepoOpts, update(), seed()
+
+### Community 110 - "buildTasks.ts"
+Cohesion: 0.22
+Nodes (5): BodySchema, BuildTaskSchema, createMany(), RepoOpts, setDone()
+
+### Community 111 - "store.ts"
+Cohesion: 0.20
+Nodes (16): ALL_COLLECTIONS, POST(), RepoOpts, set(), SettingRow, backupsDir(), collectionFile(), dataDirInfo() (+8 more)
+
+### Community 112 - "artifacts.ts"
+Cohesion: 0.18
+Nodes (9): POST(), statusFor(), ArtifactSchema, create(), latestOfKind(), listByVenture(), RepoOpts, generateContentCalendar() (+1 more)
+
+### Community 113 - "observations.ts"
+Cohesion: 0.12
+Nodes (10): BodySchema, BodySchema, POST(), statusFor(), ObservationSchema, Prediction, create(), RepoOpts (+2 more)
+
+### Community 114 - "repositories/events.ts"
+Cohesion: 0.33
+Nodes (3): NucleusEventSchema, create(), RepoOpts
+
+### Community 115 - "generateBuildSpec.ts"
+Cohesion: 0.18
+Nodes (10): Provider, Opts, Opts, Opts, Opts, Opts, Opts, Opts (+2 more)
+
+### Community 116 - "generatePost.ts"
+Cohesion: 0.60
+Nodes (4): BodySchema, POST(), statusFor(), generatePost()
+
+### Community 117 - "decisions.ts"
 Cohesion: 0.31
-Nodes (6): Competitors, Verdict, VerdictSchema, PlanVentureInput, reconcileVerdict(), ValidateIdeaInput
+Nodes (7): Decision, DecisionSchema, backfill(), create(), listByVenture(), markHumanFeedback(), RepoOpts
+
+### Community 118 - "cache.ts"
+Cohesion: 0.29
+Nodes (6): DashboardHeader(), Spend, ThemeToggle(), isApproaching(), Spend, caps
+
+### Community 119 - "runWeeklyReview.ts"
+Cohesion: 0.38
+Nodes (5): Badge(), toneStyles, VenturesCard(), relativeTime(), stageTone
+
+### Community 120 - "EXECUTION STATE"
+Cohesion: 0.33
+Nodes (3): ContentInbox(), DraftFile, VentureOption
+
+### Community 123 - "CompletionResult"
+Cohesion: 0.29
+Nodes (3): CompletionResult, GENEROUS_CAPS, bipResponse
+
+### Community 124 - "3. The five engineering decisions that matter"
+Cohesion: 0.33
+Nodes (6): 3.1 One chokepoint for all AI traffic, 3.2 The budget is a pre-flight guard, not a report, 3.3 Every AI output is schema-validated at the boundary, 3.4 The event log is the source of truth for everything narrative, 3.5 Local-first storage, adapters at the edges, 3. The five engineering decisions that matter
+
+### Community 125 - "provider.ts"
+Cohesion: 0.47
+Nodes (4): GET(), hasAiKeyConfigured(), mock, ResolveOpts
+
+### Community 126 - "idea-export.ts"
+Cohesion: 0.67
+Nodes (5): csvCell(), download(), exportVenturesAsCSV(), exportVenturesAsJSON(), todayStamp()
 
 ## Knowledge Gaps
-- **603 isolated node(s):** `{ chromium }`, `next/core-web-vitals`, `next/typescript`, `nextConfig`, `name` (+598 more)
+- **629 isolated node(s):** `{ chromium }`, `next/core-web-vitals`, `next/typescript`, `nextConfig`, `name` (+624 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **32 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **41 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `writeCollection()` connect `writeCollection` to `planAndAdvance.ts`, `devDependencies`, `gateway.ts`?**
+- **Why does `formatUsd()` connect `Verdict` to `page.tsx`, `writeCollection`, `cache.ts`, `runWeeklyReview.ts`?**
+  _High betweenness centrality (0.011) - this node is a cross-community bridge._
+- **Why does `writeCollection()` connect `store.ts` to `predictions.ts`, `ventures.ts`, `gateway.ts`, `aiCalls.ts`, `buildTasks.ts`, `artifacts.ts`, `observations.ts`, `repositories/events.ts`, `decisions.ts`?**
   _High betweenness centrality (0.009) - this node is a cross-community bridge._
-- **Why does `Plan` connect `NewIdeaFlow.tsx` to `Verdict`, `devDependencies`, `page.tsx`, `planAndAdvance.ts`, `index.tsx`, `tasks/index.ts`?**
-  _High betweenness centrality (0.004) - this node is a cross-community bridge._
-- **Why does `formatUsd()` connect `page.tsx` to `index.tsx`?**
-  _High betweenness centrality (0.004) - this node is a cross-community bridge._
+- **Why does `Provider` connect `generateBuildSpec.ts` to `generateBuildSpec.test.ts`, `generateContentCalendar.test.ts`, `generateLandingPage.test.ts`, `generatePost.test.ts`, `devDependencies`, `lesson-post.md`, `validateAndAdvance.test.ts`, `regenerateArtifact.test.ts`, `recordDecision.ts`, `budget.ts`, `gateway.ts`, `artifacts.ts`, `validateAndAdvance.ts`, `planAndAdvance.ts`, `CompletionResult`, `provider.ts`?**
+  _High betweenness centrality (0.006) - this node is a cross-community bridge._
 - **What connects `{ chromium }`, `next/core-web-vitals`, `next/typescript` to the rest of the system?**
-  _603 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _629 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `ABSOLUTE RULES` be split into smaller, more focused modules?**
   _Cohesion score 0.07407407407407407 - nodes in this community are weakly interconnected._
 - **Should `compilerOptions` be split into smaller, more focused modules?**

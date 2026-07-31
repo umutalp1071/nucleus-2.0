@@ -337,3 +337,18 @@ export const WeeklyReviewSchema = z.object({
   killCriteriaCheck: z.string(),
 });
 export type WeeklyReview = z.infer<typeof WeeklyReviewSchema>;
+
+// A Peerlist-ready build-in-public draft. `body` carries the prose (the
+// playbook's labeled sections woven in, not literal headings); `codeBlock`
+// and `question` are separate fields so the renderer can lay out the exact
+// template shape without re-parsing prose. See
+// docs/plan/PHASE-10-buildinpublic-engine.md and docs/plan/PEERLIST-PLAYBOOK.md.
+export const BuildInPublicPostSchema = z.object({
+  kind: z.enum(["ship", "lesson"]),
+  title: z.string().max(80),
+  body: z.string(),
+  codeBlock: z.string().nullable(),
+  question: z.string(),
+  tags: z.array(z.string()).min(2).max(4),
+});
+export type BuildInPublicPost = z.infer<typeof BuildInPublicPostSchema>;

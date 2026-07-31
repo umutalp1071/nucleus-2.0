@@ -30,6 +30,9 @@ export function DashboardHeader({ spend, caps }: { spend: Spend; caps: Spend }) 
         >
           💰 {formatUsd(spend.monthly)}/${caps.monthly}
         </a>
+        <Link href="/content" className="text-sm font-medium hover:opacity-80">
+          ✍️ Content
+        </Link>
         <ThemeToggle />
         <button
           aria-label="Notifications"

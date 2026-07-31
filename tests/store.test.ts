@@ -83,4 +83,42 @@ describe("store", () => {
     const info = await dataDirInfo({ baseDir: tmpDir });
     expect(info.backupCount).toBe(2);
   });
+
+  describe("repo file helpers", () => {
+    it("readRepoFile returns null for a file that doesn't exist", async () => {
+      const { readRepoFile } = await import("@/server/db/store");
+      expect(await readRepoFile("drafts/missing.md", { repoRoot: tmpDir })).toBeNull();
+    });
+
+    it("writeRepoFile then readRepoFile round-trips, creating nested dirs", async () => {
+      const { readRepoFile, writeRepoFile } = await import("@/server/db/store");
+      await writeRepoFile("content/drafts/2026-01-01-ship.md", "# Hello", { repoRoot: tmpDir });
+      expect(await readRepoFile("content/drafts/2026-01-01-ship.md", { repoRoot: tmpDir })).toBe("# Hello");
+    });
+
+    it("listRepoDir lists only .md files, sorted, and [] for a missing dir", async () => {
+      const { writeRepoFile, listRepoDir } = await import("@/server/db/store");
+      await writeRepoFile("content/drafts/b.md", "b", { repoRoot: tmpDir });
+      await writeRepoFile("content/drafts/a.md", "a", { repoRoot: tmpDir });
+      await writeRepoFile("content/drafts/notes.txt", "x", { repoRoot: tmpDir });
+      expect(await listRepoDir("content/drafts", { repoRoot: tmpDir })).toEqual(["a.md", "b.md"]);
+      expect(await listRepoDir("content/missing", { repoRoot: tmpDir })).toEqual([]);
+    });
+
+    it("moveRepoFile moves a file between directories", async () => {
+      const { writeRepoFile, moveRepoFile, readRepoFile } = await import("@/server/db/store");
+      await writeRepoFile("content/drafts/a.md", "a", { repoRoot: tmpDir });
+      await moveRepoFile("content/drafts/a.md", "content/published/a.md", { repoRoot: tmpDir });
+      expect(await readRepoFile("content/drafts/a.md", { repoRoot: tmpDir })).toBeNull();
+      expect(await readRepoFile("content/published/a.md", { repoRoot: tmpDir })).toBe("a");
+    });
+
+    it("deleteRepoFile removes a file, and is a no-op if it's already gone", async () => {
+      const { writeRepoFile, deleteRepoFile, readRepoFile } = await import("@/server/db/store");
+      await writeRepoFile("content/drafts/a.md", "a", { repoRoot: tmpDir });
+      await deleteRepoFile("content/drafts/a.md", { repoRoot: tmpDir });
+      expect(await readRepoFile("content/drafts/a.md", { repoRoot: tmpDir })).toBeNull();
+      await expect(deleteRepoFile("content/drafts/a.md", { repoRoot: tmpDir })).resolves.toBeUndefined();
+    });
+  });
 });

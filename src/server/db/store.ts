@@ -88,6 +88,49 @@ export async function dataDirInfo(opts?: StoreOpts): Promise<{ dir: string; back
   return { dir, backupCount };
 }
 
+interface RepoFileOpts {
+  // Root of the git repo -- distinct from `baseDir` above, which scopes the
+  // user's `.nucleus/` data dir. Content drafts live in the tracked repo
+  // tree (docs/content/), not the user's private data dir, so they need
+  // their own root, injectable for tests. See docs/plan/PHASE-10-buildinpublic-engine.md.
+  repoRoot?: string;
+}
+
+function resolveRepoRoot(opts?: RepoFileOpts): string {
+  return opts?.repoRoot ?? process.cwd();
+}
+
+export async function readRepoFile(relPath: string, opts?: RepoFileOpts): Promise<string | null> {
+  const file = path.join(resolveRepoRoot(opts), relPath);
+  if (!fs.existsSync(file)) return null;
+  return fs.readFileSync(file, "utf8");
+}
+
+export async function writeRepoFile(relPath: string, content: string, opts?: RepoFileOpts): Promise<void> {
+  const file = path.join(resolveRepoRoot(opts), relPath);
+  ensureDir(path.dirname(file));
+  fs.writeFileSync(file, content, "utf8");
+}
+
+export async function listRepoDir(relPath: string, opts?: RepoFileOpts): Promise<string[]> {
+  const dir = path.join(resolveRepoRoot(opts), relPath);
+  if (!fs.existsSync(dir)) return [];
+  return fs.readdirSync(dir).filter((f) => f.endsWith(".md")).sort();
+}
+
+export async function moveRepoFile(fromRelPath: string, toRelPath: string, opts?: RepoFileOpts): Promise<void> {
+  const root = resolveRepoRoot(opts);
+  const from = path.join(root, fromRelPath);
+  const to = path.join(root, toRelPath);
+  ensureDir(path.dirname(to));
+  fs.renameSync(from, to);
+}
+
+export async function deleteRepoFile(relPath: string, opts?: RepoFileOpts): Promise<void> {
+  const file = path.join(resolveRepoRoot(opts), relPath);
+  if (fs.existsSync(file)) fs.unlinkSync(file);
+}
+
 function pruneBackups(name: string, dir: string): void {
   const dir_ = backupsDir(dir);
   const prefix = `${name}.`;

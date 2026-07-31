@@ -201,4 +201,13 @@ export const FIXTURES: Record<string, unknown> = {
     recommendedAction: "Double down on r/productivity with a teardown-style post next week; hold off on another Indie Hackers post until there's a sharper result to share.",
     killCriteriaCheck: "Kill criteria was fewer than 5 of the first 25 signups returning in week 2 -- currently 6 of 14 have returned, so this is still on track, not a kill signal yet.",
   },
+
+  "write-buildinpublic": {
+    kind: "lesson",
+    title: "A budget you check after the call isn't a budget",
+    body: "My AI spending cap lived on a dashboard as a number that updated after each call finished. Which means by the time it turned red, the money was already spent -- the cap was a report, not a guard.\n\nI tried adding a warning banner at 80% of the cap. It helped a human notice, but nothing stopped a burst of calls between the warning and the next page load from blowing past the limit anyway.\n\nWhat worked: check the cap before the request leaves the process, not after the response comes back. The budget guard now estimates cost from prompt length, reserves that estimate in the ledger, and only then calls the provider -- a blocked call never reaches the network. 3 tiers, 1 guard function, 0 requests that can silently exceed the cap.\n\nThe cost: estimates are conservative, so some calls downgrade to a cheaper model earlier than the honest spend would require. I'd rather waste a little quality margin than ever explain an overage I couldn't have prevented.",
+    codeBlock: "const decision = await budget.preflight(estimatedCost, opts);\nif (decision.decision === \"block\") return blocked();\n// only now does the provider get called",
+    question: "Do you check spend before the call or after? I've mostly seen after.",
+    tags: ["ai", "typescript"],
+  },
 };

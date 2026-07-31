@@ -6,7 +6,7 @@
 
 ## Current phase
 
-**PHASE 10 — Build-in-Public Engine** — not started
+**PHASE 11 — Immune System** — not started
 
 ---
 
@@ -25,7 +25,7 @@
 | 08 | Launch Stage | ✅ done | `e908317` | ship, lesson |
 | 08.5 | Primitives (Decision/Prediction/Observation) | ✅ done | `8b24c2b` | lesson |
 | 09 | Growth Stage | ✅ done | `8a447d4` | ship |
-| 10 | Build-in-Public Engine | ⬜ | — | — |
+| 10 | Build-in-Public Engine | ✅ done | `PENDING` | ship, lesson |
 | 11 | Immune System | ⬜ | — | — |
 | 12 | Ship It | ⬜ | — | — |
 | 13 | Calibration | ⬜ | — | — |
@@ -185,6 +185,28 @@ see the call's input -- mitigated by validating it as a post-hoc check in
 generateContentCalendar.ts against the actual plan.icp.where list, same
 place the "missing_prerequisite" check already lives, and testing with a
 fixture that deliberately diverges.
+
+### Phase 10 — Build-in-Public Engine
+Files: src/server/content/{selectStory,git,drafts,generateBuildInPublicPost,
+renderBuildInPublicPost}.ts (new), src/server/ai/tasks/write-buildinpublic.ts
++ fixture, src/lib/domain.ts (BuildInPublicPostSchema), src/server/db/store.ts
+(readRepoFile/writeRepoFile/listRepoDir/moveRepoFile/deleteRepoFile), src/app/
+api/content/** (new), src/app/content/page.tsx + ContentInbox.tsx (new),
+docs/workflow/PROTOCOL.md §4 (rewritten), docs/content/README.md (rewritten),
+docs/content/templates/ (deleted).
+Risk: docs/content/ lives in the tracked repo tree, not `.nucleus/`, and
+`tests/boundaries.test.ts` restricts `node:fs` to `store.ts` alone --
+mitigated by extending store.ts with a second, `repoRoot`-scoped file family
+(distinct from the existing `baseDir`-scoped one) rather than adding a new
+fs-importing module, keeping the "one fs chokepoint" rule intact. Realized
+risk during browser verification, not caught by any test: a Playwright
+locator using `.first()` against the drafts list hit a real hand-written
+post instead of the freshly generated one (both sorted to the top by
+filename), and the reject step deleted the real `2026-07-31-phase-09-ship.md`
+-- recovered via `git checkout`, then re-ran verification scoped to the
+specific draft's filename. No code bug; a testing-methodology lesson about
+`/content` specifically, where "newest" isn't the same as "the one I just
+generated" once real content already exists.
 
 ---
 
@@ -392,6 +414,52 @@ needs to re-read.
 Revisit if: a founder wants to browse old post drafts or past weekly reviews
 outside the Growth panel -- add a collapsed history section there, not to
 the main list.
+
+### 2026-07-31 · Build-in-Public · Story selection is a weighted sum, no AI
+Chose: `selectStory()` scores events/predictions with a fixed weight table
+(killed verdict / missed prediction = 100, stage transition / budget guard /
+deploy = 70, everything else = 0) and returns the top-N -- entirely pure,
+zero model calls.
+Over: asking the model to pick the interesting events as part of the same
+generation call that writes the post.
+Because: editorial judgment is exactly the kind of logic that degrades
+silently if untested, and a model call inside the selection step makes "did
+it pick the right story" untestable without reading every output by hand. A
+weighted sum is one file, TDD'd, free to run on every generation.
+Revisit if: the weights prove wrong for a real founder's actual audience --
+add a "something failed and recovered" signal once a real event exists for
+it (none does yet; gateway.ts doesn't currently record an event for a
+provider_error or invalid_output that later succeeds).
+
+### 2026-07-31 · Build-in-Public · Self-documentation posts create no Artifact
+Chose: `generateBuildInPublicPost({mode:"self"})` writes a draft file
+directly; it never creates an `Artifact` or a `Decision` row, unlike every
+other AI-generated output in this app.
+Over: forcing self-doc posts through the same `artifacts.create()` +
+`recordDecision()` pipeline every venture-tied generation uses, for
+consistency.
+Because: `Artifact.ventureId` and `Decision.ventureId` are non-nullable --
+there is no venture to attach a "Nucleus wrote about itself" post to, and
+inventing one would fabricate provenance, the exact failure mode
+docs/reviews/2026-07-30-stack-position.md §6.3 already named and this
+project has avoided everywhere else. The AI call itself is still budgeted
+and ledgered normally; only the artifact/decision bookkeeping is skipped.
+Revisit if: self-doc posts need their own history/versioning beyond what the
+markdown file list in docs/content/drafts/ already provides.
+
+### 2026-07-31 · Build-in-Public · docs/content/ gets its own fs root in store.ts
+Chose: `store.ts` gained a second family of functions (`readRepoFile`,
+`writeRepoFile`, `listRepoDir`, `moveRepoFile`, `deleteRepoFile`) scoped to
+an injectable `repoRoot` (defaulting to `process.cwd()`), separate from the
+existing `baseDir`-scoped `.nucleus/` collection functions.
+Over: adding a second fs-importing module for content specifically, or
+loosening `tests/boundaries.test.ts`'s "only store.ts imports node:fs" rule.
+Because: docs/content/ is tracked in git, not user data under `.nucleus/` --
+a fundamentally different root -- but the "one fs chokepoint" rule the
+boundary test enforces is worth keeping regardless of how many roots that
+one chokepoint needs to know about.
+Revisit if: a third fs root is ever needed -- generalize to a named-root
+registry then, not before.
 
 ### 2026-07-28 · Planning · Mock adapters are permanent
 Chose: AI provider and deploy target each have a deterministic fake, selected

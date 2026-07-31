@@ -327,46 +327,33 @@ File: docs/MASTER_PLAN.md
 - Add note if goal changed
 
 ### 4. CONTENT ENGINE — PEERLIST POST DRAFTS
-Create directory if missing: docs/content/drafts/
-Create two draft files per session:
+As of Phase 10 (Build-in-Public Engine), drafts are generated **through
+Nucleus itself**, not written by hand at session end. Use the `/content`
+drafts inbox:
 
-**Draft A: "What I Built Today" (Ship Post)**
-File: docs/content/drafts/YYYY-MM-DD-ship.md
-```markdown
-# Nucleus 2.0 — Day [X]: [Title]
+1. Open `/content`.
+2. For a venture-specific post: pick the venture, click "Generate for this
+   venture" -- it scores the venture's own event log with
+   `src/server/content/selectStory.ts` and writes a draft via the
+   `write-buildinpublic` AI task.
+3. For a Nucleus-development post (the usual end-of-phase case): click
+   "Generate about Nucleus itself" -- it reads this repo's own recent git
+   log, `docs/plan/PROGRESS.md` phase completions, and the latest
+   `docs/workflow/learning.md` entry, and drafts a post about the project's
+   own development. This is the dogfooding path the phase existed to build.
+4. Review the draft in place. Edit if needed, then Approve (moves the file
+   to `docs/content/published/` with its filename's date stamp intact) or
+   Reject with a one-line reason (fed back into the next generation as a
+   negative example -- no ML required, just a growing "don't do this" list).
 
-## What Was Built
-- [Item]
+The `docs/plan/PEERLIST-PLAYBOOK.md` rules (open on tension, name the
+rejected alternative, one hard number, one code block, a specific closing
+question, 150-300 words) are baked into the `write-buildinpublic` prompt, not
+re-applied by hand each session.
 
-## Problem & Solution
-- [Problem] → [Solution]
-
-## Screenshot / Demo
-[Placeholder for GIF or image]
-
-## Next Step
-- [Goal]
-
-#buildinpublic #nucleus2
-```
-
-**Draft B: "Problem-Solution" (Lesson Post)**
-File: docs/content/drafts/YYYY-MM-DD-lesson.md
-```markdown
-# A problem I faced today and how I solved it
-
-**Context:** While building Nucleus 2.0...
-
-**Problem:** [Description]
-
-**Solution:** [Description]
-
-**Lesson:** [Short takeaway]
-
-Have you faced something similar?
-```
-
-RULE: These drafts are auto-generated. User only approves, edits, or rejects. They are NOT created unless user says "session ending", but MUST be created when user says "session ending".
+RULE: Drafts are generated on demand through `/content`, never auto-created
+by this protocol document. The founder approves, edits, or rejects every
+draft in the inbox -- Nucleus never publishes anything on its own.
 
 ### 5. MISTAKE DATABASE CHECK
 If new errors occurred:

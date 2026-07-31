@@ -9,6 +9,7 @@ import { writeLandingPage } from "./write-landing-page";
 import { writeContentCalendar } from "./write-content-calendar";
 import { writePost } from "./write-post";
 import { weeklyReview } from "./weekly-review";
+import { writeBuildInPublic } from "./write-buildinpublic";
 
 export interface TaskDef<I = unknown, O = unknown> {
   name: string;
@@ -47,6 +48,7 @@ export const TASKS = {
   "write-content-calendar": writeContentCalendar,
   "write-post": writePost,
   "weekly-review": weeklyReview,
+  "write-buildinpublic": writeBuildInPublic,
 } as const satisfies Record<string, TaskDef>;
 
 export type TaskName = keyof typeof TASKS;

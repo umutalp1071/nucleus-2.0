@@ -2,6 +2,83 @@
 
 ---
 
+## 2026-07-31 — Phase 10: Build-in-Public Engine
+
+**What we did:**
+Built the dogfooding loop the lessons file demanded since Phase 00: Nucleus
+now writes its own marketing. `selectStory.ts` is a pure, TDD'd scoring
+function over the event log (a killed verdict or a Prediction resolved
+`missed` rank highest, a stage transition/budget guard/deploy rank high,
+everything else scores zero) -- no AI, no cost, and it's the thing that
+stops the content engine from producing "renamed a field" as a headline. The
+`write-buildinpublic` task (tier `mid`) turns the selected story plus the
+founder's own voice samples and past rejection reasons into a schema-shaped
+draft, rendered into the exact Peerlist template
+(`docs/plan/PEERLIST-PLAYBOOK.md`) by hand-written code, never by the model.
+A new `/content` drafts inbox lists every draft, lets the founder edit in
+place, approve (moves the file into `docs/content/published/`, preserving
+its date-stamped filename), or reject with a one-line reason that's fed back
+into the next generation as a negative example. The self-documentation path
+-- "Generate about Nucleus itself" -- reads this repo's own `git log`,
+`PROGRESS.md` phase completions, and the latest `learning.md` entry, and
+drafts a post about the project's own development, with no venture attached
+at all. `docs/workflow/PROTOCOL.md` §4 and `docs/content/README.md` were
+rewritten to describe this flow instead of the manual session-end template
+they replace; `docs/content/templates/` was deleted as directed.
+
+**Decisions:**
+- **Story selection is a weighted sum, not an AI judgment call.** Editorial
+  judgment silently degrades if untested; a pure function is one file,
+  TDD'd, and the AI only ever sees what already survived the filter.
+- **Self-documentation posts create no `Artifact`/`Decision`.** Both schemas
+  require a `ventureId`; there's no venture to attach a "Nucleus wrote about
+  itself" post to, and fabricating one would be exactly the invented-
+  provenance failure mode the stack-position review already flagged
+  elsewhere. The AI call is still budgeted and ledgered normally -- only the
+  artifact bookkeeping is skipped.
+- **`docs/content/` reads/writes go through a second, `repoRoot`-scoped
+  family of functions in `store.ts`**, not a new fs-importing module --
+  `tests/boundaries.test.ts` restricts `node:fs` to `store.ts` alone, and
+  that's worth keeping even though content lives in the tracked repo tree,
+  not `.nucleus/`.
+
+**Mistake caught in browser verification, not by any automated test:** the
+first Playwright smoke script located the freshly-generated draft with
+`.first()` against a filename substring match -- but by this point in the
+project there are 23 real, hand-written drafts on disk, several sharing the
+same `2026-07-31` date prefix, and one of them (`2026-07-31-phase-09-ship.md`,
+this project's own actual Phase 09 post) sorted *above* the newly generated
+demo draft in the newest-first list. The script's Reject step deleted that
+real post; a later Approve click moved the demo draft's *second* generation
+over the first (same fixture content -> same date+kind+title -> same
+filename, silently overwritten by `writeRepoFile`) into
+`docs/content/published/`. Caught immediately via `git status` after the
+run, restored with `git checkout -- docs/content/drafts/2026-07-31-phase-09-
+ship.md` and `rm -rf docs/content/published`, then re-ran with a locator
+scoped to the specific generated filename instead of `.first()`. Not a
+product bug -- the approve/reject code did exactly what it was told -- but a
+sharp edge worth naming: any verification script that clicks buttons inside
+a list of real, git-tracked content needs to target the exact row, never the
+first match, the moment real data coexists with test data in the same list.
+
+**Next step:** Phase 11 — Immune System.
+
+**Quality Score: 87/100**
+- Every acceptance criterion has a passing test that fails without the fix:
+  `selectStory`'s killed-outranks-routine and zero-for-CRUD cases, the
+  reject-reason-appears-in-next-prompt case (asserted directly on the
+  captured prompt string), and the approve/reject file-move behavior.
+- Docked for: the self-documentation mode's actual output quality is
+  unverifiable in this session -- no OpenRouter key is configured, so
+  "generate a post about this very phase" only ever exercises the mock
+  fixture, not a real model reasoning over the real git log/PROGRESS.md
+  content that was correctly assembled and handed to it. The plumbing is
+  proven; the prose quality the acceptance criterion actually cares about
+  is not, until a real key is added. Also docked for the browser-verification
+  mistake above, even though it caused no lasting damage.
+
+---
+
 ## 2026-07-31 — Phase 09: Growth Stage
 
 **What we did:**
