@@ -24,7 +24,7 @@
 | 07 | Build Stage | ✅ done | `d1e025e` | ship, lesson |
 | 08 | Launch Stage | ✅ done | `e908317` | ship, lesson |
 | 08.5 | Primitives (Decision/Prediction/Observation) | ✅ done | `8b24c2b` | lesson |
-| 09 | Growth Stage | ✅ done | `PENDING` | ship |
+| 09 | Growth Stage | ✅ done | `8a447d4` | ship |
 | 10 | Build-in-Public Engine | ⬜ | — | — |
 | 11 | Immune System | ⬜ | — | — |
 | 12 | Ship It | ⬜ | — | — |
