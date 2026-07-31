@@ -40,8 +40,9 @@ it(
   { timeout: 30 * 60 * 1000 },
   async () => {
     const raw = await fs.readFile(IDEAS_PATH, "utf-8");
-    const ideas = (JSON.parse(raw) as IdeaFile).ideas.slice(0, LIMIT);
-    expect(ideas.length).toBeGreaterThanOrEqual(20);
+    const allIdeas = (JSON.parse(raw) as IdeaFile).ideas;
+    expect(allIdeas.length).toBeGreaterThanOrEqual(20);
+    const ideas = allIdeas.slice(0, LIMIT);
 
     const results: IdeaResult[] = [];
     let totalCost = 0;

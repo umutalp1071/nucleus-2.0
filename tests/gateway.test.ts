@@ -57,6 +57,25 @@ describe("gateway: happy path", () => {
   });
 });
 
+describe("gateway: markdown-fenced JSON", () => {
+  it("parses a response wrapped in a ```json code fence without a repair retry", async () => {
+    const { runTask } = await import("@/server/ai/gateway");
+    const provider = stubProvider([
+      { text: '```json\n{"echo":"fenced"}\n```', promptTokens: 10, completionTokens: 5 },
+    ]);
+
+    const result = await runTask<{ echo: string }>(
+      "echo-check",
+      { message: "hi" },
+      { baseDir, provider, caps: GENEROUS_CAPS }
+    );
+
+    expect(result.ok).toBe(true);
+    if (result.ok) expect(result.data).toEqual({ echo: "fenced" });
+    expect((provider.complete as ReturnType<typeof vi.fn>).mock.calls.length).toBe(1);
+  });
+});
+
 describe("gateway: schema repair retry", () => {
   it("retries once on malformed output, succeeds, and records two ai calls", async () => {
     const { runTask } = await import("@/server/ai/gateway");

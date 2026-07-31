@@ -1,5 +1,6 @@
 import { config } from "../config";
 import { FIXTURES } from "./fixtures";
+import { TASKS, type TaskName } from "./tasks";
 import * as settingsRepo from "../db/repositories/settings";
 
 // The ONLY file in the repo permitted to reference the OpenRouter host —
@@ -17,7 +18,13 @@ export interface Provider {
 
 export function makeOpenRouterProvider(apiKey: string): Provider {
   return {
-    async complete(prompt, modelId) {
+    async complete(prompt, modelId, taskName) {
+      // Without max_tokens, OpenRouter defaults to the model's full context
+      // window (tens of thousands of tokens) and pre-checks affordability
+      // against that worst case -- rejecting the call with 402 even when the
+      // task realistically needs a few hundred tokens. Cap it at 2x the
+      // task's expected output as headroom, not the model's ceiling.
+      const expectedOutTokens = TASKS[taskName as TaskName]?.expectedOutTokens ?? 1000;
       const res = await fetch("https://openrouter.ai/api/v1/chat/completions", {
         method: "POST",
         headers: {
@@ -26,6 +33,7 @@ export function makeOpenRouterProvider(apiKey: string): Provider {
         },
         body: JSON.stringify({
           model: modelId,
+          max_tokens: expectedOutTokens * 2,
           messages: [{ role: "user", content: prompt }],
         }),
       });

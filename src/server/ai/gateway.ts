@@ -80,13 +80,22 @@ function promptVersionOf(taskName: TaskName): string {
   return crypto.createHash("sha256").update(source).digest("hex").slice(0, 12);
 }
 
+// Models routinely wrap "ONLY valid JSON" responses in a markdown code
+// fence anyway (observed from claude-haiku-4.5 via OpenRouter). Strip one
+// if present before parsing -- the mock provider never does this, so no
+// test caught it until a real model was actually run.
+function stripCodeFence(text: string): string {
+  const match = text.trim().match(/^```(?:json)?\s*([\s\S]*?)\s*```$/);
+  return match ? match[1] : text;
+}
+
 function safeParseJson<T>(
   schema: z.ZodType<T>,
   text: string
 ): { success: true; data: T } | { success: false; error: string } {
   let json: unknown;
   try {
-    json = JSON.parse(text);
+    json = JSON.parse(stripCodeFence(text));
   } catch {
     return { success: false, error: "response was not valid JSON" };
   }
