@@ -48,6 +48,8 @@ What's the last feature a stranger's comment talked you into building?
 
 ## Visual (production note — not part of the post)
 
+**Prepared 2026-07-31:** `images/2026-07-28-phase-04-lesson.png` — clicked "Export Ventures," opened the download, and rendered one real venture object with its `validation` artifact expanded (score/recommendation visible inside `artifacts`).
+
 **Type:** Screenshot (live app + downloaded file)
 
 1. On the dashboard, find "Export Ventures" in the Quick Actions card (bottom

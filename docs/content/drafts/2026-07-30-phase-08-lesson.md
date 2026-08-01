@@ -32,6 +32,8 @@ Where else are you letting a model emit output you can't actually validate befor
 
 ## Visual
 
+**Prepared 2026-07-31:** `images/2026-07-30-phase-08-lesson.png` — `npx vitest run tests/template.test.ts --reporter=verbose`, all 8 passing including the script-payload-escape test named in the post.
+
 **Type:** Terminal screenshot
 
 Run `npx vitest run tests/template.test.ts` and screenshot the passing output -- specifically the test named "escapes a script payload in the headline instead of executing it," which is the one that proves the XSS path is closed.

@@ -49,6 +49,8 @@ does everyone just watch the graph and hope?
 
 ## Visual (production note — not part of the post)
 
+**Prepared 2026-07-31:** `images/2026-07-28-phase-02-lesson.png` — `npx vitest run tests/budget.test.ts --reporter=verbose`, all 14 cases including the named `ok`/`downgrade`/`block` decisions visible.
+
 **Type:** Screenshot (terminal)
 
 There's no budget UI yet at this point (Settings/spend breakdown ships in

@@ -31,6 +31,8 @@ What did you almost hand to an LLM before realizing a `.map()` already did the j
 
 ## Visual
 
+**Prepared 2026-07-31:** `images/2026-07-29-phase-07-lesson.png` — `npx vitest run tests/startBuilding.test.ts --reporter=verbose`, both cases passing (the zero-AI-calls expansion and the readable failure).
+
 **Type:** Terminal screenshot
 
 Run `npx vitest run tests/startBuilding.test.ts` and screenshot the passing output. The interesting line is the assertion in the test body: `expect(runTaskSpy).not.toHaveBeenCalled()` -- crop or highlight it if the terminal screenshot tool allows annotation.

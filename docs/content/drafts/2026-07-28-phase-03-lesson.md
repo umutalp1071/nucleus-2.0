@@ -45,6 +45,8 @@ How do you stop an LLM from just agreeing with you?
 
 ## Visual (production note — not part of the post)
 
+**Prepared 2026-07-31:** `images/2026-07-28-phase-03-lesson.png` — captured live in demo mode (New Idea → Analyze), showing the fixture's score 34/kill verdict with `whyNot` and risks in frame. Full-page shot rather than a tight crop; crop further before publishing if you want just the modal. Note: producing this required temporarily toggling the app out of demo mode via Settings' "Remove key" control and back — your real key was backed up to a file first and restored byte-for-byte afterward, never re-typed or logged.
+
 **Type:** Screenshot (live app)
 
 This one's directly capturable today, and demo mode makes it deterministic:

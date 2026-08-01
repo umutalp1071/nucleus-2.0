@@ -44,6 +44,8 @@ What's the best output constraint you've found that wasn't a prompt change?
 
 ## Visual (production note — not part of the post)
 
+**Prepared 2026-07-31:** `images/2026-07-28-phase-06-lesson.png` — MVP Scope card from the real "Provenance Test" venture (`planned` stage), "Must have" and "Explicitly not in v1" (struck-through) both visible in one frame.
+
 **Type:** Screenshot (live app)
 
 Open a venture that's reached the "planned" stage (advance one through

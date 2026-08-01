@@ -46,6 +46,8 @@ local-first tool?
 
 ## Visual (production note — not part of the post)
 
+**Prepared 2026-07-31:** `images/2026-07-28-phase-05-lesson.png` — a real key was already configured, so this is the live redacted-key preview (`sk-or-...2407`) alongside the "Live" status indicator, no placeholder key needed.
+
 **Type:** Screenshot (live app)
 
 1. Go to `/settings`.

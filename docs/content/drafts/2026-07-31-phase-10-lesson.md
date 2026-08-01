@@ -30,6 +30,8 @@ What's your signal for "this is worth telling someone about," and did you write 
 
 ## Visual
 
+**Prepared 2026-07-31:** `images/2026-07-31-phase-10-lesson.png` — `npx vitest run tests/selectStory.test.ts --reporter=verbose`, both named tests passing among the 7.
+
 **Type:** Terminal screenshot
 
 Run `npx vitest run tests/selectStory.test.ts` and capture the output showing the "a killed verdict outranks a routine event" and "routine CRUD scores zero" tests passing.

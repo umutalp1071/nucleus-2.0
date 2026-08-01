@@ -46,6 +46,8 @@ Where's your line for "just use a file" versus "just use a database"?
 
 ## Visual (production note — not part of the post)
 
+**Prepared 2026-07-31:** `images/2026-07-28-phase-01-lesson.png` — captured live (`ls -la .nucleus/` + `cat .nucleus/ventures.json`, settings.json excluded). Instructions below kept as fallback if this file goes stale.
+
 **Type:** Screenshot (terminal)
 
 From the project root, with the app run at least once so `.nucleus/` exists:
